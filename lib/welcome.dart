@@ -28,6 +28,7 @@ class _WelcomeState extends State<Welcome> {
     });
   }
 
+
   static MediaQueryData _mediaQueryData;
   int currentPage = 0;
   List<Map<String, String>> splashData = [
@@ -56,110 +57,108 @@ class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 100),
-            Container(
-              height: 450,
-              child: PageView.builder(
-                onPageChanged: (value) {
-                  setState(() {
-                    currentPage = value;
-                  });
-                },
-                itemCount: splashData.length,
-                itemBuilder: (context, index) => Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image(
-                      image: AssetImage(splashData[index]['image']),
-                      fit: BoxFit.contain,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      splashData[index]['text'],
-                      style: supportStyle,
-                      textAlign: TextAlign.center,
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                splashData.length,
-                (index) => buildDot(index: index),
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              'Welcome to ',
-              style: TextStyle(
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Raleway',
-                  color: Colors.black),
-            ),
-            Text(
-              'Feed The Need',
-              style: headingStyle,
-            ),
-            SizedBox(height: 30.0),
-            Container(
-              margin: EdgeInsets.only(left: 30,right: 30),
-              child: Row(
+      body: ListView(
+        children: <Widget>[
+          SizedBox(height: 100),
+          Container(
+            height: 450,
+            child: PageView.builder(
+              onPageChanged: (value) {
+                setState(() {
+                  currentPage = value;
+                });
+              },
+              itemCount: splashData.length,
+              itemBuilder: (context, index) => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.only(top: 15, bottom: 15),
-                          primary: Colors.teal.shade200, // background
-                          onPrimary: Colors.white,
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(20.0),
-                          ) // foreground
-                          ),
-                      onPressed: navigateToLogin,
-                      child: Text(
-                        'LOGIN',
-                        style: buttonStyle,
-                      ),
-                    ),
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image(
+                    image: AssetImage(splashData[index]['image']),
+                    fit: BoxFit.contain,
                   ),
-                  SizedBox(width: 20.0),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.only(top: 15, bottom: 15),
-                          primary: Colors.teal.shade200, // background
-                          onPrimary: Colors.white,
-
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(20.0),
-                          ) // foreground
-                          ),
-                      onPressed: navigateToRegister,
-                      child: Text(
-                        'REGISTER',
-                        style: buttonStyle
-                      ),
-                    ),
+                  SizedBox(
+                    height: 20,
                   ),
+                  Text(
+                    splashData[index]['text'],
+                    style: supportStyle,
+                    textAlign: TextAlign.center,
+                  )
                 ],
               ),
             ),
-            SizedBox(height: 20.0),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              splashData.length,
+              (index) => buildDot(index: index),
+            ),
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          Text(
+            'Welcome to ',textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 25.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Raleway',
+                color: Colors.black),
+          ),
+          Text(
+            'Feed The Need',textAlign: TextAlign.center,
+            style: headingStyle,
+          ),
+          SizedBox(height: 30.0),
+          Container(
+            margin: EdgeInsets.only(left: 30,right: 30),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.only(top: 15, bottom: 15),
+                        primary: Colors.teal.shade200, // background
+                        onPrimary: Colors.white,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20.0),
+                        ) // foreground
+                        ),
+                    onPressed: navigateToLogin,
+                    child: Text(
+                      'LOGIN',
+                      style: buttonStyle,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20.0),
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.only(top: 15, bottom: 15),
+                        primary: Colors.teal.shade200, // background
+                        onPrimary: Colors.white,
 
-          ],
-        ),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20.0),
+                        ) // foreground
+                        ),
+                    onPressed: navigateToRegister,
+                    child: Text(
+                      'REGISTER',
+                      style: buttonStyle
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 20.0),
+
+        ],
       ),
     );
   }
