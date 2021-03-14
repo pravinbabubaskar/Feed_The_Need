@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
-import 'home.dart';
+import 'load_data.dart';
 import 'sign_up.dart';
 import 'constants.dart';
 
@@ -22,8 +22,8 @@ class _LoginState extends State<Login> {
       if (firebaseUser != null) {
         print(firebaseUser);
 
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Load()));
       }
     });
   }
@@ -41,6 +41,7 @@ class _LoginState extends State<Login> {
       try {
         final user = await _auth.signInWithEmailAndPassword(
             email: _email, password: _password);
+        checkAuthentification();
       } catch (e) {
         showError(e.message);
         print(e);

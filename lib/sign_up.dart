@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'login.dart';
-import 'home.dart';
+import 'load_data.dart';
 import 'constants.dart';
 
 class SignUp extends StatefulWidget {
@@ -19,8 +19,8 @@ class _SignUpState extends State<SignUp> {
   checkAuthentication() async {
     FirebaseAuth.instance.authStateChanges().listen((firebaseUser) async {
       if (firebaseUser != null) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Load()));
       }
     });
   }
@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
         if (user != null) {
           await FirebaseAuth.instance.currentUser
               .updateProfile(displayName: _name);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+          checkAuthentication();
         }
       } catch (e) {
         showError(e.message);

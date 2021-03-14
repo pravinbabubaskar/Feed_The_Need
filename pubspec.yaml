@@ -34,6 +34,8 @@ dependencies:
   geolocator: ^7.0.1
   geocoder: ^0.2.1
   location: ^4.1.1
+  ez_flutter: ^0.6.0
+  flutter_splash_screen: ^0.1.0
 
 dev_dependencies:
   flutter_test:

@@ -1,11 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
-
 import 'welcome.dart';
+import 'near_me.dart';
+import 'explore.dart';
+import 'account.dart';
+import 'cart.dart';
 
+String userLoc;
 class HomePage extends StatefulWidget {
+  String location;
+  HomePage  ({Key key,@required this.location }) : super(key: key) {
+    userLoc=location;
+  }
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -13,57 +19,20 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User user;
-  String Userdistrict='Empty';
   bool isloggedin = false;
-  Position loc;
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontFamily:'Raleway',fontWeight: FontWeight.bold,color: Colors.black);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Near Me',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Explore',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Cart',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Account',
-      style: optionStyle,
-    ),
+  PageController _pageController=PageController();
+  List<Widget> _screen=[
+    NearMe(),Explore(),Cart(),Account()
   ];
 
-  void _onItemTapped(int index) {
+  void _onItemTaped(int SelectedIndex){
+    _pageController.jumpToPage(SelectedIndex);
+  }
+  void _onPageChanged(int index){
     setState(() {
-      _selectedIndex = index;
+      _selectedIndex=index;
     });
-  }
-
-
-  checkAuthentification() async {
-    FirebaseAuth.instance.authStateChanges().listen((firebaseUser) {
-      if (user == null) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Welcome()));
-      }
-    });
-  }
-
-  Future getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    loc=position;
-    final coordinates = new Coordinates(position.latitude, position.longitude);
-    var addresses =
-    await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var first = addresses.first;
-    print(first);
-    Userdistrict = first.subAdminArea;
-
   }
 
   getUser() async {
@@ -79,16 +48,10 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  signOut() async {
-    _auth.signOut();
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Welcome()));
-  }
 
   @override
   void initState() {
     super.initState();
-    getLocation();
-    //this.checkAuthentification();
     this.getUser();
 
   }
@@ -100,6 +63,7 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar:
         BottomNavigationBar(
           fixedColor: Colors.grey,
+          onTap: _onItemTaped,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined,color: Colors.grey,),
@@ -120,27 +84,16 @@ class _HomePageState extends State<HomePage> {
           ],
           selectedLabelStyle: TextStyle(fontFamily: 'Sans'),
           currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
         ),
-        appBar: AppBar(
-          title: Text(Userdistrict),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.settings,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                signOut();
-                // do something
-              },
-            )
-          ],
-        ),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
+        body: PageView(
+          controller: _pageController,
+          children: _screen,
+          onPageChanged: _onPageChanged,
+          physics: NeverScrollableScrollPhysics(),
+        )
       ),
     );
   }
+
+
 }

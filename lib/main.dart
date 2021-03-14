@@ -1,8 +1,9 @@
+import 'package:feedthenead/load_data.dart';
 import 'package:flutter/material.dart';
 import 'package:feedthenead/welcome.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'home.dart';
+import 'load_data.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,17 +17,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Widget next = Welcome();
   void initState() {
     super.initState();
     this.checkAuthentication();
   }
-
-  checkAuthentication() async {
+  Future checkAuthentication() async {
     FirebaseAuth.instance.authStateChanges().listen((firebaseUser) async {
       print(firebaseUser);
       if (firebaseUser != null) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+        next=Load();
       }
     });
   }
@@ -35,12 +35,8 @@ class _MyAppState extends State<MyApp> {
 
   Widget build(BuildContext context) {
     return MaterialApp(
-
-      theme: ThemeData(
-          primaryColor: Colors.orange
-      ),
       debugShowCheckedModeBanner: false,
-      home: Welcome(),
+      home: next,
 
     );
   }

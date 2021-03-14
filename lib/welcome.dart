@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'constants.dart';
-import 'home.dart';
+import 'load_data.dart';
 import 'login.dart';
 import 'sign_up.dart';
 
@@ -23,7 +23,7 @@ class _WelcomeState extends State<Welcome> {
       print(firebaseUser);
       if (firebaseUser != null) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => Load()));
       }
     });
   }
@@ -59,7 +59,7 @@ class _WelcomeState extends State<Welcome> {
     return Scaffold(
       body: ListView(
         children: <Widget>[
-          SizedBox(height: 100),
+          SizedBox(height: 50),
           Container(
             height: 450,
             child: PageView.builder(
