@@ -3,6 +3,10 @@ import 'package:feedthenead/Hotel/login.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
+
 import '../constants.dart';
 
 class Sign_up extends StatefulWidget {
@@ -11,15 +15,49 @@ class Sign_up extends StatefulWidget {
 }
 
 class _Sign_upState extends State<Sign_up> {
-  String _name, _id, _password;
+  String _name, _id, _password, _place = "current location";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   navigateLogIn() async {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => Login()));
   }
 
+  void initState() {
+    super.initState();
+    getLocation();
+  }
+
+  Future getLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    final coordinates = new Coordinates(position.latitude, position.longitude);
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var first = addresses.first;
+    setState(() {
+      _place = first.subAdminArea;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('hotel');
+
+    Future<void> addUser() {
+      // Call the user's CollectionReference to add a new user
+      return users
+          .doc(_id)
+          .set({
+            'name': _name,
+            'id': _id,
+            'password': _password,
+            'location': _place
+          })
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+    }
+
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -129,7 +167,14 @@ class _Sign_upState extends State<Sign_up> {
                             onSaved: (input) => _password = input),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 40),
+                    Row(
+                      children: [
+                        Text("Get Current location:   "),
+                        Text(_place),
+                      ],
+                    ),
+                    SizedBox(height: 30),
                     Container(
                       width: 175,
                       child: ElevatedButton(
@@ -144,6 +189,7 @@ class _Sign_upState extends State<Sign_up> {
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
+                            addUser();
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
