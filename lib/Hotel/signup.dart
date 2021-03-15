@@ -106,7 +106,7 @@ class _Sign_upState extends State<Sign_up> {
                         child: TextFormField(
                             style: TextStyle(
                                 fontFamily: 'Raleway',
-                                fontWeight: FontWeight.bold,
+                                //fontWeight: FontWeight.bold,
                                 letterSpacing: 1,
                                 fontSize: 20),
                             // ignore: missing_return
@@ -161,7 +161,10 @@ class _Sign_upState extends State<Sign_up> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              prefixIcon: Icon(Icons.lock, color: Colors.cyan),
+                              prefixIcon: Icon(Icons.lock,
+
+                                  color: Colors.cyan
+                              ),
                             ),
                             obscureText: true,
                             onSaved: (input) => _password = input),

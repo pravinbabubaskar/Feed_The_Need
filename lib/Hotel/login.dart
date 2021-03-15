@@ -58,7 +58,7 @@ class _LoginState extends State<Login> {
             alignment: Alignment.topLeft,
             child: Text("WELCOME !",
                 style: TextStyle(
-                    fontSize: 50,
+                    fontSize: 55,
                     fontFamily: 'Poppins',
                     color: Colors.black,
                 //    fontWeight: FontWeight.bold
@@ -83,7 +83,8 @@ class _LoginState extends State<Login> {
                             fontFamily: 'Poppins',
                             fontSize: 50,
                             color: Colors.cyan,
-                            fontWeight: FontWeight.bold))
+                           // fontWeight: FontWeight.bold
+                             ))
                   ]),
             ),
           ),
@@ -106,7 +107,7 @@ class _LoginState extends State<Login> {
                               fontSize: 20),
                           // ignore: missing_return
                           validator: (input) {
-                            if (input.isEmpty) return 'Enter login_id';
+                            if (input.isEmpty) return 'Enter Login_id';
                           },
                           decoration: InputDecoration(
                             labelText: 'Login_id',
@@ -124,7 +125,7 @@ class _LoginState extends State<Login> {
                       child: TextFormField(
                           style: TextStyle(
                               fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold,
+                              //fontWeight: FontWeight.bold,
                               letterSpacing: 1,
                               fontSize: 20),
                           // ignore: missing_return
@@ -170,12 +171,12 @@ class _LoginState extends State<Login> {
                                     MaterialPageRoute(
                                         builder: (context) => Home()));
                               } else {
-                                print(
-                                    'Document id exists but password not matched..');
+                               // print(
+                                 //   'Document id exists but password not matched..');
                                 showError("Password does not match");
                               }
                             } else {
-                              print('no user id exists..');
+                             // print('no user id exists..');
                               showError("User ID does not exist.");
                             }
                           });
@@ -201,7 +202,7 @@ class _LoginState extends State<Login> {
                     fontWeight: FontWeight.bold),
                 children: <TextSpan>[
                   TextSpan(
-                    text: ' Create One',
+                    text: ' Sign-up',
                     style: TextStyle(color: Colors.cyan[300]),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {

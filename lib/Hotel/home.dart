@@ -13,9 +13,10 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         title: Text("Hotel_homepage",
             style: TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: "Cambria",
             color: Colors.black,
-            fontSize: 10,
+            fontSize: 15,
+                fontWeight: FontWeight.bold
         ),
 
       ),

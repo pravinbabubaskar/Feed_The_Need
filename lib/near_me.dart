@@ -20,7 +20,13 @@ class _NearMeState extends State<NearMe> {
         centerTitle: true,
         title: Text(loc1,style: TextStyle(fontFamily: 'Sans',color: Colors.black),textAlign: TextAlign.left,),
       ),
-      body: Center(child: Text("")
+      body: Center(child: Text("NEAR ME",
+        style: TextStyle(
+        //fontFamily: "impress",
+        color: Colors.blueGrey,
+        //fontSize: 15,
+      ),
+      ),
         //iconTheme: Icons.rice_bowl,
       ),
     );

@@ -8,7 +8,12 @@ class _ExploreState extends State<Explore> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(child: Text("")),
+      child: Center(child: Text("EXPLORE",style: TextStyle(
+        //fontFamily: "impress",
+        color: Colors.blueGrey,
+        //fontSize: 15,
+      ),),
+      ),
     );
   }
 }

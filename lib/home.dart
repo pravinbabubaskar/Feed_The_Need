@@ -66,19 +66,19 @@ class _HomePageState extends State<HomePage> {
           onTap: _onItemTaped,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined,color: Colors.grey,),
+              icon: Icon(Icons.home_outlined,color: Colors.blueGrey,),
               label: 'Near Me',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search,color: Colors.grey,),
-              label: 'Exploer',
+              icon: Icon(Icons.search,color: Colors.blueGrey,),
+              label: 'Explore',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined,color: Colors.grey,),
+              icon: Icon(Icons.shopping_cart_outlined,color: Colors.blueGrey,),
               label: 'Cart',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined,color: Colors.grey,),
+              icon: Icon(Icons.account_circle_outlined,color: Colors.blueGrey,),
               label: 'Account',
             ),
           ],
