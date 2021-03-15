@@ -31,12 +31,13 @@ class _LoginState extends State<Login> {
           Container(
             margin: EdgeInsets.only(left: 40),
             alignment: Alignment.topLeft,
-            child: Text("Welcome !",
+            child: Text("WELCOME !",
                 style: TextStyle(
                     fontSize: 50,
                     fontFamily: 'Poppins',
                     color: Colors.black,
-                    fontWeight: FontWeight.bold)),
+                //    fontWeight: FontWeight.bold
+                )),
           ),
           Container(
             margin: EdgeInsets.only(left: 40),
@@ -48,14 +49,15 @@ class _LoginState extends State<Login> {
                       fontFamily: 'Poppins',
                       fontSize: 50,
                       color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                     // fontWeight: FontWeight.bold
+                       ),
                   children: [
                     TextSpan(
                         text: ' Login',
                         style: TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 50,
-                            color: Colors.teal,
+                            color: Colors.cyan,
                             fontWeight: FontWeight.bold))
                   ]),
             ),
@@ -74,7 +76,7 @@ class _LoginState extends State<Login> {
                       child: TextFormField(
                           style: TextStyle(
                               fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold,
+                              //fontWeight: FontWeight.bold,
                               letterSpacing: 1,
                               fontSize: 20),
                           // ignore: missing_return
@@ -84,7 +86,7 @@ class _LoginState extends State<Login> {
                           decoration: InputDecoration(
                             labelText: 'Login_id',
                             prefixIcon:
-                                Icon(Icons.account_circle, color: Colors.teal),
+                                Icon(Icons.account_circle, color: Colors.cyan),
                           ),
                           onSaved: (input) => _id = input),
                     ),
@@ -107,7 +109,7 @@ class _LoginState extends State<Login> {
                           },
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            prefixIcon: Icon(Icons.lock, color: Colors.teal),
+                            prefixIcon: Icon(Icons.lock, color: Colors.cyan),
                           ),
                           obscureText: true,
                           onSaved: (input) => _password = input),
@@ -119,7 +121,7 @@ class _LoginState extends State<Login> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.only(top: 15, bottom: 15),
-                          primary: Colors.teal.shade200, // background
+                          primary: Colors.cyan.shade200, // background
                           onPrimary: Colors.white,
                           shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(20.0),
@@ -145,7 +147,7 @@ class _LoginState extends State<Login> {
           ),
           RichText(
             text: TextSpan(
-                text: 'Don\'t have an account?',
+                text: 'New account?',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
@@ -154,7 +156,7 @@ class _LoginState extends State<Login> {
                 children: <TextSpan>[
                   TextSpan(
                     text: ' Create One',
-                    style: TextStyle(color: Colors.blue[300]),
+                    style: TextStyle(color: Colors.cyan[300]),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         navigattosign();

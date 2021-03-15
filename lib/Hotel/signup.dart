@@ -33,10 +33,11 @@ class _Sign_upState extends State<Sign_up> {
               alignment: Alignment.topLeft,
               child: Text("create",
                   style: TextStyle(
-                      fontSize: 50,
+                      fontSize: 40,
                       fontFamily: 'Poppins',
                       color: Colors.black,
-                      fontWeight: FontWeight.bold)),
+                      //fontWeight: FontWeight.bold
+            )),
             ),
             Container(
               margin: EdgeInsets.only(left: 40),
@@ -46,9 +47,10 @@ class _Sign_upState extends State<Sign_up> {
                   text: 'New ID',
                   style: TextStyle(
                       fontFamily: 'Poppins',
-                      fontSize: 50,
+                      fontSize: 40,
                       color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                  //    fontWeight: FontWeight.bold
+                  ),
                 ),
               ),
             ),
@@ -75,7 +77,7 @@ class _Sign_upState extends State<Sign_up> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Name',
-                              prefixIcon: Icon(Icons.email, color: Colors.teal),
+                              prefixIcon: Icon(Icons.email, color: Colors.cyan),
                             ),
                             onSaved: (input) => _name = input),
                       ),
@@ -98,7 +100,7 @@ class _Sign_upState extends State<Sign_up> {
                             decoration: InputDecoration(
                               labelText: 'New_id',
                               prefixIcon: Icon(Icons.account_circle,
-                                  color: Colors.teal),
+                                  color: Colors.cyan),
                             ),
                             onSaved: (input) => _id = input),
                       ),
@@ -121,7 +123,7 @@ class _Sign_upState extends State<Sign_up> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              prefixIcon: Icon(Icons.lock, color: Colors.teal),
+                              prefixIcon: Icon(Icons.lock, color: Colors.cyan),
                             ),
                             obscureText: true,
                             onSaved: (input) => _password = input),
@@ -133,7 +135,7 @@ class _Sign_upState extends State<Sign_up> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.only(top: 15, bottom: 15),
-                            primary: Colors.teal.shade200, // background
+                            primary: Colors.cyan.shade200, // background
                             onPrimary: Colors.white,
                             shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(20.0),
@@ -167,8 +169,8 @@ class _Sign_upState extends State<Sign_up> {
                               fontWeight: FontWeight.bold),
                           children: <TextSpan>[
                             TextSpan(
-                              text: ' Log-In',
-                              style: TextStyle(color: Colors.blue[300]),
+                              text: ' Log-in',
+                              style: TextStyle(color: Colors.cyan[300]),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   navigateLogIn();
