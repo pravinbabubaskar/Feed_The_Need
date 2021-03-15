@@ -87,6 +87,19 @@ class _AccountState extends State<Account> {
                   color: Colors.grey
               ),
               GestureDetector(
+                //onTap: ,
+                child: Container(
+                  //margin: EdgeInsets.all(20),
+                  margin: EdgeInsets.only(top: 10,bottom: 10),
+                  child:Text('Donate For a Cause',style: TextStyle(fontFamily: 'Sans',fontSize: 15,color: Colors.black,fontWeight: FontWeight.bold)),
+
+                ),
+              ),
+              Divider(
+                  thickness: 0.5,
+                  color: Colors.grey
+              ),
+              GestureDetector(
                 onTap: signOut,
                 child: Container(
                   //margin: EdgeInsets.all(20),

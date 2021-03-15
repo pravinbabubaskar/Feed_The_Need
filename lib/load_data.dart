@@ -73,6 +73,6 @@ class _LoadState extends State<Load> {
           child: Text('Loading Data...',style: headingStyle,),
         ),
       ),
-    );;
+    );
   }
 }

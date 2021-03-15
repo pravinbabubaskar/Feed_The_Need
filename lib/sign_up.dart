@@ -144,7 +144,7 @@ class _SignUpState extends State<SignUp> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Name',
-                              prefixIcon: Icon(Icons.email,color: Colors.teal),),
+                              prefixIcon: Icon(Icons.account_circle,color: Colors.teal),),
                             onSaved: (input) => _name = input),
                       ),
                     ),
