@@ -7,7 +7,6 @@ import 'data.dart';
 import 'constants.dart';
 import 'home.dart';
 
-
 class Load extends StatefulWidget {
   @override
   _LoadState createState() => _LoadState();
@@ -28,15 +27,17 @@ class _LoadState extends State<Load> {
   }
 
   Future getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    loc=position;
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    loc = position;
     final coordinates = new Coordinates(position.latitude, position.longitude);
     var addresses =
-    await Geocoder.local.findAddressesFromCoordinates(coordinates);
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
     setState(() {
       Userdistrict = first.subAdminArea;
-      loc1=Userdistrict;
+
+      loc1 = Userdistrict;
     });
   }
 
@@ -49,7 +50,7 @@ class _LoadState extends State<Load> {
       setState(() {
         this.user = firebaseUser;
         this.isloggedin = true;
-        user1=user;
+        user1 = user;
       });
     }
   }
@@ -58,19 +59,24 @@ class _LoadState extends State<Load> {
   Future<void> hideScreen() async {
     Future.delayed(Duration(milliseconds: 3600), () {
       FlutterSplashScreen.hide();
-      Navigator.pushReplacement(context,
+      Navigator.pushReplacement(
+        context,
         MaterialPageRoute(
-            builder: (context) =>HomePage(location: Userdistrict)),
+            builder: (context) => HomePage(location: Userdistrict)),
       );
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
-          child: Text('Loading Data...',style: headingStyle,),
+          child: Text(
+            'Loading Data...',
+            style: headingStyle,
+          ),
         ),
       ),
     );
