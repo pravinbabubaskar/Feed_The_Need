@@ -49,15 +49,19 @@ class _LoginState extends State<Login> {
     }
   }
 
-
-
   showError(String errormessage) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('ERROR',style: errorStyle,),
-            content: Text(errormessage,style: messageStyle,),
+            title: Text(
+              'ERROR',
+              style: errorStyle,
+            ),
+            content: Text(
+              errormessage,
+              style: messageStyle,
+            ),
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
@@ -95,33 +99,33 @@ class _LoginState extends State<Login> {
           Container(
             margin: EdgeInsets.only(left: 40),
             alignment: Alignment.topLeft,
-            child: Text("Hello",style: TextStyle(
-              fontSize: 50,
-              fontFamily: 'Poppins',
-              color: Colors.black,
-              fontWeight: FontWeight.bold
-            )),
+            child: Text("Hello",
+                style: TextStyle(
+                    fontSize: 50,
+                    fontFamily: 'Poppins',
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold)),
           ),
           Container(
             margin: EdgeInsets.only(left: 40),
             alignment: Alignment.topLeft,
-            child: RichText(text: TextSpan(
-              text: 'User',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 50,
-                color: Colors.black,
-                fontWeight: FontWeight.bold
-              ),
-              children: [
-                TextSpan(text:'  .',style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 50,
-                    color: Colors.teal,
-                    fontWeight: FontWeight.bold
-                ))
-              ]
-            ),
+            child: RichText(
+              text: TextSpan(
+                  text: 'User',
+                  style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 50,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                  children: [
+                    TextSpan(
+                        text: '  .',
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 50,
+                            color: Colors.teal,
+                            fontWeight: FontWeight.bold))
+                  ]),
             ),
           ),
           Container(
@@ -136,15 +140,19 @@ class _LoginState extends State<Login> {
                         primaryColor: Colors.grey,
                       ),
                       child: TextFormField(
-                          style: TextStyle(fontFamily:'Raleway',fontWeight: FontWeight.bold,letterSpacing: 1,fontSize: 20),
+                          style: TextStyle(
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1,
+                              fontSize: 20),
                           // ignore: missing_return
                           validator: (input) {
-                            if (input.isEmpty)
-                              return 'Enter Email';
+                            if (input.isEmpty) return 'Enter Email';
                           },
                           decoration: InputDecoration(
                             labelText: 'Email',
-                              prefixIcon: Icon(Icons.email,color: Colors.teal),),
+                            prefixIcon: Icon(Icons.email, color: Colors.teal),
+                          ),
                           onSaved: (input) => _email = input),
                     ),
                   ),
@@ -154,7 +162,11 @@ class _LoginState extends State<Login> {
                         primaryColor: Colors.grey,
                       ),
                       child: TextFormField(
-                          style: TextStyle(fontFamily:'Raleway',fontWeight: FontWeight.bold,letterSpacing: 1,fontSize: 20),
+                          style: TextStyle(
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1,
+                              fontSize: 20),
                           // ignore: missing_return
                           validator: (input) {
                             if (input.length < 6)
@@ -162,7 +174,7 @@ class _LoginState extends State<Login> {
                           },
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            prefixIcon: Icon(Icons.lock,color: Colors.teal),
+                            prefixIcon: Icon(Icons.lock, color: Colors.teal),
                           ),
                           obscureText: true,
                           onSaved: (input) => _password = input),
@@ -176,11 +188,10 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.only(top: 15, bottom: 15),
                           primary: Colors.teal.shade200, // background
                           onPrimary: Colors.white,
-
                           shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(20.0),
                           ) // foreground
-                      ),
+                          ),
                       onPressed: login,
                       child: Text(
                         'LOGIN',
@@ -192,22 +203,25 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-      RichText(
-        text: TextSpan(
-            text: 'Don\'t have an account?',
-            style: TextStyle(
-                color: Colors.black, fontSize: 18,fontFamily: 'Raleway',fontWeight: FontWeight.bold),
-            children: <TextSpan>[
-              TextSpan(
-                text: ' Create One',
-                style: TextStyle(color: Colors.blue[300]),
-                recognizer: TapGestureRecognizer()..onTap = () {
-                  navigateToSignUp();
-                },
-              ),
-            ]
-        ),
-      )
+          RichText(
+            text: TextSpan(
+                text: 'Don\'t have an account?',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: ' Create One',
+                    style: TextStyle(color: Colors.blue[300]),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        navigateToSignUp();
+                      },
+                  ),
+                ]),
+          )
         ],
       ),
     ));

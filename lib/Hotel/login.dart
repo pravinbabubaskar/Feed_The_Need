@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedthenead/Hotel/home.dart';
 import 'package:feedthenead/Hotel/signup.dart';
 import 'package:flutter/gestures.dart';
@@ -14,6 +15,30 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _id, _password;
+
+  showError(String errormessage) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'ERROR',
+              style: errorStyle,
+            ),
+            content: Text(
+              errormessage,
+              style: messageStyle,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'))
+            ],
+          );
+        });
+  }
 
   navigattosign() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Sign_up()));
@@ -128,9 +153,30 @@ class _LoginState extends State<Login> {
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
+                          FirebaseFirestore.instance
+                              .collection('hotel')
+                              .doc(_id)
+                              .get()
+                              .then((DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists) {
+                              if (_password ==
+                                  documentSnapshot.data()['password']) {
+                                print('Document id exists on the database');
 
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Home()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Home()));
+                              } else {
+                                print(
+                                    'Document id exists but password not matched..');
+                                showError("Password does not match");
+                              }
+                            } else {
+                              print('no user id exists..');
+                              showError("User ID does not exist.");
+                            }
+                          });
                         }
                       },
                       child: Text(

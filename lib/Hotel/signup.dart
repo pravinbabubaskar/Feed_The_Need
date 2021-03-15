@@ -3,6 +3,8 @@ import 'package:feedthenead/Hotel/login.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../constants.dart';
 
 class Sign_up extends StatefulWidget {
@@ -20,6 +22,17 @@ class _Sign_upState extends State<Sign_up> {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('hotel');
+
+    Future<void> addUser() {
+      // Call the user's CollectionReference to add a new user
+      return users
+          .doc(_id)
+          .set({'name': _name, 'id': _id, 'password': _password})
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+    }
+
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -142,6 +155,7 @@ class _Sign_upState extends State<Sign_up> {
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
+                            addUser();
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
