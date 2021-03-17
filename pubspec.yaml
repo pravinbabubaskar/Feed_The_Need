@@ -36,7 +36,11 @@ dependencies:
   location: ^4.1.1
   flutter_splash_screen: ^0.1.0
   cloud_firestore: ^1.0.1
+  http: 
+  uuid: ^2.0.4
+  flutter_google_places: ^0.2.8
 
+  -
 dev_dependencies:
   flutter_test:
     sdk: flutter

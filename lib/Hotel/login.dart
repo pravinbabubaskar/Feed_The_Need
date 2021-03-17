@@ -58,10 +58,10 @@ class _LoginState extends State<Login> {
             alignment: Alignment.topLeft,
             child: Text("WELCOME !",
                 style: TextStyle(
-                    fontSize: 55,
-                    fontFamily: 'Poppins',
-                    color: Colors.black,
-                //    fontWeight: FontWeight.bold
+                  fontSize: 55,
+                  fontFamily: 'Poppins',
+                  color: Colors.black,
+                  //    fontWeight: FontWeight.bold
                 )),
           ),
           Container(
@@ -71,20 +71,20 @@ class _LoginState extends State<Login> {
               text: TextSpan(
                   text: 'Hotel',
                   style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 50,
-                      color: Colors.black,
-                     // fontWeight: FontWeight.bold
-                       ),
+                    fontFamily: 'Poppins',
+                    fontSize: 50,
+                    color: Colors.black,
+                    // fontWeight: FontWeight.bold
+                  ),
                   children: [
                     TextSpan(
                         text: ' Login',
                         style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 50,
-                            color: Colors.cyan,
-                           // fontWeight: FontWeight.bold
-                             ))
+                          fontFamily: 'Poppins',
+                          fontSize: 50,
+                          color: Colors.cyan,
+                          // fontWeight: FontWeight.bold
+                        ))
                   ]),
             ),
           ),
@@ -171,12 +171,12 @@ class _LoginState extends State<Login> {
                                     MaterialPageRoute(
                                         builder: (context) => Home()));
                               } else {
-                               // print(
-                                 //   'Document id exists but password not matched..');
+                                // print(
+                                //   'Document id exists but password not matched..');
                                 showError("Password does not match");
                               }
                             } else {
-                             // print('no user id exists..');
+                              // print('no user id exists..');
                               showError("User ID does not exist.");
                             }
                           });

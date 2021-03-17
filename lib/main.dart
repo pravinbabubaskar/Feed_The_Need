@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'load_data.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -22,22 +22,21 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     this.checkAuthentication();
   }
+
   Future checkAuthentication() async {
     FirebaseAuth.instance.authStateChanges().listen((firebaseUser) async {
       print(firebaseUser);
       if (firebaseUser != null) {
-        next=Load();
+        next = Load();
       }
     });
   }
 
   @override
-
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: next,
-
     );
   }
 }
