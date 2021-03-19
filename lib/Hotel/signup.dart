@@ -3,7 +3,9 @@ import 'package:feedthenead/Hotel/login.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:feedthenead/Hotel/address_search.dart';
+import 'package:feedthenead/Hotel/place_service.dart';
+import 'package:uuid/uuid.dart';
 
 import '../constants.dart';
 
@@ -13,7 +15,7 @@ class Sign_up extends StatefulWidget {
 }
 
 class _Sign_upState extends State<Sign_up> {
-  String _name, _id, _password, _place = "current location";
+  String _name, _id, _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   navigateLogIn() async {
     Navigator.pushReplacement(
@@ -24,6 +26,17 @@ class _Sign_upState extends State<Sign_up> {
     super.initState();
   }
 
+  final _controller = TextEditingController();
+  String _streetNumber = '';
+  String _street = '';
+  String _city = '';
+  String _zipCode = '';
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +50,6 @@ class _Sign_upState extends State<Sign_up> {
             'name': _name,
             'id': _id,
             'password': _password,
-            'location': _place
           })
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
@@ -56,11 +68,11 @@ class _Sign_upState extends State<Sign_up> {
               alignment: Alignment.topLeft,
               child: Text("create",
                   style: TextStyle(
-                      fontSize: 40,
-                      fontFamily: 'Poppins',
-                      color: Colors.black,
-                      //fontWeight: FontWeight.bold
-            )),
+                    fontSize: 40,
+                    fontFamily: 'Poppins',
+                    color: Colors.black,
+                    //fontWeight: FontWeight.bold
+                  )),
             ),
             Container(
               margin: EdgeInsets.only(left: 40),
@@ -69,10 +81,10 @@ class _Sign_upState extends State<Sign_up> {
                 text: TextSpan(
                   text: 'New ID',
                   style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 40,
-                      color: Colors.black,
-                  //    fontWeight: FontWeight.bold
+                    fontFamily: 'Poppins',
+                    fontSize: 40,
+                    color: Colors.black,
+                    //    fontWeight: FontWeight.bold
                   ),
                 ),
               ),
@@ -146,16 +158,53 @@ class _Sign_upState extends State<Sign_up> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              prefixIcon: Icon(Icons.lock,
-
-                                  color: Colors.cyan
-                              ),
+                              prefixIcon: Icon(Icons.lock, color: Colors.cyan),
                             ),
                             obscureText: true,
                             onSaved: (input) => _password = input),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          TextField(
+                            controller: _controller,
+                            readOnly: true,
+                            onTap: () async {
+                              // generate a new token here
+                              final sessionToken = Uuid().v4();
+                              final Suggestion result = await showSearch(
+                                context: context,
+                                delegate: AddressSearch(sessionToken),
+                              );
+                              // This will change the text displayed in the TextField
+                              if (result != null) {
+                                final placeDetails =
+                                    await PlaceApiProvider(sessionToken)
+                                        .getPlaceDetailFromId(result.placeId);
+                                setState(() {
+                                  _controller.text = result.description;
+                                  _streetNumber = placeDetails.streetNumber;
+                                  _street = placeDetails.street;
+                                  _city = placeDetails.city;
+                                  _zipCode = placeDetails.zipCode;
+                                });
+                              }
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Address(still not complete...)',
+                              prefixIcon: Icon(Icons.home, color: Colors.cyan),
+                            ),
+                          ),
+                          SizedBox(height: 20.0),
+                          Text('Street Number: $_streetNumber'),
+                          Text('Street: $_street'),
+                          Text('City: $_city'),
+                          Text('ZIP Code: $_zipCode'),
+                        ],
+                      ),
+                    ),
                     SizedBox(height: 30),
                     Container(
                       width: 175,
