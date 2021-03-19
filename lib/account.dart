@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'data.dart';
 import 'welcome.dart';
+import 'web_scrapping.dart';
 
 class Account extends StatefulWidget {
   @override
@@ -21,6 +22,12 @@ class _AccountState extends State<Account> {
     _auth.signOut();
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => Welcome()));
+  }
+
+  moveWeb() async{
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => WebScraperApp()));
+
   }
 
   Hotel_login() async {
@@ -60,7 +67,7 @@ class _AccountState extends State<Account> {
             ),
             Divider(color: Colors.black),
             GestureDetector(
-              //onTap: ,
+              onTap: moveWeb ,
               child: Container(
                 //margin: EdgeInsets.all(20),
                 margin: EdgeInsets.only(top: 10, bottom: 10),
