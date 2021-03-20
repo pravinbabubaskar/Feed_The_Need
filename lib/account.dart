@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'data.dart';
 import 'welcome.dart';
 import 'web_scrapping.dart';
+import 'donate.dart';
+import '';
 
 class Account extends StatefulWidget {
   @override
@@ -33,7 +35,12 @@ class _AccountState extends State<Account> {
   Hotel_login() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
   }
-
+  Donate() async{
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Donate()));
+  }
+  Past_orders() async{
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +88,7 @@ class _AccountState extends State<Account> {
             ),
             Divider(thickness: 0.5, color: Colors.grey),
             GestureDetector(
-              //onTap: ,
+              onTap:Past_orders ,
               child: Container(
                 //margin: EdgeInsets.all(20),
                 margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -109,7 +116,7 @@ class _AccountState extends State<Account> {
       ),
             Divider(thickness: 0.5, color: Colors.grey),
               GestureDetector(
-                //onTap: ,
+                onTap:Donate ,
                 child: Container(
                   //margin: EdgeInsets.all(20),
                   margin: EdgeInsets.only(top: 10,bottom: 10),

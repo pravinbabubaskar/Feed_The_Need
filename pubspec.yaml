@@ -39,6 +39,7 @@ dependencies:
   uuid: ^3.0.1
   http: ^0.13.0
   web_scraper: ^0.1.4
+  url_launcher: ^5.2.5
 
 dev_dependencies:
   flutter_test:
