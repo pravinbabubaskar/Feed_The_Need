@@ -2,6 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:web_scraper/web_scraper.dart';
 import 'constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'data.dart';
 
 class WebScraperApp extends StatefulWidget {
   @override
@@ -11,21 +14,18 @@ class WebScraperApp extends StatefulWidget {
 class _WebScraperAppState extends State<WebScraperApp> {
   // initialize WebScraper by passing base url of website
   final webScraper = WebScraper('https://ngodarpan.gov.in');
-
-  // Response of getElement is always List<Map<String, dynamic>>
-  List<String> productDescriptions;
+  final _store = FirebaseFirestore.instance;
   List<String> dummy;
   String result;
   bool flag = false,progress=false;
   String name;
-
-  void findPerson(List<String> people, String Name) {
+  void findPerson(List<String> people, String Name) async{
     print(people);
     if(people[0][0].codeUnitAt(0)>Name[0].codeUnitAt(0)){
       setState(() {
         flag = true;
         progress=false;
-        showResult("Not Found",name);
+        showResult('Not Found',name);
       });
     }
     final index = people.indexWhere((element) => element == Name);
@@ -35,12 +35,40 @@ class _WebScraperAppState extends State<WebScraperApp> {
         result = people[index];
         flag = true;
         progress=false;
-        showResult("NGO Found",name);
+        makeVerified();
+        //showResult('NGO Verified',name);
       });
 
     }
   }
 
+  void makeVerified() async{
+    bool check = false;
+    final snapshots = await _store.collection("NGO").get();
+    for (var m in snapshots.docs) {
+      var t = m.data();
+      if (t['name'] == name) {
+        check=true;
+        print(check);
+        break;
+      }
+    }
+    if(check==true) {
+      showResult("Failed", 'Already verified under \n'+ user1.email);
+    }
+    else{
+      FirebaseFirestore.instance.collection('NGO').doc(name)
+          .set({'name': name,'user':user1.email}).then((value) => print("User Added"));
+      await FirebaseAuth.instance.currentUser.updateProfile(photoURL: 'dvdfv');
+      showResult("Success", 'Verified');
+      setState(() {
+        isNGOVerified = true;
+        print(isNGOVerified);
+      });
+
+
+    }
+  }
   showResult(String message,String name) {
     showDialog(
         context: context,
@@ -78,23 +106,29 @@ class _WebScraperAppState extends State<WebScraperApp> {
     }
   }
 
+
+
   @override
   void initState() {
     super.initState();
     // Requesting to fetch before UI drawing starts
 
+
   }
 
   @override
   Widget build(BuildContext context) {
-    print(productDescriptions);
     return SafeArea(
-      child: Scaffold(
+      child:Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text("NGO Upgrade",style:headingStyle,),
         ),
-        body: Padding(
+        body: isNGOVerified ?Container(
+          child: Center(
+            child: Text("Already this user is verified",style: headingStyle,),
+          ),
+        ):Padding(
           padding: const EdgeInsets.all(20.0),
           child: progress==true?
           Center(
@@ -135,6 +169,7 @@ class _WebScraperAppState extends State<WebScraperApp> {
                 onPressed: () {
                   setState(() {
                     progress=true;
+                    flag=false;
                   });
                   fetchProducts();
                 },
