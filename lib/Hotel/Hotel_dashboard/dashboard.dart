@@ -1,3 +1,8 @@
+import 'package:feedthenead/Hotel/Hotel_dashboard/order.dart';
+import 'package:feedthenead/Hotel/Hotel_dashboard/product.dart';
+import 'package:feedthenead/Hotel/Hotel_dashboard/restaurent.dart';
+import 'package:feedthenead/Hotel/home.dart';
+import 'package:feedthenead/Hotel/login.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -49,7 +54,10 @@ class Dashboard extends StatelessWidget {
       //Now let's Add the button for the Menu
       //and let's copy that and modify it
       ListTile(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Home()));
+        },
         leading: Icon(
           Icons.home,
           color: Colors.black,
@@ -58,7 +66,10 @@ class Dashboard extends StatelessWidget {
       ),
 
       ListTile(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Restaurent()));
+        },
         leading: Icon(
           Icons.restaurant,
           color: Colors.black,
@@ -67,7 +78,10 @@ class Dashboard extends StatelessWidget {
       ),
 
       ListTile(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Order()));
+        },
         leading: Icon(
           Icons.bookmark_border,
           color: Colors.black,
@@ -76,7 +90,10 @@ class Dashboard extends StatelessWidget {
       ),
 
       ListTile(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Product()));
+        },
         leading: Icon(
           Icons.fastfood,
           color: Colors.black,
@@ -85,7 +102,11 @@ class Dashboard extends StatelessWidget {
       ),
 
       ListTile(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Login()));
+          Navigator.pop(context);
+        },
         leading: Icon(
           Icons.logout,
           color: Colors.black,

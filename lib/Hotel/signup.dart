@@ -103,7 +103,7 @@ class _Sign_upState extends State<Sign_up> {
                         child: TextFormField(
                             style: TextStyle(
                                 fontFamily: 'Raleway',
-                                //fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.bold,
                                 letterSpacing: 1,
                                 fontSize: 20),
                             // ignore: missing_return
@@ -198,10 +198,10 @@ class _Sign_upState extends State<Sign_up> {
                             ),
                           ),
                           SizedBox(height: 20.0),
-                          Text('Street Number: $_streetNumber'),
-                          Text('Street: $_street'),
-                          Text('City: $_city'),
-                          Text('ZIP Code: $_zipCode'),
+                          //Text('Street Number: $_streetNumber'),
+                          //Text('Street: $_street'),
+                          //Text('City: $_city'),
+                          //Text('ZIP Code: $_zipCode'),
                         ],
                       ),
                     ),

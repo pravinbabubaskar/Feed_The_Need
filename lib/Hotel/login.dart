@@ -58,7 +58,7 @@ class _LoginState extends State<Login> {
             alignment: Alignment.topLeft,
             child: Text("WELCOME !",
                 style: TextStyle(
-                  fontSize: 55,
+                  fontSize: 50,
                   fontFamily: 'Poppins',
                   color: Colors.black,
                   //    fontWeight: FontWeight.bold
