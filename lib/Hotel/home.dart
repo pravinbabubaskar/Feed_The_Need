@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Hotel_dashboard/dashboard.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -12,6 +14,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("Home page"),
       ),
+      drawer: Drawer(child: Dashboard()),
     );
   }
 }
