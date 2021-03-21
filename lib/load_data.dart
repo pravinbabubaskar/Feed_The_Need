@@ -24,6 +24,7 @@ class _LoadState extends State<Load> {
     getLocation();
     hideScreen();
     getUser();
+
   }
 
   Future getLocation() async {
@@ -51,6 +52,7 @@ class _LoadState extends State<Load> {
         this.user = firebaseUser;
         this.isloggedin = true;
         user1 = user;
+        isNGOVerified = user1.photoURL == null ? false:true;
       });
     }
   }

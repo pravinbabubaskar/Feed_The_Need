@@ -126,7 +126,7 @@ class _WebScraperAppState extends State<WebScraperApp> {
         ),
         body: isNGOVerified ?Container(
           child: Center(
-            child: Text("Already this user is verified",style: headingStyle,),
+            child: Text("Already this user is verified under"+user1.email,style: TextStyle(fontFamily: 'Sans',fontSize: 30),),
           ),
         ):Padding(
           padding: const EdgeInsets.all(20.0),
