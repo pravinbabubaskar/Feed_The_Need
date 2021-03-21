@@ -50,7 +50,7 @@ class _Donation extends State<donate> {
 
   @override
   void initState() {
-    
+
     super.initState();
     _launchbrowser(launchURL);
    // _launchapp(launchURL);
