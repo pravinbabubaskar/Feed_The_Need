@@ -2,6 +2,7 @@ import 'package:feedthenead/Hotel/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'data.dart';
+import 'Past_orders.dart';
 import 'welcome.dart';
 import 'web_scrapping.dart';
 import 'donate.dart';
@@ -39,7 +40,7 @@ class _AccountState extends State<Account> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Donate()));
   }
   Past_orders() async{
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Past_order()));
   }
   @override
   Widget build(BuildContext context) {
