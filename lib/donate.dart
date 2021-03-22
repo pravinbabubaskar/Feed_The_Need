@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_core/firebase_core.dart';
@@ -59,6 +60,7 @@ class _Donation extends State<donate> {
   Widget build(BuildContext context)  {
     return  Scaffold(
         appBar : AppBar(title : Text ("DONATE")
+           // backgroundColor: Colors.white,
     ),
 
 /*
