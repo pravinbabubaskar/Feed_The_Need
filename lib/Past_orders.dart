@@ -11,24 +11,48 @@ class pastorder extends State<Past_order>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[100],
       appBar: AppBar(
-        title:Text('YOUR PAST ORDERS',style: TextStyle(),),
+        backgroundColor: Colors.white,
+        title:Text('YOUR PAST ORDERS',style: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'Raleway',
+          color: Colors.black,
+        ),
+        ),
           centerTitle: true,
       ),
       body:Center(
-
-      child:Text(
+        //backgroundColor: Colors.white,
+      child:Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children:[
+          //child:Center(
+        //    child:
+        Text(
            'your orders',
           textAlign:TextAlign.center,
           style: TextStyle(
-          fontSize: 15.0,
+          fontSize: 20.0,
           fontWeight: FontWeight.bold,
           fontFamily: 'Raleway',
-          color: Colors.blueGrey
+          color: Colors.blueGrey,
+
           ),
-    ),
-           //),
+        //  textAlign: TextAlign.center
+      ),
+          Icon(
+            Icons.access_alarms,
+            //size: TextAlign.left,
+            color: Colors.blueGrey,
           ),
+       // ),
+        ],
+      ),
+           ),
+
+
 
     );
     //throw UnimplementedError();
