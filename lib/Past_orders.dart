@@ -11,7 +11,7 @@ class pastorder extends State<Past_order>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      //backgroundColor: Colors.blue[100],
       appBar: AppBar(
         backgroundColor: Colors.white,
         title:Text('YOUR PAST ORDERS',style: TextStyle(

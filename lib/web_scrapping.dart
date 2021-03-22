@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:web_scraper/web_scraper.dart';
 import 'constants.dart';
@@ -121,15 +122,16 @@ class _WebScraperAppState extends State<WebScraperApp> {
     return SafeArea(
       child:Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
-          title: Text("NGO Upgrade",style:headingStyle,),
+          title: Text("NGO +",style:TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sans',fontSize: 25,color: Colors.black),),
         ),
         body: isNGOVerified ?Container(
           child: Center(
             child: Text("Already this user is verified under"+user1.email,style: TextStyle(fontFamily: 'Sans',fontSize: 30),),
           ),
         ):Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.only(top:10,left: 10,right: 10),
           child: progress==true?
           Center(
             child:
@@ -138,7 +140,7 @@ class _WebScraperAppState extends State<WebScraperApp> {
               valueColor: AlwaysStoppedAnimation(Colors.teal[100]),
             ), // Loads Circular Loading Animation
           ):
-          Column(
+          ListView(
             children: [
               Container(
                 padding: EdgeInsets.all(20.0),
@@ -166,6 +168,7 @@ class _WebScraperAppState extends State<WebScraperApp> {
                 ),
               ),
               FlatButton(
+                padding: EdgeInsets.all(5),
                 color: Colors.teal[100],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
@@ -178,15 +181,43 @@ class _WebScraperAppState extends State<WebScraperApp> {
                   fetchProducts();
                 },
                 child: Text(
-                  ' Verify ',
+                  ' Update',
                   style: TextStyle(
-                    fontSize: 30.0,
+                    fontSize: 25.0,
                     fontFamily: 'Poppins',
                     color: Colors.black,
-                    fontWeight: FontWeight.w600,
+                   // fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
+              SizedBox(
+                height: 40,
+              ),
+              Text('Get Food 🍱 for free',style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 30,
+                fontWeight: FontWeight.bold
+              ),textAlign: TextAlign.center,),
+              SizedBox(
+                height: 25,
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 5,top: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.teal[100],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(' ➼ Order food and donate it for free\n',style: TextStyle(fontSize:20,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
+                    Text(' ➼ Extra donation for app users\n',style: TextStyle(fontSize:20,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
+                    Text(' ➼ Collaborations with hotel for large events\n',style:TextStyle(fontSize:20,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
+                    Text(' ➼ More extra benefits\n',style: TextStyle(fontSize:20,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ),
+               Image.asset('images/upgrade.png'),
             ],
           ),
         ),
