@@ -1,3 +1,4 @@
+import 'package:feedthenead/Hotel/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 import 'package:geocoder/geocoder.dart';
@@ -61,11 +62,13 @@ class _LoadState extends State<Load> {
   Future<void> hideScreen() async {
     Future.delayed(Duration(milliseconds: 3600), () {
       FlutterSplashScreen.hide();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage(location: Userdistrict)),
-      );
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  HomePage(location: Userdistrict)
+          ),(route) => false);
+
+
     });
   }
 

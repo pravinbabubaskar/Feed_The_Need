@@ -85,7 +85,7 @@ class _WebScraperAppState extends State<WebScraperApp> {
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
-                    //Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   },
                   child: Text('OK'))
             ],
@@ -133,7 +133,10 @@ class _WebScraperAppState extends State<WebScraperApp> {
           child: progress==true?
           Center(
             child:
-            CircularProgressIndicator(), // Loads Circular Loading Animation
+            CircularProgressIndicator(
+              backgroundColor: Colors.teal,
+              valueColor: AlwaysStoppedAnimation(Colors.teal[100]),
+            ), // Loads Circular Loading Animation
           ):
           Column(
             children: [
@@ -154,8 +157,9 @@ class _WebScraperAppState extends State<WebScraperApp> {
                   ),
                   style: TextStyle(
                       color: Colors.black,
-                      fontFamily: 'Sans',
-                      fontSize: 20.0),
+                      fontFamily: 'Raleway',
+                      fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
                   onChanged: (value) {
                     name = value;
                   },
@@ -174,7 +178,7 @@ class _WebScraperAppState extends State<WebScraperApp> {
                   fetchProducts();
                 },
                 child: Text(
-                  ' Get Details',
+                  ' Verify ',
                   style: TextStyle(
                     fontSize: 30.0,
                     fontFamily: 'Poppins',
