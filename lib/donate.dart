@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 //import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_core_web/firebase_core_web.dart';
-class donate extends StatefulWidget{
+class donate extends StatefulWidget {
   @override
-  _Donation createState() =>_Donation();
-
+  _Donation createState() => _Donation();
 }
 
 class _Donation extends State<donate> {
-  Future <void> _launched;
+  Future<void> _launched;
   String phone = '';
   String launchURL = 'https://www.paytm.com';
 
@@ -21,19 +21,16 @@ class _Donation extends State<donate> {
         url,
         forceSafariVC: false,
         forceWebView: false,
-        headers: <String, String>{'header_key': 'header_value'
-        },
+        headers: <String, String>{'header_key': 'header_value'},
       );
-    }
-    else {
-      throw'Could not launch';
+    } else {
+      throw 'Could not launch';
     }
   }
 
   Future<void> _launchapp(String url) async {
     if (await canLaunch(url)) {
-      final bool nativeAppLaunchSucceeded =
-      await launch(
+      final bool nativeAppLaunchSucceeded = await launch(
         url,
         forceSafariVC: false,
         universalLinksOnly: true,
@@ -43,25 +40,23 @@ class _Donation extends State<donate> {
       if (!nativeAppLaunchSucceeded) {
         await launch(url, forceSafariVC: true);
       }
-    }
-    else {
-      throw'Could not launch';
+    } else {
+      throw 'Could not launch';
     }
   }
 
   @override
   void initState() {
-
     super.initState();
     _launchbrowser(launchURL);
-   // _launchapp(launchURL);
+    // _launchapp(launchURL);
   }
 
-  Widget build(BuildContext context)  {
-    return  Scaffold(
-        appBar : AppBar(title : Text ("DONATE")
-           // backgroundColor: Colors.white,
-    ),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("DONATE")
+          // backgroundColor: Colors.white,
+          ),
 
 /*
     body:StreamBuilder(
@@ -78,7 +73,7 @@ class _Donation extends State<donate> {
       },
     ),
 */
-    /*Container(
+      /*Container(
     child:Column(
     children:<Widget>[
     ElevatedButton (
@@ -97,6 +92,4 @@ class _Donation extends State<donate> {
  */
     );
   }
-
 }
-
