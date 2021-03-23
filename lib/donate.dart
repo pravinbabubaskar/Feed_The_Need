@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
+//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_core_web/firebase_core_web.dart';
 class donate extends StatefulWidget {
@@ -15,7 +15,7 @@ class _Donation extends State<donate> {
   String phone = '';
   String launchURL = 'https://www.paytm.com';
 
-  Future<void> _launchbrowser(String url) async {
+  /*Future<void> _launchbrowser(String url) async {
     if (await canLaunch(url)) {
       await launch(
         url,
@@ -26,7 +26,7 @@ class _Donation extends State<donate> {
     } else {
       throw 'Could not launch';
     }
-  }
+  }*/
 
   Future<void> _launchapp(String url) async {
     if (await canLaunch(url)) {
@@ -48,15 +48,44 @@ class _Donation extends State<donate> {
   @override
   void initState() {
     super.initState();
-    _launchbrowser(launchURL);
-    // _launchapp(launchURL);
+     _launchapp(launchURL);
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("DONATE")
-          // backgroundColor: Colors.white,
+      appBar: AppBar(title: Text("DONATE"),
+           backgroundColor: Colors.blueGrey,
+        centerTitle: true,
           ),
+      body:Center(
+
+    //backgroundColor: Colors.blueGrey[100]
+
+    child:Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+      children:[
+                Text(
+          'DONATE',
+          textAlign:TextAlign.center,
+          style: TextStyle(
+            fontSize: 17.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Sans',
+            color: Colors.blueGrey,
+
+          ),
+          //  textAlign: TextAlign.center
+        ),
+        Icon(
+          Icons.attach_money,
+          //size: TextAlign.left,
+          color: Colors.blueGrey,
+        ),
+        // ),
+      ],
+    ),
+    ),
+
 
 /*
     body:StreamBuilder(

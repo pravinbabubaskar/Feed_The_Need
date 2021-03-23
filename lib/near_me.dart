@@ -40,6 +40,7 @@ class _NearMeState extends State<NearMe> {
         //fontSize: 15,
       ),
       ),
+
         //iconTheme: Icons.rice_bowl,
       ),
     );
