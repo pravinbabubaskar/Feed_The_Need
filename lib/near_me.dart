@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'data.dart';
-
+import 'hotel.dart';
 
 class NearMe extends StatefulWidget {
   @override
@@ -28,20 +30,116 @@ class _NearMeState extends State<NearMe> {
           children: [
             Text(loc1,style: TextStyle(fontFamily: 'Sans',color: Colors.black),textAlign: TextAlign.left,),
             Text("NGO+",style: TextStyle(fontFamily: 'Sans',color: isNGOVerified==true?Colors.teal[100]:Colors.white,fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
-
           ],
         ),
 
       ),
-      body: Center(child: Text("NEAR ME",
-        style: TextStyle(
-        //fontFamily: "impress",
-        color: Colors.blueGrey,
-        //fontSize: 15,
-      ),
-      ),
-        //iconTheme: Icons.rice_bowl,
-      ),
+      body:SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(top: 10,bottom: 10,left: 5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: 20,),
+              Text("ALL RESTAURANTS", style: TextStyle(
+                  fontFamily: 'Sans',
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500
+              ),),
+              SizedBox(height: 20,),
+              Expanded(
+                child: ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    HotelPage()),
+                          );
+                        },
+                        child: Container(
+                          child:Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: placesWidget("hotel1", "Sushi Den"),
+                          ),
+                        ),
+                      );
+                    },
+
+                ),
+              ),
+            ]
+          ),
+        ),
+      )
     );
+  }
+  Row placesWidget(String img, String name)
+  {
+    return Row(
+      children: [
+        Container(
+          height: 100,
+          width: 100,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("images/food.png")
+              )
+          ),
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Annapoorna", style: TextStyle(
+                 fontFamily: 'Sans',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600
+              ),),
+              Text("India, Biryani, Ice Cream", style: TextStyle(
+                  fontSize: 12,
+                fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w100,
+                color: Colors.grey
+              ),),
+              SizedBox(
+                height: 5,
+              ),
+              SmoothStarRating(
+                  allowHalfRating: false,
+                  starCount: 5,
+                  rating: 2,
+                  isReadOnly:true,
+                  color: Colors.teal,
+                  borderColor: Colors.teal[100],
+                  spacing:0.0
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Divider(color: Colors.grey),
+              Row(
+                children: [
+                  Text('30 min',style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: 'Sans',
+                      fontWeight: FontWeight.w100,
+                      color: Colors.grey
+                  ),)
+                ],
+              )
+
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+  void openHotelPage()
+  {
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>HotelPage()));
   }
 }

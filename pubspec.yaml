@@ -40,6 +40,7 @@ dependencies:
   http: ^0.13.0
   web_scraper: ^0.1.4
   url_launcher: ^5.2.5
+  smooth_star_rating: 1.1.1
 
 dev_dependencies:
   flutter_test:
