@@ -1,4 +1,6 @@
+import 'package:feedthenead/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:feedthenead/helpers/style.dart';
 
 class Product extends StatefulWidget {
   @override
