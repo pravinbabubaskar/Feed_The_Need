@@ -1,3 +1,6 @@
+import 'package:feedthenead/helpers/style.dart';
+import 'package:feedthenead/widgets/custom_file_button.dart';
+import 'package:feedthenead/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class Add_product extends StatefulWidget {
@@ -13,57 +16,129 @@ class _Add_productState extends State<Add_product> {
     return Scaffold(
       key: _key,
       appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(color: black),
           centerTitle: true,
           elevation: 0.0,
-          backgroundColor: Colors.white,
+          backgroundColor: white,
           title: Text(
             "Add Product",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: black),
           )),
       body: ListView(
         children: <Widget>[
           SizedBox(
-            height: 40,
+            height: 10,
           ),
-          GestureDetector(
-            onTap: null,
+          Container(
+            height: 130,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.black)),
-                  width: 140,
-                  height: 120,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: <Widget>[
-                        Icon(Icons.camera_outlined,
-                            size: 70, color: Colors.grey),
-                        Text("pick an image"),
-                      ],
-                    ),
+                  child: CustomFileUploadButton(
+                    icon: Icons.image,
+                    text: "Add image",
+                    onTap: () async {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext bc) {
+                            return Container(
+                              child: new Wrap(
+                                children: <Widget>[
+                                  new ListTile(
+                                      leading: new Icon(Icons.image),
+                                      title: new Text('From gallery'),
+                                      onTap: () async {
+                                        Navigator.pop(context);
+                                      }),
+                                  new ListTile(
+                                      leading: new Icon(Icons.camera_alt),
+                                      title: new Text('Take a photo'),
+                                      onTap: () async {
+                                        Navigator.pop(context);
+                                      }),
+                                ],
+                              ),
+                            );
+                          });
+                    },
                   ),
-                ),
+                )
               ],
             ),
           ),
-          SizedBox(
-            height: 40,
+          Visibility(
+            child: FlatButton(
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext bc) {
+                      return Container(
+                        child: new Wrap(
+                          children: <Widget>[
+                            new ListTile(
+                                leading: new Icon(Icons.image),
+                                title: new Text('From gallery'),
+                                onTap: () async {
+                                  Navigator.pop(context);
+                                }),
+                            new ListTile(
+                                leading: new Icon(Icons.camera_alt),
+                                title: new Text('Take a photo'),
+                                onTap: () async {
+                                  Navigator.pop(context);
+                                }),
+                          ],
+                        ),
+                      );
+                    });
+              },
+              child: CustomText(
+                text: "Change Image",
+                color: primary,
+              ),
+            ),
           ),
+          Divider(),
+          Padding(
+              padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  CustomText(text: "featured Magazine"),
+                ],
+              )),
+          Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              CustomText(
+                text: "Category:",
+                color: grey,
+                weight: FontWeight.w300,
+              ),
+              DropdownButton<String>(
+                style: TextStyle(color: primary, fontWeight: FontWeight.w300),
+                icon: Icon(
+                  Icons.filter_list,
+                  color: primary,
+                ),
+                elevation: 0,
+                onChanged: (value) {},
+              )
+            ],
+          ),
+          Divider(),
           Padding(
             padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black, width: 0.2),
+                  color: white,
+                  border: Border.all(color: black, width: 0.2),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: grey.withOpacity(0.5),
                         offset: Offset(2, 7),
                         blurRadius: 7)
                   ]),
@@ -74,7 +149,7 @@ class _Add_productState extends State<Add_product> {
                       border: InputBorder.none,
                       hintText: "Product name",
                       hintStyle: TextStyle(
-                          color: Colors.grey, fontFamily: "Sen", fontSize: 18)),
+                          color: grey, fontFamily: "Sen", fontSize: 18)),
                 ),
               ),
             ),
@@ -83,12 +158,12 @@ class _Add_productState extends State<Add_product> {
             padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black, width: 0.2),
+                  color: white,
+                  border: Border.all(color: black, width: 0.2),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: grey.withOpacity(0.5),
                         offset: Offset(2, 7),
                         blurRadius: 7)
                   ]),
@@ -99,7 +174,7 @@ class _Add_productState extends State<Add_product> {
                       border: InputBorder.none,
                       hintText: "Product description",
                       hintStyle: TextStyle(
-                          color: Colors.grey, fontFamily: "Sen", fontSize: 18)),
+                          color: grey, fontFamily: "Sen", fontSize: 18)),
                 ),
               ),
             ),
@@ -108,47 +183,49 @@ class _Add_productState extends State<Add_product> {
             padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black, width: 0.2),
+                  color: white,
+                  border: Border.all(color: black, width: 0.2),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: grey.withOpacity(0.5),
                         offset: Offset(2, 7),
                         blurRadius: 7)
                   ]),
               child: Padding(
                 padding: const EdgeInsets.only(left: 14),
                 child: TextField(
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "Price",
                       hintStyle: TextStyle(
-                          color: Colors.grey, fontFamily: "Sen", fontSize: 18)),
+                          color: grey, fontFamily: "Sen", fontSize: 18)),
                 ),
               ),
             ),
           ),
-          SizedBox(
-            height: 40,
-          ),
           Padding(
-              padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-              child: Container(
+            padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+            child: Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 0.2),
+                    color: primary,
+                    border: Border.all(color: black, width: 0.2),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
+                          color: grey.withOpacity(0.3),
                           offset: Offset(2, 7),
                           blurRadius: 4)
                     ]),
                 child: FlatButton(
                   onPressed: () async {},
-                  child: Text("post"),
-                ),
-              )),
+                  child: CustomText(
+                    text: "Post",
+                    color: white,
+                  ),
+                )),
+          ),
         ],
       ),
     );
