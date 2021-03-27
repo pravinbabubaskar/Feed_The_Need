@@ -43,7 +43,7 @@ class _NearMeState extends State<NearMe> {
               SizedBox(height: 20,),
               Text("ALL RESTAURANTS", style: TextStyle(
                   fontFamily: 'Sans',
-                  fontSize: 15,
+                  fontSize: 17.5,
                   fontWeight: FontWeight.w500
               ),),
               SizedBox(height: 20,),
@@ -109,13 +109,14 @@ class _NearMeState extends State<NearMe> {
                 height: 5,
               ),
               SmoothStarRating(
+                size: 20,
                   allowHalfRating: false,
                   starCount: 5,
                   rating: 2,
                   isReadOnly:true,
                   color: Colors.teal,
                   borderColor: Colors.teal[100],
-                  spacing:0.0
+                  spacing:-0.5
               ),
               SizedBox(
                 height: 5,

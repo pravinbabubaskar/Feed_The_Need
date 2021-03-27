@@ -58,7 +58,7 @@ class _ExploreState extends State<Explore> {
     return Scaffold(
         body: ListView(children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.only(top:40.0,left: 20,right: 20),
             child: TextField(
               onChanged: (val) {
                 initiateSearch(val);

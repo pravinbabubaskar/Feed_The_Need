@@ -62,23 +62,24 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         bottomNavigationBar:
         BottomNavigationBar(
-          fixedColor: Colors.grey,
+          unselectedItemColor: Colors.grey,
+          fixedColor: Colors.teal,
           onTap: _onItemTaped,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined,color: Colors.blueGrey,),
+              icon: Icon(Icons.home_outlined),
               label: 'Near Me',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search,color: Colors.blueGrey,),
+              icon: Icon(Icons.search),
               label: 'Explore',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined,color: Colors.blueGrey,),
+              icon: Icon(Icons.shopping_cart_outlined),
               label: 'Cart',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined,color: Colors.blueGrey,),
+              icon: Icon(Icons.account_circle_outlined),
               label: 'Account',
             ),
           ],

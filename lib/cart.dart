@@ -7,15 +7,29 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(child: Text("CART",
-        style: TextStyle(
-        //fontFamily: "impress",
-        color: Colors.blueGrey,
-        //fontSize: 15,
-      ),
-      ),
-    ),
+    return Column(
+
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset('images/cart.png'),
+        Text('No More Waste',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: "Poppins",
+            letterSpacing: -1,
+            color: Colors.black,
+            fontSize: 20,
+          ),),
+        Text("Your cart is empty. Add something from the menu",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+          fontFamily: "Sans",
+          letterSpacing: -1,
+          color: Colors.grey,
+          fontSize: 20,
+        ),
+        ),
+      ],
     );
   }
 }
