@@ -1,13 +1,9 @@
 //import 'dart:html';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_core_web/firebase_core_web.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_core/firebase_core.dart';
 final CollectionReference userref=FirebaseFirestore.instance.collection('NGO');
 class donate extends StatefulWidget {
   @override
@@ -15,12 +11,11 @@ class donate extends StatefulWidget {
 }
 
 class _Donation extends State<donate> {
-  Future<void> _launched;
-  String phone = '';
+ /* Future<void> _launched;
   String launchURL = 'https://www.paytm.com';
+*/
 
-
-  Future<void> _launchapp(String url) async {
+  /*Future<void> _launchapp(String url) async {
     if (await canLaunch(url)) {
       final bool nativeAppLaunchSucceeded = await launch(
         url,
@@ -36,15 +31,15 @@ class _Donation extends State<donate> {
       throw 'Could not launch';
     }
   }
-
+*/
   //@override
-  /**void initState() {
+/*  void initState() {
 
     super.initState();
-     //_launchapp(launchURL);
-    getuser();
-  }
-  */
+     _launchapp(launchURL);
+
+  }*/
+
 
 
   Widget build(BuildContext context) {
