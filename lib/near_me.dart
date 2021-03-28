@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:dio/dio.dart';
 import 'data.dart';
 import 'hotel.dart';
 
@@ -12,9 +13,13 @@ class NearMe extends StatefulWidget {
 class _NearMeState extends State<NearMe> {
 
   @override
-  void initState() {
+  void initState() async{
     // TODO: implement initState
     super.initState();
+    Dio dio = new Dio();
+    String key ="AIzaSyAFEBlphkh0ce4Euso1X2tW0QVyhAznK8o";
+    Response response=await dio.get("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=40.6655101,-73.89188969999998&destinations=40.6905615%2C,-73.9976592&key=$key");
+    print(response.data);
   }
 
   @override
