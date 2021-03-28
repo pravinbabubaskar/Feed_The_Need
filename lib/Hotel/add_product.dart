@@ -69,35 +69,36 @@ class _Add_productState extends State<Add_product> {
           ),
           Visibility(
             child: FlatButton(
-              onPressed: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext bc) {
-                      return Container(
-                        child: new Wrap(
-                          children: <Widget>[
-                            new ListTile(
-                                leading: new Icon(Icons.image),
-                                title: new Text('From gallery'),
-                                onTap: () async {
-                                  Navigator.pop(context);
-                                }),
-                            new ListTile(
-                                leading: new Icon(Icons.camera_alt),
-                                title: new Text('Take a photo'),
-                                onTap: () async {
-                                  Navigator.pop(context);
-                                }),
-                          ],
-                        ),
-                      );
-                    });
-              },
-              child: CustomText(
-                text: "Change Image",
-                color: primary,
-              ),
-            ),
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext bc) {
+                        return Container(
+                          child: new Wrap(
+                            children: <Widget>[
+                              new ListTile(
+                                  leading: new Icon(Icons.image),
+                                  title: new Text('From gallery'),
+                                  onTap: () async {
+                                    Navigator.pop(context);
+                                  }),
+                              new ListTile(
+                                  leading: new Icon(Icons.camera_alt),
+                                  title: new Text('Take a photo'),
+                                  onTap: () async {
+                                    Navigator.pop(context);
+                                  }),
+                            ],
+                          ),
+                        );
+                      });
+                },
+                child: CustomText(
+                  text: "Change Image",
+                  color: grey,
+                  fontfamily: "poppin",
+                  size: 16.0,
+                )),
           ),
           Divider(),
           Padding(
@@ -105,7 +106,12 @@ class _Add_productState extends State<Add_product> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  CustomText(text: "featured Magazine"),
+                  CustomText(
+                    text: "featured Magazine",
+                    color: black,
+                    fontfamily: "sans",
+                    size: 16.0,
+                  )
                 ],
               )),
           Divider(),
@@ -149,7 +155,7 @@ class _Add_productState extends State<Add_product> {
                       border: InputBorder.none,
                       hintText: "Product name",
                       hintStyle: TextStyle(
-                          color: grey, fontFamily: "Sen", fontSize: 18)),
+                          color: black, fontFamily: "raleway", fontSize: 18)),
                 ),
               ),
             ),
@@ -174,7 +180,7 @@ class _Add_productState extends State<Add_product> {
                       border: InputBorder.none,
                       hintText: "Product description",
                       hintStyle: TextStyle(
-                          color: grey, fontFamily: "Sen", fontSize: 18)),
+                          color: black, fontFamily: "raleway", fontSize: 18)),
                 ),
               ),
             ),
@@ -200,7 +206,7 @@ class _Add_productState extends State<Add_product> {
                       border: InputBorder.none,
                       hintText: "Price",
                       hintStyle: TextStyle(
-                          color: grey, fontFamily: "Sen", fontSize: 18)),
+                          color: black, fontFamily: "raleway", fontSize: 18)),
                 ),
               ),
             ),
@@ -223,6 +229,8 @@ class _Add_productState extends State<Add_product> {
                   child: CustomText(
                     text: "Post",
                     color: white,
+                    fontfamily: "poppin",
+                    size: 20.0,
                   ),
                 )),
           ),

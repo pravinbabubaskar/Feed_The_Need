@@ -25,6 +25,8 @@ class _HomeState extends State<Home> {
         title: CustomText(
           text: "Home_page",
           color: white,
+          fontfamily: "poppin",
+          size: 20,
         ),
         actions: <Widget>[],
       ),

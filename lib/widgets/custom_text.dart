@@ -6,15 +6,28 @@ class CustomText extends StatelessWidget {
   final double size;
   final Color color;
   final FontWeight weight;
-  
+  final fontfamily;
+
   // name constructor that has a positional parameters with the text required
   // and the other parameters optional
-  CustomText({@required this.text, this.size,this.color,this.weight});
+  CustomText(
+      {@required this.text,
+      this.size,
+      this.color,
+      this.weight,
+      this.fontfamily});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,style: TextStyle(fontSize: size ?? 16, color: color ?? black, fontWeight: weight ?? FontWeight.normal),
+      text,
+      style: TextStyle(
+        fontSize: size ?? 16,
+        color: color ?? black,
+        fontWeight: weight ?? FontWeight.normal,
+        fontFamily: fontfamily ?? "sans",
+        letterSpacing: -1,
+      ),
     );
   }
 }
