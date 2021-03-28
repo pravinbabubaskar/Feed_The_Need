@@ -1,3 +1,5 @@
+import 'package:feedthenead/helpers/style.dart';
+import 'package:feedthenead/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class Restaurent extends StatefulWidget {
@@ -10,7 +12,15 @@ class _RestaurentState extends State<Restaurent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Restaurent_page"),
+        iconTheme: IconThemeData(color: black),
+        backgroundColor: white,
+        elevation: 0.0,
+        title: CustomText(text: "Restaurent"),
+        leading: IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
     );
   }

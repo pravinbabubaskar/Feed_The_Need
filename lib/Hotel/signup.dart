@@ -112,7 +112,7 @@ class _Sign_upState extends State<Sign_up> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Name',
-                              prefixIcon: Icon(Icons.email, color: Colors.cyan),
+                              prefixIcon: Icon(Icons.email, color: Colors.teal),
                             ),
                             onSaved: (input) => _name = input),
                       ),
@@ -135,7 +135,7 @@ class _Sign_upState extends State<Sign_up> {
                             decoration: InputDecoration(
                               labelText: 'New_id',
                               prefixIcon: Icon(Icons.account_circle,
-                                  color: Colors.cyan),
+                                  color: Colors.teal),
                             ),
                             onSaved: (input) => _id = input),
                       ),
@@ -158,7 +158,7 @@ class _Sign_upState extends State<Sign_up> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              prefixIcon: Icon(Icons.lock, color: Colors.cyan),
+                              prefixIcon: Icon(Icons.lock, color: Colors.teal),
                             ),
                             obscureText: true,
                             onSaved: (input) => _password = input),
@@ -169,6 +169,11 @@ class _Sign_upState extends State<Sign_up> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           TextField(
+                            // style: TextStyle(
+                            // fontFamily: 'Raleway',
+                            // fontWeight: FontWeight.bold,
+                            // letterSpacing: 1,
+                            //  fontSize: 20),
                             controller: _controller,
                             readOnly: true,
                             onTap: () async {
@@ -194,7 +199,7 @@ class _Sign_upState extends State<Sign_up> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Address(still not complete...)',
-                              prefixIcon: Icon(Icons.home, color: Colors.cyan),
+                              prefixIcon: Icon(Icons.home, color: Colors.teal),
                             ),
                           ),
                           SizedBox(height: 20.0),
@@ -211,7 +216,7 @@ class _Sign_upState extends State<Sign_up> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.only(top: 15, bottom: 15),
-                            primary: Colors.cyan.shade200, // background
+                            primary: Colors.teal.shade200, // background
                             onPrimary: Colors.white,
                             shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(20.0),
@@ -247,7 +252,7 @@ class _Sign_upState extends State<Sign_up> {
                           children: <TextSpan>[
                             TextSpan(
                               text: ' Log-in',
-                              style: TextStyle(color: Colors.cyan[300]),
+                              style: TextStyle(color: Colors.teal[300]),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   navigateLogIn();

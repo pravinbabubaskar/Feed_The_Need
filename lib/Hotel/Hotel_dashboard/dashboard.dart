@@ -3,6 +3,8 @@ import 'package:feedthenead/Hotel/Hotel_dashboard/product.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/restaurent.dart';
 import 'package:feedthenead/Hotel/home.dart';
 import 'package:feedthenead/Hotel/login.dart';
+import 'package:feedthenead/helpers/style.dart';
+import 'package:feedthenead/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -31,6 +33,7 @@ class Dashboard extends StatelessWidget {
                 "Restaurent",
                 style: TextStyle(
                   fontSize: 22.0,
+                  fontFamily: "poppins",
                   fontWeight: FontWeight.w800,
                 ),
               ),
@@ -41,7 +44,8 @@ class Dashboard extends StatelessWidget {
                 "Feed the Need",
                 style: TextStyle(
                   fontSize: 16.0,
-                  fontWeight: FontWeight.w400,
+                  fontFamily: "poppins",
+                  fontWeight: FontWeight.w100,
                 ),
               ),
             ],
@@ -54,65 +58,85 @@ class Dashboard extends StatelessWidget {
       //Now let's Add the button for the Menu
       //and let's copy that and modify it
       ListTile(
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Home()));
-        },
-        leading: Icon(
-          Icons.home,
-          color: Colors.black,
-        ),
-        title: Text("Home_page"),
-      ),
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Home()));
+          },
+          leading: Icon(
+            Icons.home,
+            color: Colors.black,
+          ),
+          title: CustomText(
+            text: "Home page",
+            color: black,
+            size: 16,
+            weight: FontWeight.w300,
+          )),
 
       ListTile(
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Restaurent()));
-        },
-        leading: Icon(
-          Icons.restaurant,
-          color: Colors.black,
-        ),
-        title: Text("My Restaurent"),
-      ),
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Restaurent()));
+          },
+          leading: Icon(
+            Icons.restaurant,
+            color: Colors.black,
+          ),
+          title: CustomText(
+            text: "My Restaurent",
+            color: black,
+            size: 16,
+            weight: FontWeight.w300,
+          )),
 
       ListTile(
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Order()));
-        },
-        leading: Icon(
-          Icons.bookmark_border,
-          color: Colors.black,
-        ),
-        title: Text("Orders"),
-      ),
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Order()));
+          },
+          leading: Icon(
+            Icons.bookmark_border,
+            color: Colors.black,
+          ),
+          title: CustomText(
+            text: "Orders",
+            color: black,
+            size: 16,
+            weight: FontWeight.w300,
+          )),
 
       ListTile(
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Product()));
-        },
-        leading: Icon(
-          Icons.fastfood,
-          color: Colors.black,
-        ),
-        title: Text("Products"),
-      ),
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Product()));
+          },
+          leading: Icon(
+            Icons.fastfood,
+            color: Colors.black,
+          ),
+          title: CustomText(
+            text: "Products",
+            color: black,
+            size: 16,
+            weight: FontWeight.w300,
+          )),
 
       ListTile(
-        onTap: () {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Login()));
-          Navigator.pop(context);
-        },
-        leading: Icon(
-          Icons.logout,
-          color: Colors.black,
-        ),
-        title: Text("Log Out"),
-      ),
+          onTap: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => Login()));
+            Navigator.pop(context);
+          },
+          leading: Icon(
+            Icons.logout,
+            color: Colors.black,
+          ),
+          title: CustomText(
+            text: "Log Out",
+            color: black,
+            size: 16,
+            weight: FontWeight.w300,
+          )),
     ]);
   }
 }

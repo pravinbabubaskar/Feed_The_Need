@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+//import 'dart:html';
 import 'package:url_launcher/url_launcher.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:firebase_core/firebase_core.dart';
-//import 'package:firebase_core_web/firebase_core_web.dart';
+final CollectionReference userref=FirebaseFirestore.instance.collection('NGO');
 class donate extends StatefulWidget {
   @override
   _Donation createState() => _Donation();
@@ -12,21 +12,8 @@ class donate extends StatefulWidget {
 
 class _Donation extends State<donate> {
   Future<void> _launched;
-  String phone = '';
   String launchURL = 'https://www.paytm.com';
 
-  /*Future<void> _launchbrowser(String url) async {
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: false,
-        forceWebView: false,
-        headers: <String, String>{'header_key': 'header_value'},
-      );
-    } else {
-      throw 'Could not launch';
-    }
-  }*/
 
   Future<void> _launchapp(String url) async {
     if (await canLaunch(url)) {
@@ -45,11 +32,15 @@ class _Donation extends State<donate> {
     }
   }
 
-  @override
-  void initState() {
+  //@override
+/*  void initState() {
+
     super.initState();
      _launchapp(launchURL);
-  }
+
+  }*/
+
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,68 +48,47 @@ class _Donation extends State<donate> {
            backgroundColor: Colors.blueGrey,
         centerTitle: true,
           ),
-      body:Center(
+      body:StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('NGO').snapshots(),
 
-    //backgroundColor: Colors.blueGrey[100]
+        builder: (BuildContext context,AsyncSnapshot<QuerySnapshot>snapshot) {
+          mainAxisAlignment: MainAxisAlignment.center;
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return ListView(
+            children: snapshot.data.docs.map((document) {
+              return Center(
+                  child: Container(
+                  width:MediaQuery.of(context).size.width/1.2,
+              height:MediaQuery.of(context).size.width/1.2,
+              child: Text("NAME- "+document['name']
+                  +"\nMAIL ID- "+document['user'],
+                  textAlign:TextAlign.center,
+              style: TextStyle(
+              fontSize: 17.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Raleway',
+              color: Colors.blueGrey,
 
-    child:Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-      children:[
-                Text(
-          'DONATE',
-          textAlign:TextAlign.center,
-          style: TextStyle(
-            fontSize: 17.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Sans',
-            color: Colors.blueGrey,
+              )
+              ),
 
-          ),
-          //  textAlign: TextAlign.center
-        ),
-        Icon(
-          Icons.attach_money,
-          //size: TextAlign.left,
-          color: Colors.blueGrey,
-        ),
-        // ),
-      ],
-    ),
-    ),
+                  ),
+              );
+            }
+            ).toList()
+
+          );
+
+        }
+    )
+    //final
 
 
-/*
-    body:StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('NGO').snapshots(),
-      builder: (context,snapshot){
-        if(!snapshot.hasData)
-          return Text('LOADING DATA');
-        return Column(
-          children:<Widget>[
-            Text(snapshot.data.documents[0]['name']),
-            Text(snapshot.data.documents[0]['user']),
-          ],
-        );
-      },
-    ),
-*/
-      /*Container(
-    child:Column(
-    children:<Widget>[
-    ElevatedButton (
-    child: const Text("PRESS"),
-    onPressed:() {
-    //_launchbrowser(launchURL);
-    },
-    ),
-    ],
-    ) ,
-    ),
-   /* *///throw UnimplementedError();
 
-    /*
-      */
- */
     );
   }
 }

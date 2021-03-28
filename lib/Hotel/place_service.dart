@@ -40,7 +40,7 @@ class PlaceApiProvider {
 
   final sessionToken;
 
-  final apiKey = 'AIzaSyDzoIBCT8jnLlHqTO7ME4QthF9zpDVvkdI';
+  final apiKey = 'AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk';
 
   Future<List<Suggestion>> fetchSuggestions(String input, String lang) async {
     final request =
@@ -52,11 +52,14 @@ class PlaceApiProvider {
       final result = json.decode(response.body);
       if (result['status'] == 'OK') {
         // compose suggestions in a list
+        print("okkk");
         return result['predictions']
             .map<Suggestion>((p) => Suggestion(p['place_id'], p['description']))
             .toList();
       }
       if (result['status'] == 'ZERO_RESULTS') {
+        print("zeroooo");
+
         return [];
       }
       throw Exception(result['error_message']);
