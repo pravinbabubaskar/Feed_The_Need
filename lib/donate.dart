@@ -1,5 +1,5 @@
 //import 'dart:html';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
@@ -11,11 +11,11 @@ class donate extends StatefulWidget {
 }
 
 class _Donation extends State<donate> {
- /* Future<void> _launched;
+  Future<void> _launched;
   String launchURL = 'https://www.paytm.com';
-*/
 
-  /*Future<void> _launchapp(String url) async {
+
+  Future<void> _launchapp(String url) async {
     if (await canLaunch(url)) {
       final bool nativeAppLaunchSucceeded = await launch(
         url,
@@ -31,7 +31,7 @@ class _Donation extends State<donate> {
       throw 'Could not launch';
     }
   }
-*/
+
   //@override
 /*  void initState() {
 
@@ -49,8 +49,10 @@ class _Donation extends State<donate> {
         centerTitle: true,
           ),
       body:StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('NGO').snapshots(),
+          stream: FirebaseFirestore.instance.collection('NGO').snapshots(),
+
         builder: (BuildContext context,AsyncSnapshot<QuerySnapshot>snapshot) {
+          mainAxisAlignment: MainAxisAlignment.center;
           if (!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(),
@@ -62,8 +64,19 @@ class _Donation extends State<donate> {
                   child: Container(
                   width:MediaQuery.of(context).size.width/1.2,
               height:MediaQuery.of(context).size.width/1.2,
-              child: Text("TITLE"+document['user'])
+              child: Text("NAME- "+document['name']
+                  +"\nMAIL ID- "+document['user'],
+                  textAlign:TextAlign.center,
+              style: TextStyle(
+              fontSize: 17.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Raleway',
+              color: Colors.blueGrey,
+
+              )
               ),
+
+                  ),
               );
             }
             ).toList()
