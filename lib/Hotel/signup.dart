@@ -1,4 +1,5 @@
 import 'package:feedthenead/Hotel/home.dart';
+import 'package:feedthenead/Hotel/loc_autosearch.dart';
 import 'package:feedthenead/Hotel/login.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -177,8 +178,12 @@ class _Sign_upState extends State<Sign_up> {
                             controller: _controller,
                             readOnly: true,
                             onTap: () async {
+                              /* Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AutoSearch()));
                               // generate a new token here
-                              final sessionToken = Uuid().v4();
+                                  final sessionToken = Uuid().v4();
                               final Suggestion result = await showSearch(
                                 context: context,
                                 delegate: AddressSearch(sessionToken),
@@ -195,7 +200,7 @@ class _Sign_upState extends State<Sign_up> {
                                   _city = placeDetails.city;
                                   _zipCode = placeDetails.zipCode;
                                 });
-                              }
+                              }*/
                             },
                             decoration: InputDecoration(
                               labelText: 'Address(still not complete...)',
