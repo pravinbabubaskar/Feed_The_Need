@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:web_scraper/web_scraper.dart';
 import 'constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -126,10 +127,43 @@ class _WebScraperAppState extends State<WebScraperApp> {
           backgroundColor: Colors.white,
           title: Text("NGO +",style:TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sans',fontSize: 25,color: Colors.black),),
         ),
-        body: isNGOVerified ?Container(
-          child: Center(
-            child: Text("Already this user is verified under"+user1.email,style: TextStyle(fontFamily: 'Sans',fontSize: 30),),
-          ),
+        body: isNGOVerified ?Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              child: Text("Already this user is verified under "+user1.email,style: TextStyle(fontFamily: 'Raleway',fontSize: 25,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text('Get Food 🍱 for free',style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 30,
+                fontWeight: FontWeight.bold
+            ),textAlign: TextAlign.center,),
+            SizedBox(
+              height: 25,
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 5,top: 5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.teal[100],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(' ➼ Order food and donate it for free\n',style: TextStyle(fontSize:20,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
+                  Text(' ➼ Extra donation for app users\n',style: TextStyle(fontSize:20,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
+                  Text(' ➼ Collaborations with hotel for large events\n',style:TextStyle(fontSize:20,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
+                  Text(' ➼ More extra benefits\n',style: TextStyle(fontSize:20,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
+                ],
+              ),
+            ),
+            Image.asset('images/upgrade.png'),
+          ],
         ):Padding(
           padding: const EdgeInsets.only(top:10,left: 10,right: 10),
           child: progress==true?

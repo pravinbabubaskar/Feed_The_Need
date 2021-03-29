@@ -1,7 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
-import 'package:dio/dio.dart';
 import 'data.dart';
 import 'hotel.dart';
 
@@ -12,19 +12,16 @@ class NearMe extends StatefulWidget {
 
 class _NearMeState extends State<NearMe> {
 
+  List<String> distance = new List();
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-   // getDistance();
-
   }
 
-  getDistance() async{
-    var dio = Dio();
-    final response = await dio.get('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=11.1760088,76.9958071&destinations=11.1760088,76.9958071&key=AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk');
-    print(response.data['rows'][0]['duration']['text']);
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +69,7 @@ class _NearMeState extends State<NearMe> {
                         child: Container(
                           child:Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: placesWidget(hotelData[index]['name'],hotelData[index]['type']),
+                            child: placesWidget(hotelData[index]['name'],hotelData[index]['type'],duration[index]),
                           ),
                         ),
                       );
@@ -86,7 +83,7 @@ class _NearMeState extends State<NearMe> {
       )
     );
   }
-  Row placesWidget(String img, String name)
+  Row placesWidget(String name, String about,String dist)
   {
     return Row(
       children: [
@@ -103,12 +100,12 @@ class _NearMeState extends State<NearMe> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Annapoorna", style: TextStyle(
+              Text(name, style: TextStyle(
                  fontFamily: 'Sans',
                   fontSize: 16,
                   fontWeight: FontWeight.w600
               ),),
-              Text("India, Biryani, Ice Cream", style: TextStyle(
+              Text(about, style: TextStyle(
                   fontSize: 12,
                 fontFamily: 'Poppins',
                   fontWeight: FontWeight.w100,
@@ -133,7 +130,7 @@ class _NearMeState extends State<NearMe> {
               Divider(color: Colors.grey),
               Row(
                 children: [
-                  Text('30 min',style: TextStyle(
+                  Text(dist,style: TextStyle(
                       fontSize: 12,
                       fontFamily: 'Sans',
                       fontWeight: FontWeight.w100,
