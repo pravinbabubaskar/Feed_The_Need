@@ -31,7 +31,7 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    this.checkAuthentification();
+    //this.checkAuthentification();
   }
 
   login() async {

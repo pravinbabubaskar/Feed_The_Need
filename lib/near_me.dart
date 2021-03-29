@@ -13,13 +13,17 @@ class NearMe extends StatefulWidget {
 class _NearMeState extends State<NearMe> {
 
   @override
-  void initState() async{
+  void initState() {
     // TODO: implement initState
     super.initState();
-    Dio dio = new Dio();
-    String key ="AIzaSyAFEBlphkh0ce4Euso1X2tW0QVyhAznK8o";
-    Response response=await dio.get("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=40.6655101,-73.89188969999998&destinations=40.6905615%2C,-73.9976592&key=$key");
-    print(response.data);
+   // getDistance();
+
+  }
+
+  getDistance() async{
+    var dio = Dio();
+    final response = await dio.get('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=11.1760088,76.9958071&destinations=11.1760088,76.9958071&key=AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk');
+    print(response.data['rows'][0]['duration']['text']);
   }
 
   @override
@@ -54,7 +58,7 @@ class _NearMeState extends State<NearMe> {
               SizedBox(height: 20,),
               Expanded(
                 child: ListView.builder(
-                    itemCount: 10,
+                    itemCount: hotelData.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
@@ -68,7 +72,7 @@ class _NearMeState extends State<NearMe> {
                         child: Container(
                           child:Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: placesWidget("hotel1", "Sushi Den"),
+                            child: placesWidget(hotelData[index]['name'],hotelData[index]['type']),
                           ),
                         ),
                       );

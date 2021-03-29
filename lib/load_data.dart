@@ -1,8 +1,9 @@
-import 'package:feedthenead/Hotel/home.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'data.dart';
 import 'constants.dart';
@@ -17,15 +18,28 @@ class _LoadState extends State<Load> {
   Position loc;
   String Userdistrict;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _store = FirebaseFirestore.instance;
   User user;
+  List<dynamic> data =List<dynamic>();
   bool isloggedin = false;
-
   void initState() {
     super.initState();
     getLocation();
     hideScreen();
     getUser();
+    getData();
 
+  }
+
+  getData() async {
+    final snapshots = await _store.collection("hotel").get();
+    for (var m in snapshots.docs) {
+      var t = m.data();
+      data.add(t);
+    }
+    setState(() {
+      hotelData=data;
+    });
   }
 
   Future getLocation() async {
@@ -38,8 +52,8 @@ class _LoadState extends State<Load> {
     var first = addresses.first;
     setState(() {
       Userdistrict = first.subAdminArea;
-
       loc1 = Userdistrict;
+      latlong=position;
     });
   }
 

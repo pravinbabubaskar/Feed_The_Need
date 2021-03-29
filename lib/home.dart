@@ -53,46 +53,43 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     this.getUser();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar:
-        BottomNavigationBar(
-          unselectedItemColor: Colors.grey,
-          fixedColor: Colors.teal,
-          onTap: _onItemTaped,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: 'Near Me',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Explore',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined),
-              label: 'Cart',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined),
-              label: 'Account',
-            ),
-          ],
-          selectedLabelStyle: TextStyle(fontFamily: 'Sans'),
-          currentIndex: _selectedIndex,
-        ),
-        body: PageView(
-          controller: _pageController,
-          children: _screen,
-          onPageChanged: _onPageChanged,
-          physics: NeverScrollableScrollPhysics(),
-        )
+    return Scaffold(
+      bottomNavigationBar:
+      BottomNavigationBar(
+        unselectedItemColor: Colors.grey,
+        fixedColor: Colors.teal,
+        onTap: _onItemTaped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Near Me',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Explore',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_outlined),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_outlined),
+            label: 'Account',
+          ),
+        ],
+        selectedLabelStyle: TextStyle(fontFamily: 'Sans'),
+        currentIndex: _selectedIndex,
       ),
+      body: PageView(
+        controller: _pageController,
+        children: _screen,
+        onPageChanged: _onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
+      )
     );
   }
 
