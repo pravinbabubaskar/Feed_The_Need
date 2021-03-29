@@ -7,8 +7,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedthenead/Hotel/address_search.dart';
 import 'package:feedthenead/Hotel/place_service.dart';
 import 'package:uuid/uuid.dart';
-
+import 'dart:math';
+import 'dart:core';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:google_maps_webservice/places.dart';
 import '../constants.dart';
+
+const kGoogleApiKey = "AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk";
+
+GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
 class Sign_up extends StatefulWidget {
   @override
@@ -21,6 +29,25 @@ class _Sign_upState extends State<Sign_up> {
   navigateLogIn() async {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => Login()));
+  }
+
+  Future<Null> displayPrediction(Prediction p) async {
+    if (p == null) {
+      print("please select any place...");
+    }
+    if (p != null) {
+      PlacesDetailsResponse detail =
+          await _places.getDetailsByPlaceId(p.placeId);
+
+      var placeId = p.placeId;
+      double lat = detail.result.geometry.location.lat;
+      double lng = detail.result.geometry.location.lng;
+
+      var address = await Geocoder.local.findAddressesFromQuery(p.description);
+
+      print(lat);
+      print(lng);
+    }
   }
 
   void initState() {
@@ -178,12 +205,17 @@ class _Sign_upState extends State<Sign_up> {
                             controller: _controller,
                             readOnly: true,
                             onTap: () async {
+                              // show input autocomplete with selected mode
+                              // then get the Prediction selected
+                              Prediction p = await PlacesAutocomplete.show(
+                                  context: context, apiKey: kGoogleApiKey);
+                              displayPrediction(p);
                               /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => AutoSearch()));
                               // generate a new token here
-                                  final sessionToken = Uuid().v4();
+                              final sessionToken = Uuid().v4();
                               final Suggestion result = await showSearch(
                                 context: context,
                                 delegate: AddressSearch(sessionToken),

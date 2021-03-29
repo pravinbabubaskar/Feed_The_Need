@@ -1,4 +1,4 @@
-/*import 'dart:math';
+/* import 'dart:math';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
@@ -51,4 +51,5 @@ class _AutoSearchState extends State<AutoSearch> {
     }
   }
 }
+
 */
