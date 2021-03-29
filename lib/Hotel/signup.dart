@@ -310,7 +310,7 @@ class _Sign_upState extends State<Sign_up> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Home()));
+                                    builder: (context) => Home(_id)));
                           }
                         },
                         child: Text(

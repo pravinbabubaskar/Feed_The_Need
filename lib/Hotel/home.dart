@@ -9,6 +9,9 @@ import 'Hotel_dashboard/product.dart';
 import 'add_product.dart';
 
 class Home extends StatefulWidget {
+  final String _id;
+
+  Home(this._id);
   @override
   _HomeState createState() => _HomeState();
 }
@@ -30,7 +33,7 @@ class _HomeState extends State<Home> {
         ),
         actions: <Widget>[],
       ),
-      drawer: Drawer(child: Dashboard()),
+      drawer: Drawer(child: Dashboard(widget._id)),
       backgroundColor: white,
       body: SafeArea(
           child: ListView(

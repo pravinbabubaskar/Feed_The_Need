@@ -169,7 +169,7 @@ class _LoginState extends State<Login> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Home()));
+                                        builder: (context) => Home(_id)));
                               } else {
                                 // print(
                                 //   'Document id exists but password not matched..');

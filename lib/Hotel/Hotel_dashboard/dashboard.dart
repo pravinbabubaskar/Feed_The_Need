@@ -1,3 +1,4 @@
+import 'package:feedthenead/Hotel/Hotel_dashboard/add_img.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/order.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/product.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/restaurent.dart';
@@ -8,7 +9,9 @@ import 'package:feedthenead/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({Key key}) : super(key: key);
+  final String _id;
+
+  Dashboard(this._id);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,7 @@ class Dashboard extends StatelessWidget {
       ListTile(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Home()));
+                context, MaterialPageRoute(builder: (context) => Home(_id)));
           },
           leading: Icon(
             Icons.home,
@@ -116,6 +119,21 @@ class Dashboard extends StatelessWidget {
           ),
           title: CustomText(
             text: "Products",
+            color: black,
+            size: 16,
+            weight: FontWeight.w300,
+          )),
+      ListTile(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Add_Img(_id)));
+          },
+          leading: Icon(
+            Icons.add_a_photo,
+            color: Colors.black,
+          ),
+          title: CustomText(
+            text: "Add Image",
             color: black,
             size: 16,
             weight: FontWeight.w300,
