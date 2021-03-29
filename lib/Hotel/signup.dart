@@ -24,7 +24,8 @@ class Sign_up extends StatefulWidget {
 }
 
 class _Sign_upState extends State<Sign_up> {
-  String _name, _id, _password;
+  String _name, _id, _password, _address = "Address";
+  double lat, lon;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   navigateLogIn() async {
     Navigator.pushReplacement(
@@ -40,13 +41,19 @@ class _Sign_upState extends State<Sign_up> {
           await _places.getDetailsByPlaceId(p.placeId);
 
       var placeId = p.placeId;
-      double lat = detail.result.geometry.location.lat;
-      double lng = detail.result.geometry.location.lng;
 
+      setState(() {
+        _controller.text = p.description;
+        lat = detail.result.geometry.location.lat;
+        lon = detail.result.geometry.location.lng;
+        _address = detail.result.formattedAddress;
+      });
+      print(detail.result.formattedAddress);
+      print(p.description);
       var address = await Geocoder.local.findAddressesFromQuery(p.description);
 
       print(lat);
-      print(lng);
+      print(lon);
     }
   }
 
@@ -78,6 +85,9 @@ class _Sign_upState extends State<Sign_up> {
             'name': _name,
             'id': _id,
             'password': _password,
+            'latitue': lat,
+            'longitude': lon,
+            'address': _address,
           })
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
@@ -193,15 +203,49 @@ class _Sign_upState extends State<Sign_up> {
                       ),
                     ),
                     Container(
+                      child: Theme(
+                        data: new ThemeData(
+                          primaryColor: Colors.grey,
+                        ),
+                        child: TextFormField(
+                          controller: _controller,
+                          style: TextStyle(
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1,
+                              fontSize: 20),
+                          // ignore: missing_return
+                          validator: (input) {
+                            if (input.length < 1) return 'Pick any location';
+                          },
+                          onTap: () async {
+                            // show input autocomplete with selected mode
+                            // then get the Prediction selected
+                            Prediction p = await PlacesAutocomplete.show(
+                                context: context, apiKey: kGoogleApiKey);
+                            displayPrediction(p);
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Address',
+                            prefixIcon: Icon(Icons.home, color: Colors.teal),
+                          ),
+                        ),
+                      ),
+                    ),
+                    /*  Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          TextField(
-                            // style: TextStyle(
-                            // fontFamily: 'Raleway',
-                            // fontWeight: FontWeight.bold,
-                            // letterSpacing: 1,
-                            //  fontSize: 20),
+                          TextFormField(
+                            style: TextStyle(
+                                fontFamily: 'Raleway',
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                                fontSize: 20),
+                                  validator: (input){
+                              if (input.length < 1)
+                                return 'Please select loation';
+                                  },
                             controller: _controller,
                             readOnly: true,
                             onTap: () async {
@@ -235,7 +279,7 @@ class _Sign_upState extends State<Sign_up> {
                               }*/
                             },
                             decoration: InputDecoration(
-                              labelText: 'Address(still not complete...)',
+                              labelText: 'Address',
                               prefixIcon: Icon(Icons.home, color: Colors.teal),
                             ),
                           ),
@@ -246,7 +290,7 @@ class _Sign_upState extends State<Sign_up> {
                           //Text('ZIP Code: $_zipCode'),
                         ],
                       ),
-                    ),
+                    ), */
                     SizedBox(height: 30),
                     Container(
                       width: 175,
