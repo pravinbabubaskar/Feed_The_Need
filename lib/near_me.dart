@@ -11,18 +11,31 @@ class NearMe extends StatefulWidget {
 }
 
 class _NearMeState extends State<NearMe> {
+  List<dynamic> hotel = new List();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // getDistance();
+    getData();
+     //getDistance();
   }
 
-  getDistance() async {
+  getData(){
+    for(var t in hotelData){
+      if(t['address']==loc1){
+        hotel.add(t);
+        getDistance(t['latitue'],t['longitude']);
+      }
+    }
+  }
+  getDistance(double lat,double long) async {
     var dio = Dio();
-    final response = await dio.get(
-        'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=11.1760088,76.9958071&destinations=11.1760088,76.9958071&key=AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk');
-    print(response.data['rows'][0]['duration']['text']);
+      double lat = latlong.latitude;
+      double long = latlong.longitude;
+      final response = await dio.get(
+          'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=11.1760088,76.9958071&destinations=$lat,$long&key=AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk');
+      print(response.data['rows'][0]['duration']['text']);
+
   }
 
   @override
@@ -74,7 +87,7 @@ class _NearMeState extends State<NearMe> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: hotelData.length,
+                      itemCount: hotel.length,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTap: () {
@@ -87,8 +100,8 @@ class _NearMeState extends State<NearMe> {
                           child: Container(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: placesWidget(hotelData[index]['name'],
-                                  hotelData[index]['type']),
+                              child: placesWidget(hotel[index]['name'],
+                                  hotel[index]['type'],hotel[index]['imageUrl']),
                             ),
                           ),
                         );
@@ -100,28 +113,29 @@ class _NearMeState extends State<NearMe> {
         ));
   }
 
-  Row placesWidget(String img, String name) {
+  Row placesWidget(String name, String abt,String url) {
     return Row(
       children: [
         Container(
-          height: 100,
-          width: 100,
-          decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage("images/food.png"))),
+          padding: EdgeInsets.only(right: 10),
+          height: 120,
+          width: 140,
+          child: url==null?Image.asset("images/food.png",fit:BoxFit.fill):Image.network(url,fit:BoxFit.fill),
+
         ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Annapoorna",
+                name,
                 style: TextStyle(
                     fontFamily: 'Sans',
                     fontSize: 16,
                     fontWeight: FontWeight.w600),
               ),
               Text(
-                "India, Biryani, Ice Cream",
+                abt,
                 style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'Poppins',
