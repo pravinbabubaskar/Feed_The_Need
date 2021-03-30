@@ -13,20 +13,19 @@ class NearMe extends StatefulWidget {
 class _NearMeState extends State<NearMe> {
   List<dynamic> hotel = new List();
   int i=0;
-  List<String> duration =['Unknown','Unknown'];
+  List<String> duration =['Unknown','Unknown','Unknown','Unknown','Unknown','Unknown',];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getData();
-     //getDistance();
   }
 
   getData(){
     for(var t in hotelData){
       if(t['address']==loc1){
         hotel.add(t);
-        getDistance(t['latitue'],t['longitude']);
+        //getDistance(t['latitue'],t['longitude']);
       }
     }
   }
@@ -53,11 +52,20 @@ class _NearMeState extends State<NearMe> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                loc1,
-                style: TextStyle(fontFamily: 'Sans', color: Colors.black),
-                textAlign: TextAlign.left,
+              Row(
+                children: [
+                  Icon(Icons.location_city_rounded,color: Colors.grey,),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    loc1,
+                    style: TextStyle(fontFamily: 'Sans', color: Colors.black),
+                    textAlign: TextAlign.left,
+                  ),
+                ],
               ),
+
               Text(
                 "NGO+",
                 style: TextStyle(
@@ -124,8 +132,11 @@ class _NearMeState extends State<NearMe> {
           padding: EdgeInsets.only(right: 10),
           height: 120,
           width: 140,
-          child: url==null?Image.asset("images/food.png",fit:BoxFit.fill):Image.network(url,fit:BoxFit.fill),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5.0),
+            child: url==null?Image.asset("images/food.png",fit:BoxFit.contain):Image.network(url,fit:BoxFit.fill),
 
+          ),
         ),
         Expanded(
           child: Column(
