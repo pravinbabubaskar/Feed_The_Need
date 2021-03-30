@@ -12,8 +12,15 @@ class NearMe extends StatefulWidget {
 
 class _NearMeState extends State<NearMe> {
   List<dynamic> hotel = new List();
-  int i=0;
-  List<String> duration =['Unknown','Unknown','Unknown','Unknown','Unknown','Unknown',];
+  int i = 0;
+  List<String> duration = [
+    'Unknown',
+    'Unknown',
+    'Unknown',
+    'Unknown',
+    'Unknown',
+    'Unknown',
+  ];
   @override
   void initState() {
     // TODO: implement initState
@@ -21,23 +28,24 @@ class _NearMeState extends State<NearMe> {
     getData();
   }
 
-  getData(){
-    for(var t in hotelData){
-      if(t['address']==loc1){
+  getData() {
+    for (var t in hotelData) {
+      if (t['district'] == loc1) {
         hotel.add(t);
         //getDistance(t['latitue'],t['longitude']);
       }
     }
   }
-  getDistance(double lat,double long) async {
+
+  getDistance(double lat, double long) async {
     var dio = Dio();
-      double Ulat = latlong.latitude;
-      double Ulong = latlong.longitude;
-      final response = await dio.get(
-          'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=$Ulat,$Ulong&destinations=$lat,$long&key=AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk');
+    double Ulat = latlong.latitude;
+    double Ulong = latlong.longitude;
+    final response = await dio.get(
+        'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=$Ulat,$Ulong&destinations=$lat,$long&key=AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk');
     Map data = response.data;
-      setState(() {
-      duration[i++]=data['rows'][0]["elements"][0]["duration"]["text"];
+    setState(() {
+      duration[i++] = data['rows'][0]["elements"][0]["duration"]["text"];
     });
   }
 
@@ -54,7 +62,10 @@ class _NearMeState extends State<NearMe> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.location_city_rounded,color: Colors.grey,),
+                  Icon(
+                    Icons.location_city_rounded,
+                    color: Colors.grey,
+                  ),
                   SizedBox(
                     width: 10,
                   ),
@@ -65,7 +76,6 @@ class _NearMeState extends State<NearMe> {
                   ),
                 ],
               ),
-
               Text(
                 "NGO+",
                 style: TextStyle(
@@ -112,8 +122,11 @@ class _NearMeState extends State<NearMe> {
                           child: Container(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: placesWidget(hotel[index]['name'],
-                                  hotel[index]['type'],hotel[index]['imageUrl'],duration[index]),
+                              child: placesWidget(
+                                  hotel[index]['name'],
+                                  hotel[index]['type'],
+                                  hotel[index]['imageUrl'],
+                                  duration[index]),
                             ),
                           ),
                         );
@@ -125,7 +138,7 @@ class _NearMeState extends State<NearMe> {
         ));
   }
 
-  Row placesWidget(String name, String abt,String url,String time) {
+  Row placesWidget(String name, String abt, String url, String time) {
     return Row(
       children: [
         Container(
@@ -134,8 +147,9 @@ class _NearMeState extends State<NearMe> {
           width: 140,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(5.0),
-            child: url==null?Image.asset("images/food.png",fit:BoxFit.contain):Image.network(url,fit:BoxFit.fill),
-
+            child: url == null
+                ? Image.asset("images/food.png", fit: BoxFit.contain)
+                : Image.network(url, fit: BoxFit.fill),
           ),
         ),
         Expanded(

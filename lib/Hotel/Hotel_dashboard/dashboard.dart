@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/add_img.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/order.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/product.dart';
@@ -8,13 +9,34 @@ import 'package:feedthenead/helpers/style.dart';
 import 'package:feedthenead/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
   final String _id;
-
   Dashboard(this._id);
 
   @override
+  _DashboardState createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  String _type = "type";
+
+  String _name = "name";
+
+  String _imgurl = "url";
+
+  @override
   Widget build(BuildContext context) {
+    FirebaseFirestore.instance
+        .collection('hotel')
+        .doc(widget._id)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      setState(() {
+        _name = documentSnapshot.data()['name'];
+        _imgurl = documentSnapshot.data()['imageUrl'];
+        _type = documentSnapshot.data()['type'];
+      });
+    });
     return Column(children: [
       Container(
         child: Padding(
@@ -26,14 +48,14 @@ class Dashboard extends StatelessWidget {
               CircleAvatar(
                 radius: 50.0,
                 backgroundImage: NetworkImage(
-                  "https://imgmedia.lbb.in/media/2019/12/5e098fae2335a92f5b3536f3_1577684910704.jpg",
+                  _imgurl,
                 ),
               ),
               SizedBox(
                 height: 5.0,
               ),
               Text(
-                "Restaurent",
+                _name,
                 style: TextStyle(
                   fontSize: 22.0,
                   fontFamily: "poppins",
@@ -44,7 +66,7 @@ class Dashboard extends StatelessWidget {
                 height: 5.0,
               ),
               Text(
-                "Feed the Need",
+                _type,
                 style: TextStyle(
                   fontSize: 16.0,
                   fontFamily: "poppins",
@@ -62,8 +84,8 @@ class Dashboard extends StatelessWidget {
       //and let's copy that and modify it
       ListTile(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Home(_id)));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Home(widget._id)));
           },
           leading: Icon(
             Icons.home,
@@ -125,8 +147,8 @@ class Dashboard extends StatelessWidget {
           )),
       ListTile(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Add_Img(_id)));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Add_Img(widget._id)));
           },
           leading: Icon(
             Icons.add_a_photo,

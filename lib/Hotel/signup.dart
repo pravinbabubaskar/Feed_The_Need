@@ -24,7 +24,7 @@ class Sign_up extends StatefulWidget {
 }
 
 class _Sign_upState extends State<Sign_up> {
-  String _name, _id, _password, _address = "Address";
+  String _name, _id, _password, _address = "Address", _type, _district;
   double lat, lon;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   navigateLogIn() async {
@@ -45,13 +45,21 @@ class _Sign_upState extends State<Sign_up> {
       setState(() {
         _controller.text = p.description;
         lat = detail.result.geometry.location.lat;
-        lon = detail.result.geometry.location.lng;
         _address = detail.result.formattedAddress;
+        lon = detail.result.geometry.location.lng;
       });
       print(detail.result.formattedAddress);
       print(p.description);
       var address = await Geocoder.local.findAddressesFromQuery(p.description);
+      final coordinates = new Coordinates(lat, lon);
+      var addresses =
+          await Geocoder.local.findAddressesFromCoordinates(coordinates);
+      var first = addresses.first;
 
+      print(
+          ' ${first.locality}, ${first.adminArea},${first.subLocality}, ${first.subAdminArea}');
+      _district = first.subAdminArea;
+      print(_district);
       print(lat);
       print(lon);
     }
@@ -85,9 +93,11 @@ class _Sign_upState extends State<Sign_up> {
             'name': _name,
             'id': _id,
             'password': _password,
+            'type': _type,
             'latitue': lat,
             'longitude': lon,
             'address': _address,
+            'district': _district,
           })
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
@@ -200,6 +210,30 @@ class _Sign_upState extends State<Sign_up> {
                             ),
                             obscureText: true,
                             onSaved: (input) => _password = input),
+                      ),
+                    ),
+                    Container(
+                      child: Theme(
+                        data: new ThemeData(
+                          primaryColor: Colors.grey,
+                        ),
+                        child: TextFormField(
+                            style: TextStyle(
+                                fontFamily: 'Raleway',
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                                fontSize: 20),
+                            // ignore: missing_return
+                            validator: (input) {
+                              if (input.length < 3)
+                                return 'Provide type of restaurent';
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Type',
+                              prefixIcon:
+                                  Icon(Icons.merge_type, color: Colors.teal),
+                            ),
+                            onSaved: (input) => _type = input),
                       ),
                     ),
                     Container(

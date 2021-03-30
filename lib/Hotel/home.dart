@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedthenead/helpers/style.dart';
 import 'package:feedthenead/widgets/custom_text.dart';
 import 'package:feedthenead/widgets/small_floating_button.dart';
@@ -17,7 +18,30 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool hasImage = false;
+  String _type = "type";
+
+  String _name = "name";
+  String _imgurl = "url";
+  @override
+  void initState() {
+    super.initState();
+    this.getData();
+  }
+
+  getData() {
+    FirebaseFirestore.instance
+        .collection('hotel')
+        .doc(widget._id)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      setState(() {
+        _name = documentSnapshot.data()['name'];
+        _imgurl = documentSnapshot.data()['imageUrl'];
+        _type = documentSnapshot.data()['type'];
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +50,7 @@ class _HomeState extends State<Home> {
         elevation: 0.5,
         backgroundColor: primary,
         title: CustomText(
-          text: "Home_page",
+          text: _name,
           color: white,
           fontfamily: "poppin",
           size: 20,
@@ -48,14 +72,18 @@ class _HomeState extends State<Home> {
 
               // restaurant image
               ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(2),
-                    bottomRight: Radius.circular(2),
-                  ),
-                  child: imageWidget(hasImage: hasImage)),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(2),
+                  bottomRight: Radius.circular(2),
+                ),
+                child: Image.network(
+                  _imgurl,
+                  scale: 1.0,
+                ),
+              ),
 
               // fading black
-              Container(
+              /*   Container(
                 height: 160,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -77,14 +105,14 @@ class _HomeState extends State<Home> {
                     )),
               ),
 
-              //restaurant name
+                 //restaurant name
               Positioned.fill(
                   bottom: 30,
                   left: 10,
                   child: Align(
                       alignment: Alignment.bottomLeft,
                       child: CustomText(
-                        text: "name",
+                        text: _name,
                         color: white,
                         size: 24,
                         weight: FontWeight.normal,
@@ -97,12 +125,12 @@ class _HomeState extends State<Home> {
                   child: Align(
                       alignment: Alignment.bottomLeft,
                       child: CustomText(
-                        text: "Average Price",
+                        text: _type,
                         color: white,
                         size: 16,
                         weight: FontWeight.w300,
                       ))),
-
+*/
               Positioned.fill(
                   bottom: 2,
                   child: Align(
