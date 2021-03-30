@@ -34,15 +34,15 @@ class _LoadState extends State<Load> {
     //getDistance();
   }
 
-  getDistance() async{
-    var dio = Dio();
-    final response = await dio.get('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=11.1728779,76.9961671&destinations=11.1728779,76.9961671&key=$_key');
-    Map data = response.data;
-    print(data);
-    duration[0]=data['rows'][0]["elements"][0]["duration"]["text"];
-
-
-  }
+  // getDistance() async{
+  //   var dio = Dio();
+  //   final response = await dio.get('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=11.1728779,76.9961671&destinations=11.1728779,76.9961671&key=$_key');
+  //   Map data = response.data;
+  //   print(data);
+  //   duration[0]=data['rows'][0]["elements"][0]["duration"]["text"];
+  //
+  //
+  // }
 
 
   getData() async {

@@ -7,4 +7,3 @@ User user1;
 bool isNGOVerified = false;
 List<dynamic> hotelData ;
 Position latlong;
-List<String> duration =['Unknown','Unknown'];

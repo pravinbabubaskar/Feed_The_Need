@@ -12,6 +12,8 @@ class NearMe extends StatefulWidget {
 
 class _NearMeState extends State<NearMe> {
   List<dynamic> hotel = new List();
+  int i=0;
+  List<String> duration =['Unknown','Unknown'];
   @override
   void initState() {
     // TODO: implement initState
@@ -30,12 +32,14 @@ class _NearMeState extends State<NearMe> {
   }
   getDistance(double lat,double long) async {
     var dio = Dio();
-      double lat = latlong.latitude;
-      double long = latlong.longitude;
+      double Ulat = latlong.latitude;
+      double Ulong = latlong.longitude;
       final response = await dio.get(
-          'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=11.1760088,76.9958071&destinations=$lat,$long&key=AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk');
-      print(response.data['rows'][0]['duration']['text']);
-
+          'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=$Ulat,$Ulong&destinations=$lat,$long&key=AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk');
+    Map data = response.data;
+      setState(() {
+      duration[i++]=data['rows'][0]["elements"][0]["duration"]["text"];
+    });
   }
 
   @override
@@ -101,7 +105,7 @@ class _NearMeState extends State<NearMe> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: placesWidget(hotel[index]['name'],
-                                  hotel[index]['type'],hotel[index]['imageUrl']),
+                                  hotel[index]['type'],hotel[index]['imageUrl'],duration[index]),
                             ),
                           ),
                         );
@@ -113,7 +117,7 @@ class _NearMeState extends State<NearMe> {
         ));
   }
 
-  Row placesWidget(String name, String abt,String url) {
+  Row placesWidget(String name, String abt,String url,String time) {
     return Row(
       children: [
         Container(
@@ -161,7 +165,7 @@ class _NearMeState extends State<NearMe> {
               Row(
                 children: [
                   Text(
-                    '30 min',
+                    time,
                     style: TextStyle(
                         fontSize: 12,
                         fontFamily: 'Sans',
