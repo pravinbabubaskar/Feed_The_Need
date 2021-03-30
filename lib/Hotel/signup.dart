@@ -231,7 +231,7 @@ class _Sign_upState extends State<Sign_up> {
                             decoration: InputDecoration(
                               labelText: 'Type',
                               prefixIcon:
-                                  Icon(Icons.merge_type, color: Colors.teal),
+                                  Icon(Icons.no_drinks, color: Colors.teal),
                             ),
                             onSaved: (input) => _type = input),
                       ),

@@ -22,7 +22,7 @@ class _DashboardState extends State<Dashboard> {
 
   String _name = "name";
 
-  String _imgurl = "url";
+  String _imgurl;
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +45,22 @@ class _DashboardState extends State<Dashboard> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: 50.0,
-                backgroundImage: NetworkImage(
-                  _imgurl,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Add_Img(widget._id)));
+                },
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: _imgurl == null
+                      ? AssetImage(
+                          "images/food.png",
+                        )
+                      : NetworkImage(
+                          _imgurl,
+                        ),
                 ),
               ),
               SizedBox(
@@ -84,7 +96,7 @@ class _DashboardState extends State<Dashboard> {
       //and let's copy that and modify it
       ListTile(
           onTap: () {
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => Home(widget._id)));
           },
           leading: Icon(

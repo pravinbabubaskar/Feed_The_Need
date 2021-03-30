@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
   String _type = "type";
 
   String _name = "name";
-  String _imgurl = "url";
+  String _imgurl;
   @override
   void initState() {
     super.initState();
@@ -76,10 +76,13 @@ class _HomeState extends State<Home> {
                   bottomLeft: Radius.circular(2),
                   bottomRight: Radius.circular(2),
                 ),
-                child: Image.network(
-                  _imgurl,
-                  scale: 1.0,
-                ),
+                child: _imgurl == null
+                    ? Image.asset(
+                        "images/food.png",
+                        height: 200.0,
+                        width: 400.0,
+                      )
+                    : Image.network(_imgurl, fit: BoxFit.fill),
               ),
 
               // fading black

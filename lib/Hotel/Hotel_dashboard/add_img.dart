@@ -33,7 +33,13 @@ class _Add_ImgState extends State<Add_Img> {
           var snapshot = await _firebaseStorage
               .ref()
               .child('Restaurent_img/${widget._id}')
-              .putFile(_image);
+              .putFile(_image)
+              .whenComplete(() {
+            setState(() {
+              e = "Image uploaded successfullyy..";
+            });
+          });
+          showError(e);
 
           var downloadUrl = await snapshot.ref.getDownloadURL();
 
@@ -46,8 +52,6 @@ class _Add_ImgState extends State<Add_Img> {
                 .then((value) => print("Image Updated"))
                 .catchError((error) => print("Failed to update image: $error"));
             print(imageUrl);
-            e = "Image uploaded successfullyy..";
-            showError(e);
           });
         } else {
           print('No Image Path Received');
