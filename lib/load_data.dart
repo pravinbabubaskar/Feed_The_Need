@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 import 'package:geocoder/geocoder.dart';
@@ -22,8 +21,8 @@ class _LoadState extends State<Load> {
   final _store = FirebaseFirestore.instance;
   User user;
   String _key = "AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk";
-  List<dynamic> data =List<dynamic>();
-  double lat,long;
+  List<dynamic> data = List<dynamic>();
+  double lat, long;
   bool isloggedin = false;
   void initState() {
     super.initState();
@@ -44,7 +43,6 @@ class _LoadState extends State<Load> {
   //
   // }
 
-
   getData() async {
     final snapshots = await _store.collection("hotel").get();
     for (var m in snapshots.docs) {
@@ -52,7 +50,7 @@ class _LoadState extends State<Load> {
       data.add(t);
     }
     setState(() {
-      hotelData=data;
+      hotelData = data;
     });
   }
 
@@ -60,8 +58,8 @@ class _LoadState extends State<Load> {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     loc = position;
-    lat=loc.latitude;
-    long=loc.longitude;
+    lat = loc.latitude;
+    long = loc.longitude;
     final coordinates = new Coordinates(position.latitude, position.longitude);
     var addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
@@ -69,7 +67,7 @@ class _LoadState extends State<Load> {
     setState(() {
       Userdistrict = first.subAdminArea;
       loc1 = Userdistrict;
-      latlong=position;
+      latlong = position;
     });
   }
 
@@ -83,7 +81,7 @@ class _LoadState extends State<Load> {
         this.user = firebaseUser;
         this.isloggedin = true;
         user1 = user;
-        isNGOVerified = user1.photoURL == null ? false:true;
+        isNGOVerified = user1.photoURL == null ? false : true;
       });
     }
   }
@@ -92,13 +90,11 @@ class _LoadState extends State<Load> {
   Future<void> hideScreen() async {
     Future.delayed(Duration(milliseconds: 5600), () {
       FlutterSplashScreen.hide();
-      Navigator.pushAndRemoveUntil(context,
+      Navigator.pushAndRemoveUntil(
+          context,
           MaterialPageRoute(
-              builder: (context) =>
-                  HomePage(location: Userdistrict)
-          ),(route) => false);
-
-
+              builder: (context) => HomePage(location: Userdistrict)),
+          (route) => false);
     });
   }
 

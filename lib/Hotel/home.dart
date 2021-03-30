@@ -13,6 +13,7 @@ class Home extends StatefulWidget {
   final String _id;
 
   Home(this._id);
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -220,8 +221,10 @@ class _HomeState extends State<Home> {
                     ]),
                 child: ListTile(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Product()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Product(widget._id)));
                     },
                     leading: Padding(
                       padding: const EdgeInsets.all(4),
