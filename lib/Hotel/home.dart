@@ -246,8 +246,8 @@ class _HomeState extends State<Home> {
       )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Add_product()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Add_product(widget._id)));
         },
         child: Icon(Icons.add),
         backgroundColor: primary,
