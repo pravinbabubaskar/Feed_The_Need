@@ -123,8 +123,14 @@ class _WebScraperAppState extends State<WebScraperApp> {
     return SafeArea(
       child:Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          //automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
+          ),
+          actions: [
+
+          ],
           title: Text("NGO +",style:TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sans',fontSize: 25,color: Colors.black),),
         ),
         body: isNGOVerified ?Column(

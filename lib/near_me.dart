@@ -116,7 +116,7 @@ class _NearMeState extends State<NearMe> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HotelPage()),
+                                  builder: (context) => HotelPage(hotelData: hotel[index],)),
                             );
                           },
                           child: Container(
@@ -204,10 +204,5 @@ class _NearMeState extends State<NearMe> {
         ),
       ],
     );
-  }
-
-  void openHotelPage() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HotelPage()));
   }
 }
