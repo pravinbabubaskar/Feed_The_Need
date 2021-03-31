@@ -28,7 +28,8 @@ class _Add_productState extends State<Add_product> {
   final _firebaseStorage = FirebaseStorage.instance;
   String imageUrl;
   CollectionReference users = FirebaseFirestore.instance.collection('hotel');
-  String e = "loading...";
+
+  String e = "Product Addedd Successfully..";
   Future pickImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
     if (pickedFile != null) {
@@ -45,12 +46,7 @@ class _Add_productState extends State<Add_product> {
             .ref()
             .child('Product_img/${widget._id}/${_pid}')
             .putFile(_image)
-            .whenComplete(() {
-          setState(() {
-            e = "Product Updated successfullyy..";
-          });
-        });
-        showError(e);
+            .whenComplete(() {});
 
         var downloadUrl = await snapshot.ref.getDownloadURL();
 
@@ -85,7 +81,7 @@ class _Add_productState extends State<Add_product> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              'Done',
+              'Upload',
               style: errorStyle,
             ),
             content: Text(
@@ -95,17 +91,37 @@ class _Add_productState extends State<Add_product> {
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Home(widget._id)));
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Home(widget._id)));
+                    });
                   },
                   child: Text('OK'))
             ],
           );
         });
+  }
+
+  openLoadingDialog(BuildContext context, String text) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+              content: Row(children: <Widget>[
+                SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 1,
+                        valueColor: AlwaysStoppedAnimation(Colors.black))),
+                SizedBox(width: 10),
+                Text(text)
+              ]),
+            ));
   }
 
   @override
@@ -381,6 +397,10 @@ class _Add_productState extends State<Add_product> {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
                         uploadImage();
+                        openLoadingDialog(context, "Uploading...");
+                        Future.delayed(const Duration(seconds: 3), () {
+                          showError(e);
+                        });
                       }
                     },
                     child: CustomText(

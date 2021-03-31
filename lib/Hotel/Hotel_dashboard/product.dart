@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:feedthenead/Hotel/home.dart';
 import 'package:feedthenead/helpers/style.dart';
 import 'package:feedthenead/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -14,16 +17,22 @@ class Product extends StatelessWidget {
     // Stream documentStream =  FirebaseFirestore.instance.collection('hotel').doc(_id).snapshots();
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: white),
-          elevation: 0.5,
-          backgroundColor: primary,
+          iconTheme: IconThemeData(color: black),
+          backgroundColor: white,
+          elevation: 0.0,
           title: CustomText(
             text: "products",
-            color: white,
-            fontfamily: "poppin",
             size: 20,
           ),
-          actions: <Widget>[],
+          leading: IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Home(_id)));
+              }),
         ),
         body: StreamBuilder<DocumentSnapshot>(
             stream: users.doc(_id).snapshots(),

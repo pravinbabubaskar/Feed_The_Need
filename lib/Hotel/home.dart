@@ -23,6 +23,9 @@ class _HomeState extends State<Home> {
 
   String _name = "name";
   String _imgurl;
+  String _count = "0";
+  String _len = "0";
+  //List<dynamic> pr;
   @override
   void initState() {
     super.initState();
@@ -39,6 +42,9 @@ class _HomeState extends State<Home> {
         _name = documentSnapshot.data()['name'];
         _imgurl = documentSnapshot.data()['imageUrl'];
         _type = documentSnapshot.data()['type'];
+        int len = documentSnapshot.data()['product'].length;
+        print(len);
+        _count = len.toString();
       });
     });
   }
@@ -197,7 +203,7 @@ class _HomeState extends State<Home> {
                       size: 24,
                     ),
                     trailing: CustomText(
-                      text: "+",
+                      text: _len,
                       size: 24,
                       weight: FontWeight.bold,
                     )),
@@ -235,7 +241,7 @@ class _HomeState extends State<Home> {
                       size: 24,
                     ),
                     trailing: CustomText(
-                      text: "+",
+                      text: _count,
                       size: 24,
                       weight: FontWeight.bold,
                     )),
