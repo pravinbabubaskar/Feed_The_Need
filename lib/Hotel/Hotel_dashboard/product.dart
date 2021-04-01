@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:feedthenead/Hotel/delete_product.dart';
 import 'package:feedthenead/Hotel/home.dart';
 import 'package:feedthenead/helpers/style.dart';
 import 'package:feedthenead/widgets/custom_text.dart';
@@ -13,6 +14,7 @@ class Product extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('hotel');
+    DocumentReference docref = users.doc(_id);
 //Stream collectionStream = FirebaseFirestore.instance.collection('users').snapshots();
     // Stream documentStream =  FirebaseFirestore.instance.collection('hotel').doc(_id).snapshots();
     return Scaffold(
@@ -46,122 +48,157 @@ class Product extends StatelessWidget {
                     itemCount: product != null ? product.length : 0,
                     itemBuilder: (_, int index) {
                       print(product[index]['name']);
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                            left: 4, right: 4, top: 4, bottom: 10),
-                        child: Container(
-                          height: 110,
-                          decoration: BoxDecoration(
-                              color: white,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey[300],
-                                    offset: Offset(-2, -1),
-                                    blurRadius: 5),
-                              ]),
+                      return GestureDetector(
+                        onLongPress: () {
+                          //  print(product[index]);
+                          //  del_product(context, Product,index,docref);
+                          return showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text(
+                                      'Are you sure want to delete ${product[index]['name']} from this List?'),
+                                  actions: <Widget>[
+                                    new FlatButton(
+                                      child: new Text('Yes'),
+                                      onPressed: () async {
+                                        docref.update({
+                                          'product': FieldValue.arrayRemove(
+                                              [product[index]])
+                                        }).then((value) {
+                                          Future.delayed(
+                                              const Duration(seconds: 1), () {
+                                            Navigator.of(context).pop();
+                                          });
+                                        });
+                                      },
+                                    ),
+                                    new FlatButton(
+                                      child: new Text('No'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    )
+                                  ],
+                                );
+                              });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 4, right: 4, top: 4, bottom: 10),
+                          child: Container(
+                            height: 110,
+                            decoration: BoxDecoration(
+                                color: white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey[300],
+                                      offset: Offset(-2, -1),
+                                      blurRadius: 5),
+                                ]),
 //          height: 160,
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 140,
-                                height: 120,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(20),
-                                    topLeft: Radius.circular(20),
-                                  ),
-                                  child: Image.network(
-                                    product[index]['p_url'],
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  width: 140,
+                                  height: 120,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(20),
+                                      topLeft: Radius.circular(20),
+                                    ),
+                                    child: Image.network(
+                                      product[index]['p_url'],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: CustomText(
-                                            text: product[index]['name'],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 25,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: Row(
+                                Expanded(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
-                                          CustomText(
-                                            text: "from: ",
-                                            color: grey,
-                                            weight: FontWeight.w300,
-                                            size: 14,
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: CustomText(
+                                              text: product[index]['name'],
+                                            ),
                                           ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          GestureDetector(
-                                              onTap: () async {},
-                                              child: CustomText(
-                                                text: product[index]
-                                                    ['description'],
-                                                color: primary,
-                                                weight: FontWeight.w300,
-                                                size: 14,
-                                              )),
                                         ],
                                       ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Row(
+                                      SizedBox(
+                                        height: 25,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: Row(
                                           children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.all(2),
-                                              child: Icon(
-                                                Icons.star,
-                                                color: red,
-                                                size: 20,
-                                              ),
+                                            CustomText(
+                                              text: product[index]['quantity']
+                                                  .toString(),
+                                              color: primary,
+                                              weight: FontWeight.w300,
+                                              size: 14,
                                             ),
                                             SizedBox(
                                               width: 2,
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8.0),
-                                              child: CustomText(
-                                                text: "rating",
-                                                color: grey,
-                                                size: 14.0,
-                                              ),
+                                            CustomText(
+                                              text: 'quantity',
+                                              color: primary,
+                                              weight: FontWeight.w300,
+                                              size: 14,
                                             ),
                                           ],
                                         ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 8.0),
-                                          child: CustomText(
-                                            text:
-                                                "price : ${product[index]['price']}",
-                                            weight: FontWeight.bold,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(2),
+                                                child: Icon(
+                                                  Icons.star,
+                                                  color: red,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              GestureDetector(
+                                                  onTap: () async {},
+                                                  child: CustomText(
+                                                    text: product[index]
+                                                        ['description'],
+                                                    color: primary,
+                                                    weight: FontWeight.w300,
+                                                    size: 14,
+                                                  )),
+                                            ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 8.0),
+                                            child: CustomText(
+                                              text:
+                                                  "price : ${product[index]['price']}",
+                                              weight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       );

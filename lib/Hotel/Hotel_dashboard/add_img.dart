@@ -37,7 +37,7 @@ class _Add_ImgState extends State<Add_Img> {
               .putFile(_image)
               .whenComplete(() {
             openLoadingDialog(context, "Uploading...");
-            Future.delayed(const Duration(seconds: 4), () {
+            Future.delayed(const Duration(seconds: 2), () {
               showError(e);
             });
           });
