@@ -65,6 +65,24 @@ class _Sign_upState extends State<Sign_up> {
     }
   }
 
+  openLoadingDialog(BuildContext context, String text) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+              content: Row(children: <Widget>[
+                SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 1,
+                        valueColor: AlwaysStoppedAnimation(Colors.black))),
+                SizedBox(width: 10),
+                Text(text)
+              ]),
+            ));
+  }
+
   void initState() {
     super.initState();
   }
@@ -98,6 +116,11 @@ class _Sign_upState extends State<Sign_up> {
             'longitude': lon,
             'address': _address,
             'district': _district,
+            'email': "none",
+            'number': "none",
+            'product': [],
+            'imageUrl':
+                'https://firebasestorage.googleapis.com/v0/b/feedtheneed-ad7d0.appspot.com/o/food.png?alt=media&token=b594a56c-fadc-4399-9900-a233bd61d802',
           })
           .then((value) => print("Document Added"))
           .catchError((error) => print("Failed to add document: $error"));
@@ -341,10 +364,13 @@ class _Sign_upState extends State<Sign_up> {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             addUser();
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Home(_id)));
+                            openLoadingDialog(context, "signing in...");
+                            Future.delayed(const Duration(seconds: 2), () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Home(_id)));
+                            });
                           }
                         },
                         child: Text(
