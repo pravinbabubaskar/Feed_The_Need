@@ -113,7 +113,9 @@ class _DashboardState extends State<Dashboard> {
       ListTile(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Restaurent()));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Restaurent(widget._id)));
           },
           leading: Icon(
             Icons.restaurant,
