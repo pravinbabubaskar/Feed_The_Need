@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:like_button/like_button.dart';
+import 'cart.dart';
+import 'data.dart';
 
 class HotelPage extends StatefulWidget {
   var hotelData;
@@ -8,7 +10,6 @@ class HotelPage extends StatefulWidget {
   @override
   _HotelPageState createState() => _HotelPageState(this.hotelData);
 }
-
 class _HotelPageState extends State<HotelPage> {
   var data;
   List<dynamic> products = new List();
@@ -69,7 +70,7 @@ class _HotelPageState extends State<HotelPage> {
                             height: 20,
                           ),
                           Text(
-                            data['name'],
+                            '${data['name'][0].toUpperCase()}${data['name'].substring(1)}',
                             style: TextStyle(
                                 fontFamily: 'Sans',
                                 color: Colors.black,
@@ -80,13 +81,13 @@ class _HotelPageState extends State<HotelPage> {
                             height: 10,
                           ),
                           SmoothStarRating(
-                              size: 20,
+                              size: 25,
                               allowHalfRating: false,
                               starCount: 5,
                               rating: 2,
                               isReadOnly: true,
-                              color: Colors.black,
-                              borderColor: Colors.black,
+                              color: Colors.lime,
+                              borderColor: Colors.lime[100],
                               spacing: -0.5),
                         ],
                       ),
@@ -111,8 +112,8 @@ class _HotelPageState extends State<HotelPage> {
                     data['type'],
                     style: TextStyle(
                         fontFamily: 'Poppins',
-                        color: Colors.black,
-                        fontSize: 12),
+                        color: Colors.black54,
+                        fontSize: 15),
                   ),
                 )
               ],
@@ -134,7 +135,7 @@ class _HotelPageState extends State<HotelPage> {
                     Text(
                       "Dishes",
                       style: TextStyle(
-                          fontFamily: 'Raleway',
+                          fontFamily: 'Sans',
                           fontSize: 22,
                           letterSpacing: -0.5,
                           fontWeight: FontWeight.bold),
@@ -157,11 +158,12 @@ class _HotelPageState extends State<HotelPage> {
           Flexible(
             child: ListView.builder(
                 shrinkWrap: true,
-                itemCount:products.length,
+                itemCount: products.length,
                 itemBuilder: (BuildContext context, int index) {
                   return dishWidget(products[index]);
                 }),
-          )
+          ),
+
         ],
       ),
     );
@@ -169,7 +171,7 @@ class _HotelPageState extends State<HotelPage> {
 
   Padding dishWidget(Map<dynamic, dynamic> mp) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10,right: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
         children: [
           Row(children: [
@@ -178,16 +180,16 @@ class _HotelPageState extends State<HotelPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    mp["name"],
+                    '${mp['name'][0].toUpperCase()}${mp['name'].substring(1)}',
                     style: TextStyle(
                         fontFamily: 'Sans',
-                        fontSize: 16,
+                        fontSize: 20,
                         fontWeight: FontWeight.w600),
                   ),
                   Text(
                     mp["description"],
                     style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 15,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w100,
                         color: Colors.grey),
@@ -198,13 +200,22 @@ class _HotelPageState extends State<HotelPage> {
                   Text(
                     "₹ " + mp["price"],
                     style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 15,
                         fontFamily: 'Sans',
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
                   SizedBox(
                     height: 5,
+                  ),
+                  Text(
+                    "Availability :" + mp["quantity"].toString(),
+                    style: TextStyle(
+                        letterSpacing: 1,
+                        fontSize: 12,
+                        fontFamily: 'Sans',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
                   ),
                 ],
               ),
@@ -221,8 +232,18 @@ class _HotelPageState extends State<HotelPage> {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(5.0),
                           child: mp["p_url"] == null
-                              ? Image.asset("images/food.png", fit: BoxFit.contain,height: 80,width: 100,)
-                              : Image.network(mp["p_url"], fit: BoxFit.contain,height: 80,width: 100,)),
+                              ? Image.asset(
+                                  "images/food.png",
+                                  fit: BoxFit.contain,
+                                  height: 80,
+                                  width: 100,
+                                )
+                              : Image.network(
+                                  mp["p_url"],
+                                  fit: BoxFit.contain,
+                                  height: 80,
+                                  width: 100,
+                                )),
                     ),
                   ],
                 ),
@@ -232,8 +253,19 @@ class _HotelPageState extends State<HotelPage> {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green, // background
                     ),
-                    onPressed: () {print("hi");},
-                    child: Text("Add",style: TextStyle(fontFamily: 'Sans',fontWeight: FontWeight.w600),),
+                    onPressed: () {
+                      setState(() {
+                        toto++;
+                        cost+=int.parse(mp["price"]);
+                        openCartPage(mp);
+                      });
+
+                    },
+                    child: Text(
+                      "Add",
+                      style: TextStyle(
+                          fontFamily: 'Sans', fontWeight: FontWeight.w600),
+                    ),
                   ),
                 )
               ],
@@ -250,8 +282,30 @@ class _HotelPageState extends State<HotelPage> {
     );
   }
 
-  void openCartPage() {
-    print("hi");
-    //Navigator.push(context, MaterialPageRoute(builder: (context)=>CartPage()));
+  void openCartPage(Map<dynamic,dynamic> mp) {
+    cartData.add(mp);
+    final snackBar = SnackBar(
+      duration: Duration(seconds: 5),
+      backgroundColor: Colors.green,
+      content: Text( '$toto Items | ₹ $cost 😋',style: TextStyle(
+        fontFamily: 'Sans',
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
+        fontSize: 15,
+      ),),
+      action: SnackBarAction(
+        label: 'Cart',
+        textColor: Colors.white,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Cart()),
+          );
+        },
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
   }
 }

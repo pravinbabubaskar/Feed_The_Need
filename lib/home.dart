@@ -1,3 +1,4 @@
+import 'package:feedthenead/data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'welcome.dart';
@@ -7,6 +8,8 @@ import 'account.dart';
 import 'cart.dart';
 
 String userLoc;
+
+
 class HomePage extends StatefulWidget {
   String location;
   HomePage  ({Key key,@required this.location }) : super(key: key) {
@@ -25,6 +28,10 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _screen=[
     NearMe(),Explore(),Cart(),Account()
   ];
+
+
+
+
 
   void _onItemTaped(int SelectedIndex){
     _pageController.jumpToPage(SelectedIndex);
@@ -48,11 +55,20 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  dynamic move(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => Cart()),
+    );
+  }
+
 
   @override
   void initState() {
     super.initState();
     this.getUser();
+    print(cartData);
   }
 
   @override
