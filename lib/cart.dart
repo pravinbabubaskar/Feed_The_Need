@@ -7,6 +7,33 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   @override
+  var map = Map();
+  List<dynamic> Data=new List();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    countOcc();
+  }
+  countOcc(){
+
+    cartData.forEach((element) {
+      if(!map.containsKey(element)) {
+        map[element] = 1;
+        Data.add(element);
+      } else {
+        map[element] +=1;
+      }
+    });
+  }
+  @override
+  int total(){
+    int a =cost;
+    a+=(cost*0.1).round();
+    if(isNGOVerified){
+      a-=cost;
+    }
+    return a;
+  }
   Widget build(BuildContext context) {
     return cartData.length==0?Scaffold(
       backgroundColor: Colors.white,
@@ -47,6 +74,9 @@ class _CartState extends State<Cart> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        SizedBox(
+                          height: 40,
+                        ),
                         Text("Your Cart", style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w700
@@ -63,19 +93,28 @@ class _CartState extends State<Cart> {
                     ),
                     ListView.builder(
                       shrinkWrap: true,
-                      itemCount: cartData.length,
+                      itemCount: Data.length,
                       itemBuilder: (BuildContext context, int index) {
-                                  return placesWidget(cartData[index]);
+                                  return Padding(
+                                    padding: const EdgeInsets.only(top: 10,bottom: 10),
+                                    child: placesWidget(Data[index]),
+                                  );
               },
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Total ($toto items)", style: TextStyle(
+                          fontFamily: 'Sans',
                             fontWeight: FontWeight.w700,
                             fontSize: 18
                         ),),
                         Text("\₹ $cost", style: TextStyle(
+                            fontFamily: 'Sans',
                             fontWeight: FontWeight.w700,
                             fontSize: 16
                         ),)
@@ -88,9 +127,11 @@ class _CartState extends State<Cart> {
                         Text("+Taxes", style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
+                            fontFamily: 'Sans',
                             color: Colors.grey
                         ),),
                         Text("\₹ "+(cost*0.1).toString(), style: TextStyle(
+                            fontFamily: 'Sans',
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
                             color: Colors.grey
@@ -103,37 +144,40 @@ class _CartState extends State<Cart> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Discounts", style: TextStyle(
+                            fontFamily: 'Sans',
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
                             color: Colors.grey
                         ),),
                         Text(isNGOVerified==true? "- $cost":"- "+ (cost/2).toString() , style: TextStyle(
+                            fontFamily: 'Sans',
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
                             color: Colors.grey
                         ),)
                       ],
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 10,),
+                    Divider(color: Colors.black),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Total Payable", style: TextStyle(
+                          fontFamily: 'Sans',
                           fontWeight: FontWeight.w700,
                           fontSize: 18,
                         ),),
-                        Text("\$102", style: TextStyle(
-                            fontWeight: FontWeight.w500,
+                        Text(total().toString(), style: TextStyle(
+                            fontFamily: 'Sans',
+                            fontWeight: FontWeight.w700,
                             fontSize: 16,
-                            color: Colors.grey
+                            color: Colors.black
                         ),)
                       ],
                     ),
                     SizedBox(height: 25,),
-                    Text("Have a Promo Code?", style: TextStyle(
-                        color: Colors.green
-                    ),),
                     SizedBox(height: 20,),
+                    Text("dfb"),
                     InkWell(
                       onTap: openSuccessPage,
                       child: Container(
@@ -143,6 +187,7 @@ class _CartState extends State<Cart> {
                           color: Colors.green,
                         ),
                         child: Text("Check Out", style: TextStyle(
+                          fontFamily: 'Sans',
                             color: Colors.white,
                             fontWeight: FontWeight.w700
                         ),),
@@ -163,12 +208,21 @@ class _CartState extends State<Cart> {
       children: [
         Container(
           height: 100,
-          width: 100,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(mp["p_url"])
+          width: 125,
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: mp["p_url"] == null
+                  ? Image.asset(
+                "images/food.png",
+                fit: BoxFit.contain,
+                height: 25,
+                width: 50,
               )
-          ),
+                  : Image.network(
+                mp["p_url"],
+                fit: BoxFit.contain,
+
+              )),
         ),
         Expanded(
           child: Column(
@@ -194,7 +248,7 @@ class _CartState extends State<Cart> {
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
               ),
-              child: Text("1", style: TextStyle(
+              child: Text(map[mp].toString(), style: TextStyle(
 
                   fontSize: 13,
                   fontWeight: FontWeight.w700
