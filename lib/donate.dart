@@ -84,7 +84,14 @@ class _ListPageState extends State<ListPage>{
 
   }
 
+  navigateToDetail(DocumentSnapshot post){
 
+    Navigator.push(context,
+        MaterialPageRoute(
+            builder:(context)=>DetailPage(post:post,)
+        )
+    );
+  }
 
   @override
   Widget build(BuildContext context){
@@ -111,12 +118,16 @@ class _ListPageState extends State<ListPage>{
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Colors.blueGrey
-                ),),
-                 //onTap:()=>navigateToDetail(snapshot.data[index]),
+                ),
+                ),
+
+                 onTap:()=>navigateToDetail(snapshot.data[index]),
                 );
-          });
+              }
+              );
         }
-      }),
+      }
+      ),
     );
   }
 }
