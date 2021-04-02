@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:feedthenead/Hotel/home.dart';
 import 'package:feedthenead/widgets/custom_file_button.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _Add_ImgState extends State<Add_Img> {
   final _firebaseStorage = FirebaseStorage.instance;
   String imageUrl;
   CollectionReference users = FirebaseFirestore.instance.collection('hotel');
-  String e = "loading...";
+  String e = "Image uploaded successfullyy..";
   Future getImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
 
@@ -35,11 +36,11 @@ class _Add_ImgState extends State<Add_Img> {
               .child('Restaurent_img/${widget._id}')
               .putFile(_image)
               .whenComplete(() {
-            setState(() {
-              e = "Image uploaded successfullyy..";
+            openLoadingDialog(context, "Uploading...");
+            Future.delayed(const Duration(seconds: 2), () {
+              showError(e);
             });
           });
-          showError(e);
 
           var downloadUrl = await snapshot.ref.getDownloadURL();
 
@@ -78,12 +79,37 @@ class _Add_ImgState extends State<Add_Img> {
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Home(widget._id)));
+                    });
                   },
                   child: Text('OK'))
             ],
           );
         });
+  }
+
+  openLoadingDialog(BuildContext context, String text) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+              content: Row(children: <Widget>[
+                SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 1,
+                        valueColor: AlwaysStoppedAnimation(Colors.black))),
+                SizedBox(width: 10),
+                Text(text)
+              ]),
+            ));
   }
 
   @override
@@ -114,6 +140,7 @@ class _Add_ImgState extends State<Add_Img> {
                                     title: new Text('From gallery'),
                                     onTap: () async {
                                       getImage(ImageSource.gallery);
+
                                       Navigator.pop(context);
                                     }),
                                 new ListTile(
@@ -121,6 +148,7 @@ class _Add_ImgState extends State<Add_Img> {
                                     title: new Text('Take a photo'),
                                     onTap: () async {
                                       getImage(ImageSource.camera);
+
                                       Navigator.pop(context);
                                     }),
                               ],

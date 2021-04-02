@@ -21,6 +21,7 @@ class Add_product extends StatefulWidget {
 class _Add_productState extends State<Add_product> {
   final _key = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  int dropdownValue = 1;
 
   String _name, _des, _price, _url, _pid;
   File _image;
@@ -28,7 +29,8 @@ class _Add_productState extends State<Add_product> {
   final _firebaseStorage = FirebaseStorage.instance;
   String imageUrl;
   CollectionReference users = FirebaseFirestore.instance.collection('hotel');
-  String e = "loading...";
+
+  String e = "Product Addedd Successfully..";
   Future pickImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
     if (pickedFile != null) {
@@ -45,12 +47,7 @@ class _Add_productState extends State<Add_product> {
             .ref()
             .child('Product_img/${widget._id}/${_pid}')
             .putFile(_image)
-            .whenComplete(() {
-          setState(() {
-            e = "Product Updated successfullyy..";
-          });
-        });
-        showError(e);
+            .whenComplete(() {});
 
         var downloadUrl = await snapshot.ref.getDownloadURL();
 
@@ -66,6 +63,7 @@ class _Add_productState extends State<Add_product> {
                     "description": _des,
                     "p_id": _pid,
                     "p_url": imageUrl,
+                    "quantity": dropdownValue,
                   },
                 ]),
               })
@@ -85,7 +83,7 @@ class _Add_productState extends State<Add_product> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              'Done',
+              'Upload',
               style: errorStyle,
             ),
             content: Text(
@@ -95,17 +93,37 @@ class _Add_productState extends State<Add_product> {
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Home(widget._id)));
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Home(widget._id)));
+                    });
                   },
                   child: Text('OK'))
             ],
           );
         });
+  }
+
+  openLoadingDialog(BuildContext context, String text) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+              content: Row(children: <Widget>[
+                SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 1,
+                        valueColor: AlwaysStoppedAnimation(Colors.black))),
+                SizedBox(width: 10),
+                Text(text)
+              ]),
+            ));
   }
 
   @override
@@ -207,7 +225,7 @@ class _Add_productState extends State<Add_product> {
                     size: 16.0,
                   )),
             ),
-            Divider(),
+            /*  Divider(),
             Padding(
                 padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
                 child: Row(
@@ -220,27 +238,49 @@ class _Add_productState extends State<Add_product> {
                       size: 16.0,
                     )
                   ],
-                )),
+                )),*/
             Divider(),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                CustomText(
-                  text: "Category:",
-                  color: grey,
-                  weight: FontWeight.w300,
-                ),
-                DropdownButton<String>(
-                  style: TextStyle(color: primary, fontWeight: FontWeight.w300),
-                  icon: Icon(
-                    Icons.filter_list,
-                    color: primary,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  CustomText(
+                    text: "Quantity:",
+                    color: grey,
+                    weight: FontWeight.w300,
                   ),
-                  elevation: 0,
-                  onChanged: (value) {},
-                )
-              ],
-            ),
+                  DropdownButton<int>(
+                    value: dropdownValue,
+                    icon: Icon(Icons.filter_list),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (int newValue) {
+                      setState(() {
+                        dropdownValue = newValue;
+                      });
+                    },
+                    items: <int>[
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                    ].map<DropdownMenuItem<int>>((int value) {
+                      return DropdownMenuItem<int>(
+                        value: value,
+                        child: Text(value.toString()),
+                      );
+                    }).toList(),
+                  )
+                ]),
             Divider(),
             Padding(
               padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
@@ -381,6 +421,10 @@ class _Add_productState extends State<Add_product> {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
                         uploadImage();
+                        openLoadingDialog(context, "Uploading...");
+                        Future.delayed(const Duration(seconds: 2), () {
+                          showError(e);
+                        });
                       }
                     },
                     child: CustomText(

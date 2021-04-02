@@ -70,10 +70,10 @@ class _Sign_upState extends State<Sign_up> {
   }
 
   final _controller = TextEditingController();
-  String _streetNumber = '';
-  String _street = '';
-  String _city = '';
-  String _zipCode = '';
+  //String _streetNumber = '';
+  //String _street = '';
+  //String _city = '';
+  //String _zipCode = '';
 
   @override
   void dispose() {
@@ -99,8 +99,8 @@ class _Sign_upState extends State<Sign_up> {
             'address': _address,
             'district': _district,
           })
-          .then((value) => print("User Added"))
-          .catchError((error) => print("Failed to add user: $error"));
+          .then((value) => print("Document Added"))
+          .catchError((error) => print("Failed to add document: $error"));
     }
 
     return Scaffold(
