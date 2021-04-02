@@ -3,6 +3,7 @@ import 'package:feedthenead/Hotel/Hotel_dashboard/add_img.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/order.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/product.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/restaurent.dart';
+import 'package:feedthenead/Hotel/Hotel_dashboard/update_profile.dart';
 import 'package:feedthenead/Hotel/home.dart';
 import 'package:feedthenead/Hotel/login.dart';
 import 'package:feedthenead/helpers/style.dart';
@@ -161,15 +162,17 @@ class _DashboardState extends State<Dashboard> {
           )),
       ListTile(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Add_Img(widget._id)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Update_profile(widget._id)));
           },
           leading: Icon(
-            Icons.add_a_photo,
+            Icons.update_outlined,
             color: Colors.black,
           ),
           title: CustomText(
-            text: "Add Image",
+            text: "Update Profile",
             color: black,
             size: 16,
             weight: FontWeight.w300,

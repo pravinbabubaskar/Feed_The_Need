@@ -42,6 +42,7 @@ class _HomeState extends State<Home> {
         _name = documentSnapshot.data()['name'];
         _imgurl = documentSnapshot.data()['imageUrl'];
         _type = documentSnapshot.data()['type'];
+
         int len = documentSnapshot.data()['product'].length;
         print(len);
         _count = len.toString();

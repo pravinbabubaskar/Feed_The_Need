@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'seach.dart';
 
@@ -8,7 +8,6 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-
   var queryResultSet = [];
   var tempSearchStore = [];
 
@@ -35,61 +34,57 @@ class _ExploreState extends State<Explore> {
     } else {
       tempSearchStore = [];
       queryResultSet.forEach((element) {
-        if (element['id'].toLowerCase().contains(value.toLowerCase()) ==  true) {
-          if (element['id'].toLowerCase().indexOf(value.toLowerCase()) ==0) {
+        if (element['id'].toLowerCase().contains(value.toLowerCase()) == true) {
+          if (element['id'].toLowerCase().indexOf(value.toLowerCase()) == 0) {
             setState(() {
               tempSearchStore.add(element);
             });
           }
         }
-
       });
-
     }
     if (tempSearchStore.length == 0 && value.length > 1) {
       setState(() {});
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView(children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top:40.0,left: 20,right: 20),
-            child: TextField(
-              onChanged: (val) {
-                initiateSearch(val);
-              },
-              decoration: InputDecoration(
-                  prefixIcon: IconButton(
-                    color: Colors.black,
-                    icon: Icon(Icons.arrow_back),
-                    iconSize: 20.0,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  contentPadding: EdgeInsets.only(left: 25.0),
-                  hintText: 'Search by name',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0))),
-            ),
-          ),
-          SizedBox(height: 10.0),
-          GridView.count(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
-              crossAxisCount: 2,
-              crossAxisSpacing: 4.0,
-              mainAxisSpacing: 4.0,
-              primary: false,
-              shrinkWrap: true,
-              children: tempSearchStore.map((element) {
-                return buildResultCard(element);
-              }).toList())
-        ]));
+      Padding(
+        padding: const EdgeInsets.only(top: 40.0, left: 20, right: 20),
+        child: TextField(
+          onChanged: (val) {
+            initiateSearch(val);
+          },
+          decoration: InputDecoration(
+              prefixIcon: IconButton(
+                color: Colors.black,
+                icon: Icon(Icons.arrow_back),
+                iconSize: 20.0,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              contentPadding: EdgeInsets.only(left: 25.0),
+              hintText: 'Search by name',
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(4.0))),
+        ),
+      ),
+      SizedBox(height: 10.0),
+      GridView.count(
+          padding: EdgeInsets.only(left: 10.0, right: 10.0),
+          crossAxisCount: 2,
+          crossAxisSpacing: 4.0,
+          mainAxisSpacing: 4.0,
+          primary: false,
+          shrinkWrap: true,
+          children: tempSearchStore.map((element) {
+            return buildResultCard(element);
+          }).toList())
+    ]));
   }
 }
 
@@ -99,14 +94,13 @@ Widget buildResultCard(data) {
       elevation: 2.0,
       child: Container(
           child: Center(
-              child: Text(data['id'],
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                ),
-              )
-          )
-      )
-  );
+              child: Text(
+        data['id'],
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 20.0,
+        ),
+      ))));
 }
+*/
