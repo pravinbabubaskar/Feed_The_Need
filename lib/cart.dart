@@ -9,10 +9,14 @@ class _CartState extends State<Cart> {
   @override
   var map = Map();
   List<dynamic> Data=new List();
+  int totalCost =0,withOut=0;
+  int len=0;
   void initState() {
     // TODO: implement initState
     super.initState();
     countOcc();
+    total();
+    len=Data.length;
   }
   countOcc(){
 
@@ -26,16 +30,18 @@ class _CartState extends State<Cart> {
     });
   }
   @override
-  int total(){
-    int a =cost;
-    a+=(cost*0.1).round();
+  void total(){
+    withOut=cost;
     if(isNGOVerified){
-      a-=cost;
+      totalCost-=0;
     }
-    return a;
+    else{
+      totalCost=cost;
+    }
+
   }
   Widget build(BuildContext context) {
-    return cartData.length==0?Scaffold(
+    return Data.length==0?Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -108,12 +114,12 @@ class _CartState extends State<Cart> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Total ($toto items)", style: TextStyle(
+                        Text("Total ($len)", style: TextStyle(
                           fontFamily: 'Sans',
                             fontWeight: FontWeight.w700,
                             fontSize: 18
                         ),),
-                        Text("\₹ $cost", style: TextStyle(
+                        Text("\₹ $withOut", style: TextStyle(
                             fontFamily: 'Sans',
                             fontWeight: FontWeight.w700,
                             fontSize: 16
@@ -130,7 +136,7 @@ class _CartState extends State<Cart> {
                             fontFamily: 'Sans',
                             color: Colors.grey
                         ),),
-                        Text("\₹ "+(cost*0.1).toString(), style: TextStyle(
+                        Text("\₹ "+(withOut*0.1).toString(), style: TextStyle(
                             fontFamily: 'Sans',
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
@@ -149,7 +155,7 @@ class _CartState extends State<Cart> {
                             fontSize: 16,
                             color: Colors.grey
                         ),),
-                        Text(isNGOVerified==true? "- $cost":"- "+ (cost/2).toString() , style: TextStyle(
+                        Text(isNGOVerified==true? "- $totalCost":"- "+ (totalCost/2).toString() , style: TextStyle(
                             fontFamily: 'Sans',
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
@@ -167,7 +173,7 @@ class _CartState extends State<Cart> {
                           fontWeight: FontWeight.w700,
                           fontSize: 18,
                         ),),
-                        Text(total().toString(), style: TextStyle(
+                        Text((totalCost+(withOut*0.1)).toString(), style: TextStyle(
                             fontFamily: 'Sans',
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
@@ -177,7 +183,9 @@ class _CartState extends State<Cart> {
                     ),
                     SizedBox(height: 25,),
                     SizedBox(height: 20,),
-                    Text("dfb"),
+                    SizedBox(
+                      height: 10,
+                    ),
                     InkWell(
                       onTap: openSuccessPage,
                       child: Container(
@@ -205,6 +213,7 @@ class _CartState extends State<Cart> {
   Row placesWidget(Map<dynamic,dynamic>mp)
   {
     return Row(
+
       children: [
         Container(
           height: 100,
@@ -239,23 +248,67 @@ class _CartState extends State<Cart> {
         SizedBox(width: 10,),
         Row(
           children: [
-            Text("Quantity ", style: TextStyle(
-                fontSize: 14,
-                color: Colors.black
-            ),),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
+              child: GestureDetector(
+                onTap: (){
+                  setState(() {
+                    if(map[mp]==1){
+                      Data.removeWhere((element) => element==mp);
+                      cartData.clear();
+                      map.clear();
+                      totalCost=withOut=cost=toto=0;
+                    }
+                    else {
+                        map[mp]--;
+                       // totalCost-=int.parse(mp["price"]);
+                        withOut-=int.parse(mp["price"]);
+                    }
+                  });
+                },
+                child: Text("-", style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.black
+                ),),
               ),
-              child: Text(map[mp].toString(), style: TextStyle(
+            ),
 
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700
-              ),),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                ),
+                child: Text(map[mp].toString(), style: TextStyle(
+
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700
+                ),),
+              ),
+            ),
+            Container(
+              child: GestureDetector(
+                onTap: (){
+                  setState(() {
+                    map[mp]++;
+                    //totalCost+=int.parse(mp["price"]);
+                    withOut+=int.parse(mp["price"]);
+                  });
+                },
+                child: Text("+", style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black
+                ),),
+              ),
             ),
           ],
-        )
+        ),
+        SizedBox(width: 60,),
+        Text((int.parse(mp['price'])*map[mp]).toString(),style: TextStyle(
+          fontFamily: 'Sans',
+          fontSize: 15,
+          color: Colors.grey
+        ),)
       ],
     );
   }

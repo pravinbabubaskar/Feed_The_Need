@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:like_button/like_button.dart';
@@ -284,7 +286,7 @@ class _HotelPageState extends State<HotelPage> {
 
   void openCartPage(Map<dynamic,dynamic> mp) {
     cartData.add(mp);
-    final snackBar = SnackBar(
+    final snackBar1 = SnackBar(
       duration: Duration(seconds: 5),
       backgroundColor: Colors.green,
       content: Text( '$toto Items | ₹ $cost 😋',style: TextStyle(
@@ -295,7 +297,7 @@ class _HotelPageState extends State<HotelPage> {
       ),),
       action: SnackBarAction(
         label: 'Cart',
-        textColor: Colors.white,
+        textColor: Colors.orange[500],
         onPressed: () {
           Navigator.push(
             context,
@@ -305,7 +307,34 @@ class _HotelPageState extends State<HotelPage> {
         },
       ),
     );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    final snackBar2 = SnackBar(
+      duration: Duration(seconds: 5),
+      backgroundColor: Colors.green,
+      content: Text( 'Trying to add from different hotel',style: TextStyle(
+        fontFamily: 'Sans',
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
+        fontSize: 15,
+      ),),
+      action: SnackBarAction(
+        label: 'Clear Cart',
+        textColor: Colors.orange[500],
+        onPressed: () {
+          cost=toto=0;
+          cartData.clear();
+          barName=null;
+        },
+      ),
+    );
+    if(barName==null || barName== data['name']){
+      ScaffoldMessenger.of(context).showSnackBar(snackBar1);
+      barName = data['name'];
+    }
+    else{
+      ScaffoldMessenger.of(context).showSnackBar(snackBar2);
+    }
+
 
   }
 }
