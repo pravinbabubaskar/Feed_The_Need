@@ -41,7 +41,22 @@ dependencies:
   web_scraper: ^0.1.4
   url_launcher: ^5.2.5
   smooth_star_rating: 1.1.1
+
   upi_pay: ^0.2.1
+
+  dio: any
+  flutter_google_places: ^0.2.8
+  google_maps_flutter: ^2.0.1
+  firebase_storage: ^8.0.1
+  image_picker: ^0.7.3
+  like_button: ^2.0.2
+
+
+
+
+
+
+
 
 dev_dependencies:
   flutter_test:

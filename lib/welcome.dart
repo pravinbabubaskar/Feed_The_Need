@@ -18,8 +18,8 @@ class _WelcomeState extends State<Welcome> {
     this.checkAuthentication();
   }
 
-  checkAuthentication() async {
-    FirebaseAuth.instance.authStateChanges().listen((firebaseUser) async {
+  checkAuthentication()  {
+    FirebaseAuth.instance.authStateChanges().listen((firebaseUser)  {
       print(firebaseUser);
       if (firebaseUser != null) {
         Navigator.push(

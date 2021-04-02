@@ -1,3 +1,4 @@
+import 'package:feedthenead/data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'welcome.dart';
@@ -7,6 +8,8 @@ import 'account.dart';
 import 'cart.dart';
 
 String userLoc;
+
+
 class HomePage extends StatefulWidget {
   String location;
   HomePage  ({Key key,@required this.location }) : super(key: key) {
@@ -25,6 +28,10 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _screen=[
     NearMe(),Explore(),Cart(),Account()
   ];
+
+
+
+
 
   void _onItemTaped(int SelectedIndex){
     _pageController.jumpToPage(SelectedIndex);
@@ -48,51 +55,57 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  dynamic move(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => Cart()),
+    );
+  }
+
 
   @override
   void initState() {
     super.initState();
     this.getUser();
-
+    print(cartData);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar:
-        BottomNavigationBar(
-          unselectedItemColor: Colors.grey,
-          fixedColor: Colors.teal,
-          onTap: _onItemTaped,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: 'Near Me',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Explore',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined),
-              label: 'Cart',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined),
-              label: 'Account',
-            ),
-          ],
-          selectedLabelStyle: TextStyle(fontFamily: 'Sans'),
-          currentIndex: _selectedIndex,
-        ),
-        body: PageView(
-          controller: _pageController,
-          children: _screen,
-          onPageChanged: _onPageChanged,
-          physics: NeverScrollableScrollPhysics(),
-        )
+    return Scaffold(
+      bottomNavigationBar:
+      BottomNavigationBar(
+        unselectedItemColor: Colors.grey,
+        fixedColor: Colors.teal,
+        onTap: _onItemTaped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Near Me',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Explore',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_outlined),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_outlined),
+            label: 'Account',
+          ),
+        ],
+        selectedLabelStyle: TextStyle(fontFamily: 'Sans'),
+        currentIndex: _selectedIndex,
       ),
+      body: PageView(
+        controller: _pageController,
+        children: _screen,
+        onPageChanged: _onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
+      )
     );
   }
 

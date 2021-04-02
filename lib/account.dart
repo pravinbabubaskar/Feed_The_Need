@@ -8,15 +8,14 @@ import 'web_scrapping.dart';
 import 'donate.dart';
 import '';
 import 'package:url_launcher/url_launcher.dart';
-class Account extends StatefulWidget {
 
+class Account extends StatefulWidget {
   @override
   _AccountState createState() => _AccountState();
 }
 
 class _AccountState extends State<Account> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
 
   @override
   void initState() {
@@ -30,21 +29,24 @@ class _AccountState extends State<Account> {
         context, MaterialPageRoute(builder: (context) => Welcome()));
   }
 
-  moveWeb() async{
+  moveWeb() async {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => WebScraperApp()));
-
   }
 
   Hotel_login() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
   }
-  Donate() async{
+
+  Donate() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => donate()));
   }
-  Past_orders() async{
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Past_order()));
+
+  Past_orders() async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Past_order()));
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +80,7 @@ class _AccountState extends State<Account> {
             ),
             Divider(color: Colors.black),
             GestureDetector(
-              onTap: moveWeb ,
+              onTap: moveWeb,
               child: Container(
                 //margin: EdgeInsets.all(20),
                 margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -92,7 +94,7 @@ class _AccountState extends State<Account> {
             ),
             Divider(thickness: 0.5, color: Colors.grey),
             GestureDetector(
-              onTap:Past_orders ,
+              onTap: Past_orders,
               child: Container(
                 //margin: EdgeInsets.all(20),
                 margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -117,16 +119,21 @@ class _AccountState extends State<Account> {
                         color: Colors.black,
                         fontWeight: FontWeight.bold)),
               ),
-      ),
+            ),
             Divider(thickness: 0.5, color: Colors.grey),
-              GestureDetector(
-                onTap:Donate  ,
-                child: Container(
-                  //margin: EdgeInsets.all(20),
-                  margin: EdgeInsets.only(top: 10,bottom: 10),
-                  child:Text('Donate For a Cause',style: TextStyle(fontFamily: 'Sans',fontSize: 15,color: Colors.black,fontWeight: FontWeight.bold)),
-    ),
+            GestureDetector(
+              onTap: Donate,
+              child: Container(
+                //margin: EdgeInsets.all(20),
+                margin: EdgeInsets.only(top: 10, bottom: 10),
+                child: Text('Donate For a Cause',
+                    style: TextStyle(
+                        fontFamily: 'Sans',
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold)),
               ),
+            ),
             Divider(thickness: 0.5, color: Colors.grey),
             GestureDetector(
               onTap: signOut,
@@ -150,7 +157,6 @@ class _AccountState extends State<Account> {
                     ],
                   )),
             ),
-
           ],
         ),
       ),

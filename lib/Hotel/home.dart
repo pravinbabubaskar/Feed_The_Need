@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedthenead/helpers/style.dart';
 import 'package:feedthenead/widgets/custom_text.dart';
 import 'package:feedthenead/widgets/small_floating_button.dart';
@@ -9,12 +10,45 @@ import 'Hotel_dashboard/product.dart';
 import 'add_product.dart';
 
 class Home extends StatefulWidget {
+  final String _id;
+
+  Home(this._id);
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  bool hasImage = false;
+  String _type = "type";
+
+  String _name = "name";
+  String _imgurl;
+  String _count = "0";
+  String _len = "0";
+  //List<dynamic> pr;
+  @override
+  void initState() {
+    super.initState();
+    this.getData();
+  }
+
+  getData() {
+    FirebaseFirestore.instance
+        .collection('hotel')
+        .doc(widget._id)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      setState(() {
+        _name = documentSnapshot.data()['name'];
+        _imgurl = documentSnapshot.data()['imageUrl'];
+        _type = documentSnapshot.data()['type'];
+        int len = documentSnapshot.data()['product'].length;
+        print(len);
+        _count = len.toString();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,12 +57,14 @@ class _HomeState extends State<Home> {
         elevation: 0.5,
         backgroundColor: primary,
         title: CustomText(
-          text: "Home_page",
+          text: _name,
           color: white,
+          fontfamily: "poppin",
+          size: 20,
         ),
         actions: <Widget>[],
       ),
-      drawer: Drawer(child: Dashboard()),
+      drawer: Drawer(child: Dashboard(widget._id)),
       backgroundColor: white,
       body: SafeArea(
           child: ListView(
@@ -43,14 +79,21 @@ class _HomeState extends State<Home> {
 
               // restaurant image
               ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(2),
-                    bottomRight: Radius.circular(2),
-                  ),
-                  child: imageWidget(hasImage: hasImage)),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(2),
+                  bottomRight: Radius.circular(2),
+                ),
+                child: _imgurl == null
+                    ? Image.asset(
+                        "images/food.png",
+                        height: 200.0,
+                        width: 400.0,
+                      )
+                    : Image.network(_imgurl, fit: BoxFit.fill),
+              ),
 
               // fading black
-              Container(
+              /*   Container(
                 height: 160,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -72,14 +115,14 @@ class _HomeState extends State<Home> {
                     )),
               ),
 
-              //restaurant name
+                 //restaurant name
               Positioned.fill(
                   bottom: 30,
                   left: 10,
                   child: Align(
                       alignment: Alignment.bottomLeft,
                       child: CustomText(
-                        text: "name",
+                        text: _name,
                         color: white,
                         size: 24,
                         weight: FontWeight.normal,
@@ -92,12 +135,12 @@ class _HomeState extends State<Home> {
                   child: Align(
                       alignment: Alignment.bottomLeft,
                       child: CustomText(
-                        text: "Average Price",
+                        text: _type,
                         color: white,
                         size: 16,
                         weight: FontWeight.w300,
                       ))),
-
+*/
               Positioned.fill(
                   bottom: 2,
                   child: Align(
@@ -160,7 +203,7 @@ class _HomeState extends State<Home> {
                       size: 24,
                     ),
                     trailing: CustomText(
-                      text: "+",
+                      text: _len,
                       size: 24,
                       weight: FontWeight.bold,
                     )),
@@ -184,8 +227,10 @@ class _HomeState extends State<Home> {
                     ]),
                 child: ListTile(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Product()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Product(widget._id)));
                     },
                     leading: Padding(
                       padding: const EdgeInsets.all(4),
@@ -196,7 +241,7 @@ class _HomeState extends State<Home> {
                       size: 24,
                     ),
                     trailing: CustomText(
-                      text: "+",
+                      text: _count,
                       size: 24,
                       weight: FontWeight.bold,
                     )),
@@ -210,8 +255,8 @@ class _HomeState extends State<Home> {
       )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Add_product()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Add_product(widget._id)));
         },
         child: Icon(Icons.add),
         backgroundColor: primary,

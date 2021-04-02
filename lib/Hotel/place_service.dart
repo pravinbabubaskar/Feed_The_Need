@@ -39,24 +39,27 @@ class PlaceApiProvider {
   PlaceApiProvider(this.sessionToken);
 
   final sessionToken;
-
-  final apiKey = 'AIzaSyDzoIBCT8jnLlHqTO7ME4QthF9zpDVvkdI';
+//AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk
+  final apiKey = '';
 
   Future<List<Suggestion>> fetchSuggestions(String input, String lang) async {
-    final request =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=$lang&components=country:ch&key=$apiKey&sessiontoken=$sessionToken';
+    final request = Uri.parse(
+        "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=$lang&components=country:ch&key=$apiKey&sessiontoken=$sessionToken");
 
-    final response = await client.get(Uri.dataFromString(request));
+    final response = await client.get(request);
 
     if (response.statusCode == 200) {
       final result = json.decode(response.body);
       if (result['status'] == 'OK') {
         // compose suggestions in a list
+        print("okkk");
         return result['predictions']
             .map<Suggestion>((p) => Suggestion(p['place_id'], p['description']))
             .toList();
       }
       if (result['status'] == 'ZERO_RESULTS') {
+        print("zeroooo");
+
         return [];
       }
       throw Exception(result['error_message']);
@@ -66,10 +69,10 @@ class PlaceApiProvider {
   }
 
   Future<Place> getPlaceDetailFromId(String placeId) async {
-    final request =
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$apiKey&sessiontoken=$sessionToken';
+    final request = Uri.parse(
+        "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$apiKey&sessiontoken=$sessionToken");
 
-    final response = await client.get(Uri.dataFromString(request));
+    final response = await client.get(request);
 
     if (response.statusCode == 200) {
       final result = json.decode(response.body);
