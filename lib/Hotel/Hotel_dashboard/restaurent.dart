@@ -20,7 +20,7 @@ class _RestaurentState extends State<Restaurent> {
   String _imgurl;
   String _address = "address";
   String _count = "0";
-  String _len = "0";
+  String _len = "0", _number = "0", _email = "@";
   //List<dynamic> pr;
   @override
   void initState() {
@@ -39,11 +39,10 @@ class _RestaurentState extends State<Restaurent> {
         _imgurl = documentSnapshot.data()['imageUrl'];
         _type = documentSnapshot.data()['type'];
         _address = documentSnapshot.data()['address'];
-        print(_address);
+        _number = documentSnapshot.data()['number'];
+        _email = documentSnapshot.data()['email'];
 
-        int len = documentSnapshot.data()['product'].length;
-        print(len);
-        _count = len.toString();
+        print(_number);
       });
     });
   }
@@ -70,7 +69,7 @@ class _RestaurentState extends State<Restaurent> {
             height: 10,
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             child: Padding(
               padding: const EdgeInsets.all(4),
               child: Card(
@@ -95,9 +94,6 @@ class _RestaurentState extends State<Restaurent> {
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 5,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -127,9 +123,6 @@ class _RestaurentState extends State<Restaurent> {
               ),
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Padding(
@@ -147,7 +140,7 @@ class _RestaurentState extends State<Restaurent> {
                         size: 24,
                       ),
                       subtitle: CustomText(
-                        text: "9876543210",
+                        text: _number,
                         size: 18,
                       ),
                       trailing: Icon(
@@ -157,9 +150,6 @@ class _RestaurentState extends State<Restaurent> {
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 10,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -178,7 +168,7 @@ class _RestaurentState extends State<Restaurent> {
                         size: 24,
                       ),
                       subtitle: CustomText(
-                        text: "abc@gmail.com",
+                        text: _email,
                         size: 18,
                       ),
                       trailing: Icon(

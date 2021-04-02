@@ -8,34 +8,48 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
 
-class Add_product extends StatefulWidget {
+class Update_profile extends StatefulWidget {
   final String _id;
 
-  Add_product(this._id);
+  Update_profile(this._id);
   @override
-  _Add_productState createState() => _Add_productState();
+  _Update_profileState createState() => _Update_profileState();
 }
 
-class _Add_productState extends State<Add_product> {
+class _Update_profileState extends State<Update_profile> {
   final _key = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   int dropdownValue = 1;
-  int quantity = 1;
 
-  String _name, _des, _price, _url, _pid;
+  String _name, _des, _price, _url, _pid, _phone, _email;
   File _image;
   final picker = ImagePicker();
   final _firebaseStorage = FirebaseStorage.instance;
   String imageUrl;
   CollectionReference users = FirebaseFirestore.instance.collection('hotel');
+  bool ans = false;
+  String e = "Profile updated Successfully..";
 
-  String e = "Product Addedd Successfully..";
-  Future pickImage(ImageSource source) async {
+  update() {
+    users
+        .doc(widget._id)
+        .update({
+          "number": _phone,
+          "email": _email,
+        })
+        .then((value) => print("profile Updated"))
+        .catchError((error) => print("Failed to update image: $error"));
+  }
+
+  /* Future pickImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
     if (pickedFile != null) {
-      _image = File(pickedFile.path);
+      setState(() {
+        ans = true;
+        _image = File(pickedFile.path);
+      });
     }
   }
 
@@ -46,7 +60,7 @@ class _Add_productState extends State<Add_product> {
 
         var snapshot = await _firebaseStorage
             .ref()
-            .child('Product_img/${widget._id}/${_name}')
+            .child('Restaurent_img/${widget._id}')
             .putFile(_image)
             .whenComplete(() {});
 
@@ -57,16 +71,8 @@ class _Add_productState extends State<Add_product> {
           users
               .doc(widget._id)
               .update({
-                "product": FieldValue.arrayUnion([
-                  {
-                    "name": _name,
-                    "price": _price,
-                    "description": _des,
-                    "p_id": _pid,
-                    "p_url": imageUrl,
-                    "quantity": quantity,
-                  },
-                ]),
+                "number": _phone,
+                "email": _email,
               })
               .then((value) => print("Image Updated"))
               .catchError((error) => print("Failed to update image: $error"));
@@ -77,14 +83,14 @@ class _Add_productState extends State<Add_product> {
       }
     });
   }
-
+*/
   showError(String errormessage) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              'Upload',
+              'Done',
               style: errorStyle,
             ),
             content: Text(
@@ -137,7 +143,7 @@ class _Add_productState extends State<Add_product> {
           elevation: 0.0,
           backgroundColor: white,
           title: Text(
-            "Add Product",
+            "Update Profile",
             style: TextStyle(color: black),
           )),
       body: Form(
@@ -147,7 +153,7 @@ class _Add_productState extends State<Add_product> {
             SizedBox(
               height: 10,
             ),
-            Container(
+            /* Container(
               height: 130,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -225,7 +231,7 @@ class _Add_productState extends State<Add_product> {
                     fontfamily: "poppin",
                     size: 16.0,
                   )),
-            ),
+            ),*/
             /*  Divider(),
             Padding(
                 padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
@@ -240,8 +246,8 @@ class _Add_productState extends State<Add_product> {
                     )
                   ],
                 )),*/
-            Divider(),
-            /* Row(
+            /* Divider(),
+            Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   CustomText(
@@ -281,54 +287,8 @@ class _Add_productState extends State<Add_product> {
                       );
                     }).toList(),
                   )
-                ]),*/
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                    icon: Icon(
-                      Icons.remove,
-                      size: 36,
-                    ),
-                    onPressed: () {
-                      if (quantity != 1) {
-                        setState(() {
-                          quantity -= 1;
-                        });
-                      }
-                    }),
-              ),
-              GestureDetector(
-                onTap: () async {},
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: primary, borderRadius: BorderRadius.circular(20)),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(28, 12, 28, 12),
-                    child: CustomText(
-                      text: "Add $quantity quantity",
-                      color: white,
-                      size: 22,
-                      weight: FontWeight.w300,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                    icon: Icon(
-                      Icons.add,
-                      size: 36,
-                      color: red,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        quantity += 1;
-                      });
-                    }),
-              ),
-            ]),
+                ]),
+                
             Divider(),
             Padding(
               padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
@@ -390,6 +350,10 @@ class _Add_productState extends State<Add_product> {
                 ),
               ),
             ),
+            */
+            SizedBox(
+              height: 30,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
               child: Container(
@@ -407,16 +371,16 @@ class _Add_productState extends State<Add_product> {
                   padding: const EdgeInsets.only(left: 14),
                   child: TextFormField(
                       validator: (input) {
-                        if (input.isEmpty) return 'Enter product Description';
+                        if (input.isEmpty) return 'Enter Email-id';
                       },
                       decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Product description",
+                          hintText: "Email id",
                           hintStyle: TextStyle(
                               color: black,
                               fontFamily: "raleway",
                               fontSize: 18)),
-                      onSaved: (input) => _des = input),
+                      onSaved: (input) => _email = input),
                 ),
               ),
             ),
@@ -437,19 +401,22 @@ class _Add_productState extends State<Add_product> {
                   padding: const EdgeInsets.only(left: 14),
                   child: TextFormField(
                       validator: (input) {
-                        if (input.isEmpty) return 'Enter product price';
+                        if (input.isEmpty) return 'Enter contact number';
                       },
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Price",
+                          hintText: "Contact Number",
                           hintStyle: TextStyle(
                               color: black,
                               fontFamily: "raleway",
                               fontSize: 18)),
-                      onSaved: (input) => _price = input),
+                      onSaved: (input) => _phone = input),
                 ),
               ),
+            ),
+            SizedBox(
+              height: 40,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
@@ -468,15 +435,17 @@ class _Add_productState extends State<Add_product> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-                        uploadImage();
-                        openLoadingDialog(context, "Uploading...");
+
+                        //  uploadImage();
+                        update();
+                        openLoadingDialog(context, "Updating...");
                         Future.delayed(const Duration(seconds: 2), () {
                           showError(e);
                         });
                       }
                     },
                     child: CustomText(
-                      text: "Post",
+                      text: "update",
                       color: white,
                       fontfamily: "poppin",
                       size: 20.0,
