@@ -9,5 +9,6 @@ bool isNGOVerified = false;
 List<dynamic> hotelData ;
 Position latlong;
 List<dynamic> cartData=new List();
+var barName ;
 int toto = 0;
 int cost=0;
