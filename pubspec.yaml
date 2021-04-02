@@ -47,6 +47,7 @@ dependencies:
   dio: any
   flutter_google_places: ^0.2.8
   google_maps_flutter: ^2.0.1
+  google_maps_webservice: ^0.0.20-nullsafety.2
   firebase_storage: ^8.0.1
   image_picker: ^0.7.3
   like_button: ^2.0.2
