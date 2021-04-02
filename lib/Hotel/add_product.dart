@@ -22,6 +22,7 @@ class _Add_productState extends State<Add_product> {
   final _key = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   int dropdownValue = 1;
+  int quantity = 1;
 
   String _name, _des, _price, _url, _pid;
   File _image;
@@ -63,7 +64,7 @@ class _Add_productState extends State<Add_product> {
                     "description": _des,
                     "p_id": _pid,
                     "p_url": imageUrl,
-                    "quantity": dropdownValue,
+                    "quantity": quantity,
                   },
                 ]),
               })
@@ -240,7 +241,7 @@ class _Add_productState extends State<Add_product> {
                   ],
                 )),*/
             Divider(),
-            Row(
+            /* Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   CustomText(
@@ -280,7 +281,54 @@ class _Add_productState extends State<Add_product> {
                       );
                     }).toList(),
                   )
-                ]),
+                ]),*/
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                    icon: Icon(
+                      Icons.remove,
+                      size: 36,
+                    ),
+                    onPressed: () {
+                      if (quantity != 1) {
+                        setState(() {
+                          quantity -= 1;
+                        });
+                      }
+                    }),
+              ),
+              GestureDetector(
+                onTap: () async {},
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: primary, borderRadius: BorderRadius.circular(20)),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(28, 12, 28, 12),
+                    child: CustomText(
+                      text: "Add $quantity quantity",
+                      color: white,
+                      size: 22,
+                      weight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                    icon: Icon(
+                      Icons.add,
+                      size: 36,
+                      color: red,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        quantity += 1;
+                      });
+                    }),
+              ),
+            ]),
             Divider(),
             Padding(
               padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
