@@ -61,7 +61,7 @@ child:GestureDetector(
     onTap: () {
       Navigator.push(context,
           MaterialPageRoute(
-            builder: (context) => UpiPayment(widget.post.get('user')),
+            builder: (context) => UpiPayment(widget.post.get('9832914993@api')),
 
           ));
     }

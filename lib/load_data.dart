@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'data.dart';
 import 'constants.dart';
 import 'home.dart';
+import 'package:web_scraper/web_scraper.dart';
 
 class Load extends StatefulWidget {
   @override
@@ -32,6 +33,7 @@ class _LoadState extends State<Load> {
     getData();
     //getDistance();
   }
+
 
   // getDistance() async{
   //   var dio = Dio();

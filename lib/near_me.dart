@@ -27,7 +27,6 @@ class _NearMeState extends State<NearMe> {
     // TODO: implement initState
     super.initState();
     getData();
-   // getRating();
   }
 
   getData() {
@@ -39,17 +38,6 @@ class _NearMeState extends State<NearMe> {
     }
   }
 
-  getRating() async {
-    var d;
-    final webScraper = WebScraper('https://www.google.com');
-    if (await webScraper.loadWebPage(
-        '/maps/search/annapoorna+coimbatore/@11.0201763,76.9921138,13z/data=!3m1!4b1')) {
-      d = webScraper.getElementTitle(
-          "div.section-layout.section-scrollbox.scrollable-y.scrollable-show.section-layout-flex-vertical > div.section-layout.section-scrollbox.scrollable-y.scrollable-show.section-layout-flex-vertical > div:nth-child(1) > div > div > div.sJKr7qpXOXd__row > div.section-place-result-container-summary > div > div > div > div:nth-child(3) > div > span.gm2-body-2 > span.rs9iHBFJiiu__container > span.rs9iHBFJiiu__rating");
-    }
-    print("v dfdf");
-    print(d);
-  }
 
   getDistance(double lat, double long) async {
     var dio = Dio();
