@@ -48,13 +48,15 @@ class UpiPaymentState extends State<UpiPayment> {
 
   //  opens user selected Payment app.
   Future<void> openpaymentapp(ApplicationMeta app) async {
-    final err = validatePID(upicontrol.text);
+    /*final err = validatePID(upicontrol.text);
     if (err != null) {
       setState(() {
         upiError = err;
       });
       return;
     }
+
+     */
     setState(() {
       upiError = null;
     });
@@ -74,20 +76,7 @@ class UpiPaymentState extends State<UpiPayment> {
 
   }
 
-  String validatePID(String value) {
-    if (value.isEmpty) {
-      return 'Enter UPI Address.';
-    }
-
-    if (!UpiPay.checkIfUpiAddressIsValid(value)) {
-      return 'Invalid UPI ID.';
-    }
-
-    return "";
-
-  }
-
-  @override
+    @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -133,7 +122,7 @@ class UpiPaymentState extends State<UpiPayment> {
                             Expanded(
                               child: TextFormField(
                                 controller:upicontrol,
-                                enabled: false,//true,
+                                enabled: true,
                                 style: TextStyle(fontSize: 15,fontFamily: 'OpenSans',color:Colors.white),
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
@@ -267,3 +256,17 @@ class UpiPaymentState extends State<UpiPayment> {
     );
   }
 }
+
+String validatePID(String value) {
+  if (value.isEmpty) {
+    return 'Enter UPI Address.';
+  }
+
+  if (!UpiPay.checkIfUpiAddressIsValid(value)) {
+    return 'Invalid UPI ID.';
+  }
+
+  return "";
+
+}
+
