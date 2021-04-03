@@ -26,7 +26,6 @@ class _LoadState extends State<Load> {
   bool isloggedin = false;
   void initState() {
     super.initState();
-    cartData.clear();
     getLocation();
     hideScreen();
     getUser();

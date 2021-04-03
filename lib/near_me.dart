@@ -27,7 +27,7 @@ class _NearMeState extends State<NearMe> {
     // TODO: implement initState
     super.initState();
     getData();
-    getRating();
+   // getRating();
   }
 
   getData() {

@@ -1,28 +1,23 @@
-//import 'dart:html';
+
+import 'dart:typed_data';
+import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:firebase_core/firebase_core.dart';
-final CollectionReference userref=FirebaseFirestore.instance.collection('NGO');
-class donate extends StatefulWidget {
-  @override
-  _Donation createState() => _Donation();
-}
 
-class _Donation extends State<donate> {
-  Future<void> _launched;
-  String launchURL = 'https://www.paytm.com';
+import 'DetailPage.dart';
 
-
+//final CollectionReference userref=FirebaseFirestore.instance.collection('NGO');
+/*Future<void> _launched;
+  String launchURL ='upi://pay?pa=pravinbabu171@okhdfc&pn=Hussain%20Imthiaz%20Hussain&aid=uGICAgIDNz7WSBw';
   Future<void> _launchapp(String url) async {
     if (await canLaunch(url)) {
       final bool nativeAppLaunchSucceeded = await launch(
         url,
         forceSafariVC: false,
         universalLinksOnly: true,
-        //   headers: <String , String>{'header_key':'header_value'
-        // },
       );
       if (!nativeAppLaunchSucceeded) {
         await launch(url, forceSafariVC: true);
@@ -31,64 +26,109 @@ class _Donation extends State<donate> {
       throw 'Could not launch';
     }
   }
-
   //@override
-/*  void initState() {
-
+  void initState() {
     super.initState();
      _launchapp(launchURL);
+  }
+*/
 
-  }*/
+class donate extends StatefulWidget {
+
+  @override
+  _Donation createState() => _Donation();
+
+}
+
+class _Donation extends State<donate> {
+
+  void initState() {
+    super.initState();
+  }
 
 
 
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(title: Text("DONATE"),
-           backgroundColor: Colors.blueGrey,
+      appBar: AppBar(title: Text("DONATE",style: TextStyle(
+          fontFamily: 'Sans',
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.black
+          ),
+          ),
+           backgroundColor: Colors.white,
         centerTitle: true,
           ),
-      body:StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('NGO').snapshots(),
+        body : ListPage(),
+    );
+  }
 
-        builder: (BuildContext context,AsyncSnapshot<QuerySnapshot>snapshot) {
-          mainAxisAlignment: MainAxisAlignment.center;
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListView(
-            children: snapshot.data.docs.map((document) {
-              return Center(
-                  child: Container(
-                  width:MediaQuery.of(context).size.width/1.2,
-              height:MediaQuery.of(context).size.width/1.2,
-              child: Text("NAME- "+document['name']
-                  +"\nMAIL ID- "+document['user'],
-                  textAlign:TextAlign.center,
-              style: TextStyle(
-              fontSize: 17.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Raleway',
-              color: Colors.blueGrey,
+}
 
-              )
-              ),
+class ListPage extends StatefulWidget{
 
-                  ),
-              );
-            }
-            ).toList()
+  @override
+  _ListPageState createState() =>_ListPageState();
 
+}
+
+class _ListPageState extends State<ListPage>{
+
+  Future getPosts() async{
+
+    var firestore= FirebaseFirestore.instance;
+    QuerySnapshot qn= await firestore. collection("NGO").get();
+    return qn.docs;
+
+  }
+
+  navigateToDetail(DocumentSnapshot post){
+
+    Navigator.push(context,
+        MaterialPageRoute(
+            builder:(context)=>DetailPage(post:post,)
+        )
+    );
+  }
+
+  @override
+  Widget build(BuildContext context){
+
+    return Container(
+      child: FutureBuilder(
+
+          future: getPosts(),
+          builder: (_,snapshot){
+
+            if(snapshot.connectionState==ConnectionState.waiting){
+          return Center(
+
+            child: Text("Loading"),
           );
-
         }
-    )
-    //final
+        else {
+          return ListView.builder(
+              itemCount:snapshot.data.length,
+              itemBuilder: (_,index) {
+               return ListTile(
+                title:Text(snapshot.data[index]['name'],style: TextStyle(
+                    fontFamily: 'Sans',
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueGrey
+                ),
+                ),
 
-
-
+                 onTap:()=>navigateToDetail(snapshot.data[index]),
+                );
+              }
+              );
+        }
+      }
+      ),
     );
   }
 }
+
