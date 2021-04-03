@@ -9,7 +9,6 @@ import 'cart.dart';
 
 String userLoc;
 
-
 class HomePage extends StatefulWidget {
   String location;
   HomePage  ({Key key,@required this.location }) : super(key: key) {
@@ -68,7 +67,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     this.getUser();
-    print(cartData);
+
   }
 
   @override
