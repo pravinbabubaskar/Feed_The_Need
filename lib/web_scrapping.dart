@@ -18,10 +18,11 @@ class _WebScraperAppState extends State<WebScraperApp> {
   final webScraper = WebScraper('https://ngodarpan.gov.in');
   final _store = FirebaseFirestore.instance;
   List<String> dummy;
+  int pos,ind;
   String result;
   bool flag = false,progress=false;
   String name;
-  void findPerson(List<String> people, String Name) async{
+  void findPerson(List<String> people, String Name,int i) async{
     print(people);
     if(people[0][0].codeUnitAt(0)>Name[0].codeUnitAt(0)){
       setState(() {
@@ -32,6 +33,11 @@ class _WebScraperAppState extends State<WebScraperApp> {
     }
     final index = people.indexWhere((element) => element == Name);
     if (index >= 0) {
+      setState(() {
+        ind=index;
+        pos=i;
+      });
+
       print('found');
       setState(() {
         result = people[index];
@@ -104,9 +110,11 @@ class _WebScraperAppState extends State<WebScraperApp> {
         dummy = webScraper
             .getElementTitle("div.ibox-content > table > tbody > tr> td > a ");
       }
-      findPerson(dummy, name);
+      findPerson(dummy, name,i);
     }
   }
+
+
 
 
 
