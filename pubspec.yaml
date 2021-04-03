@@ -47,6 +47,9 @@ dependencies:
   firebase_storage: ^8.0.1
   image_picker: ^0.7.3
   like_button: ^2.0.2
+  animations: ^2.0.0
+  flutter_staggered_animations: ^1.0.0
+
 
 
 
