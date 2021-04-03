@@ -192,7 +192,7 @@ class _CartState extends State<Cart> {
                           fontWeight: FontWeight.w700,
                           fontSize: 18,
                         ),),
-                        Text((withOut+(withOut*0.1)).toString(), style: TextStyle(
+                        Text(((withOut+(withOut*0.1))).toString(), style: TextStyle(
                             fontFamily: 'Sans',
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
@@ -213,7 +213,7 @@ class _CartState extends State<Cart> {
                           borderRadius: BorderRadius.all(Radius.circular(40)),
                           color: Colors.green,
                         ),
-                        child: Text("Check Out", style: TextStyle(
+                        child: Text("Order", style: TextStyle(
                           fontFamily: 'Sans',
                             color: Colors.white,
                             fontWeight: FontWeight.w700
