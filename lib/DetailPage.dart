@@ -27,17 +27,20 @@ class _DetailPageState extends State<DetailPage>{
     return Scaffold(
 
       appBar:AppBar(
+          backgroundColor: Colors.white,
           title:Text(widget.post.get('name'),style: TextStyle(
               fontFamily: 'Sans',
               fontSize: 20,
               color: Colors.black,
               fontWeight: FontWeight.bold),
+
           ),
           centerTitle: true),
 
       body:
       Container(
-child:GestureDetector(
+  child:
+  GestureDetector(
         child:
         Card(
           child:ListTile(
@@ -61,7 +64,7 @@ child:GestureDetector(
     onTap: () {
       Navigator.push(context,
           MaterialPageRoute(
-            builder: (context) => UpiPayment(widget.post.get('9832914993@api')),
+            builder: (context) => UpiPayment(widget.post.get('user')),
 
           ));
     }
