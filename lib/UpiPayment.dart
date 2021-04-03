@@ -38,10 +38,23 @@ class UpiPaymentState extends State<UpiPayment> {
   }
 
   @override
+  void dispose() {
+
+    // dispose the donation amount and pid fields after use.
+    upicontrol.dispose();
+    donationamountControl.dispose();
+    super.dispose();
+  }
 
   //  opens user selected Payment app.
   Future<void> openpaymentapp(ApplicationMeta app) async {
-
+    final err = validatePID(upicontrol.text);
+    if (err != null) {
+      setState(() {
+        upiError = err;
+      });
+      return;
+    }
     setState(() {
       upiError = null;
     });
@@ -58,6 +71,19 @@ class UpiPaymentState extends State<UpiPayment> {
       transactionRef: transactionRef,
       merchantCode: '7372',
     );
+
+  }
+
+  String validatePID(String value) {
+    if (value.isEmpty) {
+      return 'Enter UPI Address.';
+    }
+
+    if (!UpiPay.checkIfUpiAddressIsValid(value)) {
+      return 'Invalid UPI ID.';
+    }
+
+    return "";
 
   }
 
