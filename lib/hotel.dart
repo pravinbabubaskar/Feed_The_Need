@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:like_button/like_button.dart';
 import 'cart.dart';
@@ -12,6 +13,7 @@ class HotelPage extends StatefulWidget {
   @override
   _HotelPageState createState() => _HotelPageState(this.hotelData);
 }
+
 class _HotelPageState extends State<HotelPage> {
   var data;
   List<dynamic> products = new List();
@@ -158,14 +160,25 @@ class _HotelPageState extends State<HotelPage> {
             ),
           ),
           Flexible(
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: products.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return dishWidget(products[index]);
-                }),
+            child: AnimationLimiter(
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: products.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    //  return dishWidget(products[index]);
+                    return AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 375),
+                      child: SlideAnimation(
+                        verticalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: dishWidget(products[index]),
+                        ),
+                      ),
+                    );
+                  }),
+            ),
           ),
-
         ],
       ),
     );
@@ -258,10 +271,9 @@ class _HotelPageState extends State<HotelPage> {
                     onPressed: () {
                       setState(() {
                         toto++;
-                        cost+=int.parse(mp["price"]);
+                        cost += int.parse(mp["price"]);
                         openCartPage(mp);
                       });
-
                     },
                     child: Text(
                       "Add",
@@ -284,25 +296,27 @@ class _HotelPageState extends State<HotelPage> {
     );
   }
 
-  void openCartPage(Map<dynamic,dynamic> mp) {
+  void openCartPage(Map<dynamic, dynamic> mp) {
     cartData.add(mp);
     final snackBar1 = SnackBar(
       duration: Duration(seconds: 5),
       backgroundColor: Colors.green,
-      content: Text( '$toto Items | ₹ $cost 😋',style: TextStyle(
-        fontFamily: 'Sans',
-        color: Colors.white,
-        fontWeight: FontWeight.w500,
-        fontSize: 15,
-      ),),
+      content: Text(
+        '$toto Items | ₹ $cost 😋',
+        style: TextStyle(
+          fontFamily: 'Sans',
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+          fontSize: 15,
+        ),
+      ),
       action: SnackBarAction(
         label: 'Cart',
         textColor: Colors.orange[500],
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => Cart()),
+            MaterialPageRoute(builder: (context) => Cart()),
           );
         },
       ),
@@ -311,30 +325,30 @@ class _HotelPageState extends State<HotelPage> {
     final snackBar2 = SnackBar(
       duration: Duration(seconds: 5),
       backgroundColor: Colors.green,
-      content: Text( 'Trying to add from different hotel',style: TextStyle(
-        fontFamily: 'Sans',
-        color: Colors.white,
-        fontWeight: FontWeight.w500,
-        fontSize: 15,
-      ),),
+      content: Text(
+        'Trying to add from different hotel',
+        style: TextStyle(
+          fontFamily: 'Sans',
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+          fontSize: 15,
+        ),
+      ),
       action: SnackBarAction(
         label: 'Clear Cart',
         textColor: Colors.orange[500],
         onPressed: () {
-          cost=toto=0;
+          cost = toto = 0;
           cartData.clear();
-          barName=null;
+          barName = null;
         },
       ),
     );
-    if(barName==null || barName== data['name']){
+    if (barName == null || barName == data['name']) {
       ScaffoldMessenger.of(context).showSnackBar(snackBar1);
       barName = data['name'];
-    }
-    else{
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(snackBar2);
     }
-
-
   }
 }
