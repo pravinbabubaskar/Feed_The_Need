@@ -185,7 +185,8 @@ class _Sign_upState extends State<Sign_up> {
                               labelText: 'Name',
                               prefixIcon: Icon(Icons.email, color: Colors.teal),
                             ),
-                            onSaved: (input) => _name = input),
+                            onSaved: (input) => _name = input[0].toUpperCase() +
+                                input.substring(1).toLowerCase()),
                       ),
                     ),
                     Container(
@@ -256,7 +257,8 @@ class _Sign_upState extends State<Sign_up> {
                               prefixIcon:
                                   Icon(Icons.no_drinks, color: Colors.teal),
                             ),
-                            onSaved: (input) => _type = input),
+                            onSaved: (input) => _type = input[0].toUpperCase() +
+                                input.substring(1).toLowerCase()),
                       ),
                     ),
                     Container(

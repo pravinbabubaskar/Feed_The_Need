@@ -1,6 +1,7 @@
 import 'package:feedthenead/Hotel/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'constants.dart';
 import 'data.dart';
 import 'Past_orders.dart';
 import 'welcome.dart';
@@ -16,6 +17,30 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  showError(String errormessage) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'NGO+',
+              style: errorStyle,
+            ),
+            content: Text(
+              errormessage,
+              style: messageStyle,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'))
+            ],
+          );
+        });
+  }
 
   @override
   void initState() {
@@ -39,7 +64,12 @@ class _AccountState extends State<Account> {
   }
 
   Donate() async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => donate()));
+    if (isNGOVerified) {
+      showError("Only User can donate...");
+    } else {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => donate()));
+    }
   }
 
   Past_orders() async {
