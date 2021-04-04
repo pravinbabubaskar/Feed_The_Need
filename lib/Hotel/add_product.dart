@@ -386,7 +386,8 @@ class _Add_productState extends State<Add_product> {
                               color: black,
                               fontFamily: "raleway",
                               fontSize: 18)),
-                      onSaved: (input) => _name = input),
+                      onSaved: (input) => _name = input[0].toUpperCase() +
+                          input.substring(1).toLowerCase()),
                 ),
               ),
             ),
@@ -416,7 +417,8 @@ class _Add_productState extends State<Add_product> {
                               color: black,
                               fontFamily: "raleway",
                               fontSize: 18)),
-                      onSaved: (input) => _des = input),
+                      onSaved: (input) => _des = input[0].toUpperCase() +
+                          input.substring(1).toLowerCase()),
                 ),
               ),
             ),
