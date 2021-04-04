@@ -61,7 +61,7 @@ class _AccountState extends State<Account> {
                   text: user1.displayName,
                   style: TextStyle(
                       fontFamily: 'Sans',
-                      fontSize: 20,
+                      fontSize: 25,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
                   children: <TextSpan>[
@@ -69,7 +69,7 @@ class _AccountState extends State<Account> {
                         text: '\n' + user1.email,
                         style: TextStyle(
                             fontFamily: 'Sans',
-                            fontSize: 15,
+                            fontSize: 20,
                             color: Colors.grey)),
                   ],
                 ),

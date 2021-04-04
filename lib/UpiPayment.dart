@@ -15,10 +15,9 @@ class UpiPayment extends StatefulWidget {
 }
 
 class UpiPaymentState extends State<UpiPayment> {
-
   // used for storing errors.
   String upiError;
-  
+
   // used to store the UPI ID and the donation amount
   TextEditingController upicontrol = TextEditingController();
   TextEditingController donationamountControl = TextEditingController();
@@ -31,7 +30,7 @@ class UpiPaymentState extends State<UpiPayment> {
     super.initState();
 
     // PId data to donate money
-    upicontrol.text = (widget.payid);//.toString();
+    upicontrol.text = "9943914993@api"; //.toString();
 
     // stores the list of payment apps installed in mobile phone
     paymentapps = UpiPay.getInstalledUpiApplications();
@@ -39,7 +38,6 @@ class UpiPaymentState extends State<UpiPayment> {
 
   @override
   void dispose() {
-
     // dispose the donation amount and pid fields after use.
     upicontrol.dispose();
     donationamountControl.dispose();
@@ -73,187 +71,199 @@ class UpiPaymentState extends State<UpiPayment> {
       transactionRef: transactionRef,
       merchantCode: '7372',
     );
-
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Colors.cyanAccent[400],
-                  Colors.blue[600]
-                ],
-              )
-          ),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: AppBar(title: Text('Proceed Payment'),
-              leading: IconButton(
-                icon:Icon(Icons.arrow_back),
-                onPressed: ()
-                {
-                  Navigator.pop(context, false);
-                  },
-              ),
+        color: Colors.white,
+        home: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Text(
+              'Payment',
+              style: TextStyle(color: Colors.black, fontFamily: 'Sans'),
             ),
-
-            body: SafeArea(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: ListView(
+            backgroundColor: Colors.white,
+          ),
+          body: SafeArea(
+              child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: ListView(
+              children: <Widget>[
+                SizedBox(height: 20),
+                Text(' "Giving is not just about making a donation it\'s about making a Difference" ',style:TextStyle (
+                fontFamily: 'Raleway',
+                  fontSize: 20,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1
+                ),textAlign: TextAlign.center,),
+                Text("-Kathy Calvin",style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 20,
+                    color: Colors.grey,
+                ),textAlign: TextAlign.right,),
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(top: 32),
+                  child: Row(
                     children: <Widget>[
-                      SizedBox(height: 40),
-                      Text("  Payment Details",
+                      Expanded(
+                        child: TextFormField(
+                          controller: upicontrol,
+                          enabled: false,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'OpenSans',
+                              color: Colors.black),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Enter the valid PID',
+                            labelText: 'UPI ID',
+                            labelStyle: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Sans',
+                                color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (upiError != null)
+                  Container(
+                    margin: EdgeInsets.only(top: 4, left: 12),
+                    child: Text(
+                      upiError,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                Container(
+                  margin: EdgeInsets.only(top: 32),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Theme(
+                          data: new ThemeData(
+                            primaryColor: Colors.grey,
+                            primaryColorDark: Colors.grey,
+                          ),
+                          child: TextField(
+                            controller: donationamountControl,
+                            enabled: true,
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Sans',
+                                color: Colors.black),
+                            decoration: InputDecoration(
+                              border: new OutlineInputBorder(
+                                  borderSide: new BorderSide(
+                                      color: Colors.black, width: 10)),
+                              labelText: 'Donation Amount',
+                              labelStyle: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Sans',
+                                  color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 35),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text("  Payment Via",
+                        style: TextStyle(
+                            fontSize: 25, fontFamily: 'Sans', color: Colors.black,fontWeight: FontWeight.bold)),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Divider(
+                          thickness: 2,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 40, bottom: 32),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 15),
+                        child: Text(
+                          'Apps',
                           style: TextStyle(
                               fontSize: 20,
                               fontFamily: 'Sans',
-                              color:Colors.white)
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 32),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: TextFormField(
-                                controller:upicontrol,
-                                enabled: true,
-                                style: TextStyle(fontSize: 15,fontFamily: 'OpenSans',color:Colors.white),
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Enter the valid PID',
-                                  labelText: 'UPI ID',
-                                  labelStyle: TextStyle(fontSize: 15,fontFamily: 'Sans',color:Colors.white),
-                                ),
-                              ),
-                            ),
-                          ],
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
                         ),
                       ),
+                      FutureBuilder<List<ApplicationMeta>>(
+                        future: paymentapps,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState !=
+                              ConnectionState.done) {
+                            return Container();
+                          }
 
-                      if (upiError != null)
-                        Container(
-                          margin: EdgeInsets.only(top: 4, left: 12),
-                          child: Text(
-                            upiError,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      Container(
-                        margin: EdgeInsets.only(top: 32),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Theme(
-                                data: new ThemeData(
-                                  primaryColor: Colors.grey,
-                                  primaryColorDark: Colors.grey,
-                                ),
-                                child: TextField(
-                                  controller: donationamountControl,
-                                  enabled: true,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'Sans',
-                                      color:Colors.white
-                                  ),
-                                  decoration: InputDecoration(
-                                    border: new OutlineInputBorder(
-                                        borderSide: new BorderSide(color: Colors.white, width: 10)
-                                    ),
-
-                                    labelText: 'Donation Amount',
-                                    labelStyle: TextStyle(fontSize: 15,fontFamily: 'OpenSans',color:Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(height: 35),
-                      Text("  Payment via",
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontFamily: 'Sans',
-                              color:Colors.white
-                          )
-                      ),
-
-                      Container(
-                        margin: EdgeInsets.only(top: 40, bottom: 32),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(bottom: 15),
-                              child: Text('Apps',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'Sans',
-                                    color:Colors.white
-                                ),
-                              ),
-                            ),
-
-                            FutureBuilder<List<ApplicationMeta>>(
-                              future: paymentapps,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState != ConnectionState.done) {
-                                  return Container();
-                                }
-
-                                return GridView.count(
-                                  crossAxisCount: 2,
-                                  shrinkWrap: true,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10,
-                                  childAspectRatio: 1.6,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  children: snapshot.data.map((i) => Material(
-                                    key: ObjectKey(i.upiApplication),
-                                    color: Colors.grey[200],
-                                    child: InkWell(
-                                      onTap: () => openpaymentapp(i),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Image.memory(
-                                            i.icon,
-                                            width: 64,
-                                            height: 50,
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(top: 4),
-                                            child: Text(
-                                              i.upiApplication.getAppName(),
+                          return GridView.count(
+                            crossAxisCount: 1,
+                            shrinkWrap: true,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 1.6,
+                            physics: NeverScrollableScrollPhysics(),
+                            children: snapshot.data
+                                .map((i) => Material(
+                                      key: ObjectKey(i.upiApplication),
+                                      color: Colors.grey[200],
+                                      child: InkWell(
+                                        onTap: () => openpaymentapp(i),
+                                        child: Column(
+                                         // mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Image.memory(
+                                              i.icon,
+                                              width: 64,
+                                              height: 50,
                                             ),
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.only(top: 4),
+                                              child: Text(
+                                                i.upiApplication.getAppName(),style: TextStyle(
+                                                fontSize: 20,
+                                                fontFamily: 'Sans'
+                                              ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                  ).toList(),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      )
+                                    ))
+                                .toList(),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 )
+              ],
             ),
-          ),
-        )
-    );
+          )),
+        ));
   }
 }
 
@@ -267,6 +277,4 @@ String validatePID(String value) {
   }
 
   return "";
-
 }
-

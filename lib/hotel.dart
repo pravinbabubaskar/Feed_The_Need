@@ -6,6 +6,8 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:like_button/like_button.dart';
 import 'cart.dart';
 import 'data.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class HotelPage extends StatefulWidget {
   var hotelData;
@@ -27,101 +29,140 @@ class _HotelPageState extends State<HotelPage> {
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  colorFilter: new ColorFilter.mode(
-                      Colors.black.withOpacity(0.5), BlendMode.dstATop),
-                  image: data['imageUrl'] == null
-                      ? AssetImage('images/food.png')
-                      : NetworkImage(data['imageUrl']),
-                ),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40))),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Stack(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      colorFilter: new ColorFilter.mode(
+                          Colors.black.withOpacity(0.5), BlendMode.dstATop),
+                      image: data['imageUrl'] == null
+                          ? AssetImage('images/food.png')
+                          : NetworkImage(data['imageUrl']),
+                    ),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(40),
+                        bottomRight: Radius.circular(40))),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 200,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                '${data['name'][0].toUpperCase()}${data['name'].substring(1)}',
+                                style: TextStyle(
+                                    fontFamily: 'Sans',
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 25),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              SmoothStarRating(
+                                  size: 25,
+                                  allowHalfRating: false,
+                                  starCount: 5,
+                                  rating: 2,
+                                  isReadOnly: true,
+                                  color: Colors.lime,
+                                  borderColor: Colors.lime[100],
+                                  spacing: -0.5),
+                            ],
+                          ),
+                          Container(
+                            height: 70,
+                            width: 70,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.white),
+                            child: Center(
+                              child: LikeButton(),
+                            ),
+                          )
+                        ],
                       ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              data['type'],
+                              style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.black54,
+                                  fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            child: Icon(Icons.call, size: 30.0, color: Colors.lime),
+                            onTap: (){
+                              int num = int.parse(data["number"]);
+                              launch("tel:$num");
+                            },
+                          ),
+                          SizedBox(width: 20,),
+                          InkWell(
+                            child: Icon(Icons.map, size: 30.0, color: Colors.lime),
+                            onTap: (){
+                              double lat = latlong.latitude;
+                              double long = latlong.longitude;
+                              double Hlat = data["latitue"];
+                              double Ulong = data["longitude"];
+                              String url = "https://www.google.com/maps/dir/?api=1&origin=" + '$Hlat'+","+'$Ulong' + "&destination=" +'$lat'+","+'$long' + "&travelmode=driving";
+                              launch(url);
+                              },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 200,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            '${data['name'][0].toUpperCase()}${data['name'].substring(1)}',
-                            style: TextStyle(
-                                fontFamily: 'Sans',
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 25),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          SmoothStarRating(
-                              size: 25,
-                              allowHalfRating: false,
-                              starCount: 5,
-                              rating: 2,
-                              isReadOnly: true,
-                              color: Colors.lime,
-                              borderColor: Colors.lime[100],
-                              spacing: -0.5),
-                        ],
-                      ),
-                      Container(
-                        height: 70,
-                        width: 70,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Colors.white),
-                        child: Center(
-                          child: LikeButton(),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    data['type'],
-                    style: TextStyle(
-                        fontFamily: 'Poppins',
-                        color: Colors.black54,
-                        fontSize: 15),
-                  ),
-                )
-              ],
-            ),
+              ),
+
+            ],
           ),
           SizedBox(
             height: 15,
