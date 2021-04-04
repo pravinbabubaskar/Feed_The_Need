@@ -27,17 +27,20 @@ class _DetailPageState extends State<DetailPage>{
     return Scaffold(
 
       appBar:AppBar(
+          backgroundColor: Colors.white,
           title:Text(widget.post.get('name'),style: TextStyle(
               fontFamily: 'Sans',
               fontSize: 20,
               color: Colors.black,
               fontWeight: FontWeight.bold),
+
           ),
           centerTitle: true),
 
       body:
       Container(
-child:GestureDetector(
+  child:
+  GestureDetector(
         child:
         Card(
           child:ListTile(

@@ -2,81 +2,67 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:upi_pay/upi_pay.dart';
 
-class UpiPayment extends StatefulWidget {
+class UpiBill extends StatefulWidget {
   static const routeName = '/upipayment';
-  // string to store the UPI id of the NGO;
-  String payid;
+  // variable to store the billing amount;
+  double pay;
 
-  // getting UPI id
-  UpiPayment(this.payid);
+  // getting the billin amount
+  UpiBill(this.pay);
 
   @override
-  UpiPaymentState createState() => UpiPaymentState();
+  UpiBillState createState() => UpiBillState();
 }
 
-class UpiPaymentState extends State<UpiPayment> {
+class UpiBillState extends State<UpiBill> {
 
   // used for storing errors.
-  String upiError;
-  
-  // used to store the UPI ID and the donation amount
-  TextEditingController upicontrol = TextEditingController();
-  TextEditingController donationamountControl = TextEditingController();
+  String upiErr;
 
-  // used for showing list of UPI apps installed in current device
+  // used to store the UPI ID of the hotel and the billing money
+  TextEditingController upicontrol = TextEditingController();
+  TextEditingController BillamountControl = TextEditingController();
+
+  // used for showing list of UPI apps installed in current device for billing
   Future<List<ApplicationMeta>> paymentapps;
 
   @override
   void initState() {
     super.initState();
 
-    // PId data to donate money
-    upicontrol.text = (widget.payid);//.toString();
-
-    // stores the list of payment apps installed in mobile phone
+    // getting the billing amount
+    BillamountControl.text = (widget.pay.toString());
+    //getting the hotel id
+    upicontrol.text="Food@bank";
+    // stores the list of apps installed in mobile phone for bill payment
     paymentapps = UpiPay.getInstalledUpiApplications();
   }
 
   @override
-  void dispose() {
-
-    // dispose the donation amount and pid fields after use.
-    upicontrol.dispose();
-    donationamountControl.dispose();
-    super.dispose();
-  }
 
   //  opens user selected Payment app.
   Future<void> openpaymentapp(ApplicationMeta app) async {
-    /*final err = validatePID(upicontrol.text);
-    if (err != null) {
-      setState(() {
-        upiError = err;
-      });
-      return;
-    }
 
-     */
     setState(() {
-      upiError = null;
+      upiErr = null;
     });
 
     final transactionRef = Random.secure().nextInt(1 << 32).toString();
-    print("Starting transaction with PID $transactionRef");
+    print("Billing with id $transactionRef");
 
     // to start payment transaction.
-    final paymentdata = await UpiPay.initiateTransaction(
-      amount: donationamountControl.text,
+    final billingdata = await UpiPay.initiateTransaction(
+      amount: BillamountControl.text,
       app: app.upiApplication,
       receiverName: 'Pravinbabu',
       receiverUpiAddress: upicontrol.text,
       transactionRef: transactionRef,
       merchantCode: '7372',
     );
-
+    // print(billingdata);
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -86,20 +72,21 @@ class UpiPaymentState extends State<UpiPayment> {
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [
-                  Colors.cyanAccent[400],
-                  Colors.blue[600]
+                  Colors.lightBlue[400],
+                  Colors.blue[400]
                 ],
               )
           ),
           child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(title: Text('Proceed Payment'),
+              //backgroundColor: Colors.blue,
               leading: IconButton(
                 icon:Icon(Icons.arrow_back),
                 onPressed: ()
                 {
                   Navigator.pop(context, false);
-                  },
+                },
               ),
             ),
 
@@ -108,7 +95,7 @@ class UpiPaymentState extends State<UpiPayment> {
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: ListView(
                     children: <Widget>[
-                      SizedBox(height: 40),
+                      SizedBox(height: 50),
                       Text("  Payment Details",
                           style: TextStyle(
                               fontSize: 20,
@@ -122,13 +109,19 @@ class UpiPaymentState extends State<UpiPayment> {
                             Expanded(
                               child: TextFormField(
                                 controller:upicontrol,
-                                enabled: true,
-                                style: TextStyle(fontSize: 15,fontFamily: 'OpenSans',color:Colors.white),
+                                enabled: false,//true,
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Sans',
+                                    color:Colors.white),
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  hintText: 'Enter the valid PID',
+                                  hintText: 'restaurant PID',
                                   labelText: 'UPI ID',
-                                  labelStyle: TextStyle(fontSize: 15,fontFamily: 'Sans',color:Colors.white),
+                                  labelStyle: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'Sans',
+                                      color:Colors.white),
                                 ),
                               ),
                             ),
@@ -136,11 +129,11 @@ class UpiPaymentState extends State<UpiPayment> {
                         ),
                       ),
 
-                      if (upiError != null)
+                      if (upiErr != null)
                         Container(
                           margin: EdgeInsets.only(top: 4, left: 12),
                           child: Text(
-                            upiError,
+                            upiErr,
                             style: TextStyle(color: Colors.red),
                           ),
                         ),
@@ -155,8 +148,9 @@ class UpiPaymentState extends State<UpiPayment> {
                                   primaryColorDark: Colors.grey,
                                 ),
                                 child: TextField(
-                                  controller: donationamountControl,
-                                  enabled: true,
+                                  controller: BillamountControl,
+                                  // readOnly: true,
+                                  enabled: false,//true,
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontFamily: 'Sans',
@@ -167,8 +161,8 @@ class UpiPaymentState extends State<UpiPayment> {
                                         borderSide: new BorderSide(color: Colors.white, width: 10)
                                     ),
 
-                                    labelText: 'Donation Amount',
-                                    labelStyle: TextStyle(fontSize: 15,fontFamily: 'OpenSans',color:Colors.white),
+                                    labelText: 'Billing Amount',
+                                    labelStyle: TextStyle(fontSize: 15,fontFamily: 'Sans',color:Colors.white),
                                   ),
                                 ),
                               ),
@@ -185,7 +179,6 @@ class UpiPaymentState extends State<UpiPayment> {
                               color:Colors.white
                           )
                       ),
-
                       Container(
                         margin: EdgeInsets.only(top: 40, bottom: 32),
                         child: Column(
@@ -201,7 +194,6 @@ class UpiPaymentState extends State<UpiPayment> {
                                 ),
                               ),
                             ),
-
                             FutureBuilder<List<ApplicationMeta>>(
                               future: paymentapps,
                               builder: (context, snapshot) {
@@ -256,17 +248,3 @@ class UpiPaymentState extends State<UpiPayment> {
     );
   }
 }
-
-String validatePID(String value) {
-  if (value.isEmpty) {
-    return 'Enter UPI Address.';
-  }
-
-  if (!UpiPay.checkIfUpiAddressIsValid(value)) {
-    return 'Invalid UPI ID.';
-  }
-
-  return "";
-
-}
-

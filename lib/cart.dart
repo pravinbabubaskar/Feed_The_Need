@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'data.dart';
+import 'billPage.dart';
+import 'dart:typed_data';
+import 'dart:async';
+
 class Cart extends StatefulWidget {
   @override
   _CartState createState() => _CartState();
@@ -11,12 +16,14 @@ class _CartState extends State<Cart> {
   List<dynamic> Data=new List();
   int totalCost =0,withOut=0;
   int len=0;
+  double pass=0;
   void initState() {
     // TODO: implement initState
     super.initState();
     countOcc();
     total();
     len=Data.length;
+   // pass=(withOut+(withOut*0.1)) as double;
   }
   countOcc(){
 
@@ -39,6 +46,16 @@ class _CartState extends State<Cart> {
       totalCost=cost;
     }
 
+  }
+
+  navigateToBilling(int bill){
+
+    Navigator.push(context,
+        MaterialPageRoute(
+            builder:(context)=>billPage(
+            bill:bill,)
+        )
+    );
   }
   Widget build(BuildContext context) {
     return Data.length==0?Scaffold(
@@ -136,7 +153,9 @@ class _CartState extends State<Cart> {
                             fontFamily: 'Sans',
                             color: Colors.grey
                         ),),
-                        Text("\₹ "+(withOut*0.1).toString(), style: TextStyle(
+                        Text("\₹ "+(
+                            withOut*0.1
+                        ).toString(), style: TextStyle(
                             fontFamily: 'Sans',
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
@@ -173,7 +192,7 @@ class _CartState extends State<Cart> {
                           fontWeight: FontWeight.w700,
                           fontSize: 18,
                         ),),
-                        Text((totalCost+(withOut*0.1)).toString(), style: TextStyle(
+                        Text(((withOut+(withOut*0.1))).toString(), style: TextStyle(
                             fontFamily: 'Sans',
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
@@ -187,14 +206,14 @@ class _CartState extends State<Cart> {
                       height: 10,
                     ),
                     InkWell(
-                      onTap: openSuccessPage,
+                      onTap: ()=>navigateToBilling(withOut),//openSuccessPage,
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(40)),
                           color: Colors.green,
                         ),
-                        child: Text("Check Out", style: TextStyle(
+                        child: Text("Order", style: TextStyle(
                           fontFamily: 'Sans',
                             color: Colors.white,
                             fontWeight: FontWeight.w700
@@ -312,8 +331,5 @@ class _CartState extends State<Cart> {
       ],
     );
   }
-  void openSuccessPage()
-  {
-   // Navigator.push(context, MaterialPageRoute(builder: (context)=>SuccessPage()));
-  }
+
 }
