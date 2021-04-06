@@ -39,11 +39,9 @@ dependencies:
   uuid: ^3.0.1
   http: ^0.13.0
   web_scraper: ^0.1.4
-  url_launcher: ^5.2.5
   smooth_star_rating: 1.1.1
-
+  url_launcher: ^6.0.3
   upi_pay: ^0.2.1
-
   dio: any
   flutter_google_places: ^0.2.8
   google_maps_flutter: ^2.0.1
