@@ -53,6 +53,8 @@ dependencies:
   like_button: ^2.0.2
   animations: ^2.0.0
   flutter_staggered_animations: ^1.0.0
+  fancy_bottom_navigation: ^0.3.3
+
 
 
 

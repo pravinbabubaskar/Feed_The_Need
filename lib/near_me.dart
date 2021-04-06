@@ -38,7 +38,6 @@ class _NearMeState extends State<NearMe> {
     }
   }
 
-
   getDistance(double lat, double long) async {
     var dio = Dio();
     double Ulat = latlong.latitude;
@@ -57,7 +56,7 @@ class _NearMeState extends State<NearMe> {
     return Scaffold(
         appBar: AppBar(
           //title: Text("NEAR ME"),
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.teal[300],
           automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,7 +65,7 @@ class _NearMeState extends State<NearMe> {
                 children: [
                   Icon(
                     Icons.location_city_rounded,
-                    color: Colors.grey,
+                    color: Colors.black,
                   ),
                   SizedBox(
                     width: 10,

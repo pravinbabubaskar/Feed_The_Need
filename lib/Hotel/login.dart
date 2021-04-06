@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedthenead/Hotel/home.dart';
 import 'package:feedthenead/Hotel/signup.dart';
+import 'package:feedthenead/helpers/alert.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _LoginState extends State<Login> {
 
   String _id, _password;
 
-  showError(String errormessage) {
+  /*showError(String errormessage) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -38,7 +39,7 @@ class _LoginState extends State<Login> {
             ],
           );
         });
-  }
+  }*/
 
   navigattosign() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Sign_up()));
@@ -173,11 +174,11 @@ class _LoginState extends State<Login> {
                               } else {
                                 // print(
                                 //   'Document id exists but password not matched..');
-                                showError("Password does not match");
+                                showError("Password does not match", context);
                               }
                             } else {
                               // print('no user id exists..');
-                              showError("User ID does not exist.");
+                              showError("User ID does not exist.", context);
                             }
                           });
                         }

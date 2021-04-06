@@ -1,6 +1,7 @@
 import 'package:feedthenead/Hotel/home.dart';
 import 'package:feedthenead/Hotel/loc_autosearch.dart';
 import 'package:feedthenead/Hotel/login.dart';
+import 'package:feedthenead/helpers/alert.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -65,7 +66,7 @@ class _Sign_upState extends State<Sign_up> {
     }
   }
 
-  openLoadingDialog(BuildContext context, String text) {
+  /*openLoadingDialog(BuildContext context, String text) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -81,7 +82,7 @@ class _Sign_upState extends State<Sign_up> {
                 Text(text)
               ]),
             ));
-  }
+  }*/
 
   void initState() {
     super.initState();

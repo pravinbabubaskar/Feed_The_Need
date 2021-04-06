@@ -16,6 +16,7 @@ class _ExploreState extends State<Explore> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.teal[400],
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
