@@ -11,22 +11,17 @@ class Explore extends StatefulWidget {
 
 class _ExploreState extends State<Explore> {
   String name = "";
-
+  var _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal[400],
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: Card(
+        backgroundColor: Colors.white,
+        title: Expanded(
           child: TextField(
-            decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search), hintText: 'Search by name...'),
+            cursorColor: Colors.teal,
+            controller: _controller,
+
             onChanged: (val) {
               setState(() {
                 name = "";
@@ -36,7 +31,24 @@ class _ExploreState extends State<Explore> {
                       name[0].toUpperCase() + name.substring(1).toLowerCase());
               });
             },
-          ),
+            decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: _controller.clear,
+                  icon: Icon(Icons.clear),
+                  color: Colors.teal[100],
+                ),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.teal, width: 0.0),
+                ),
+                contentPadding: EdgeInsets.only(left: 25.0),
+                hintText: 'Search by name',
+                border: OutlineInputBorder(
+                    borderSide: new BorderSide(color: Colors.teal),
+                    borderRadius: BorderRadius.circular(4.0))),
+          )
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -76,42 +88,52 @@ class _ExploreState extends State<Explore> {
                                                     snapshot.data.docs[index],
                                               )));
                                 },
-                                child: Card(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Image.network(
-                                        data['imageUrl'],
-                                        width: 150,
-                                        height: 100,
-                                        fit: BoxFit.fill,
-                                      ),
-                                      SizedBox(
-                                        width: 25,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            data['name'],
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: Colors.grey)
+                                    ),
+                                    child: Row(
+                                      children: <Widget>[
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(5.0),
+                                          child: Image.network(
+                                            data['imageUrl'],
+                                            width: 125,
+                                            height: 100,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 25,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data['name'],
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 20,
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            data['type'],
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w200,
-                                              fontSize: 15,
+                                            SizedBox(
+                                              height: 5,
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                            Text(
+                                              data['type'],
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w200,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

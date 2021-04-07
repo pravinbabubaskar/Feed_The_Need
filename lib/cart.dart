@@ -84,6 +84,7 @@ class _CartState extends State<Cart> {
         ],
       )
     ):Scaffold(
+
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -211,10 +212,11 @@ class _CartState extends State<Cart> {
                         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(40)),
-                          color: Colors.green,
+                          color: Colors.teal[100],
                         ),
                         child: Text("Order", style: TextStyle(
                           fontFamily: 'Sans',
+                            fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.w700
                         ),),
