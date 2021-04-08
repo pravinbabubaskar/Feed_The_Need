@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:upi_pay/upi_pay.dart';
-
+import 'bill.dart';
 class UpiBill extends StatefulWidget {
   static const routeName = '/upipayment';
   // variable to store the billing amount;
@@ -60,6 +60,8 @@ class UpiBillState extends State<UpiBill> {
       merchantCode: '7372',
     );
      //print(billingdata);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => bill(widget.pay)));
   }
 
   @override
