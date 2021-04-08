@@ -192,7 +192,7 @@ class _CartState extends State<Cart> {
                           fontWeight: FontWeight.w700,
                           fontSize: 18,
                         ),),
-                        Text(((withOut+(withOut*0.1))).toString(), style: TextStyle(
+                        Text(((withOut+(withOut*0.1)-totalCost/2)).toString(), style: TextStyle(
                             fontFamily: 'Sans',
                             fontWeight: FontWeight.w700,
                             fontSize: 16,

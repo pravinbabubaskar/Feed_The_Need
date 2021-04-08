@@ -1,9 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:upi_pay/upi_pay.dart';
-
 class UpiBill extends StatefulWidget {
-  static const routeName = '/upipayment';
+  //static const routeName = '/upipayment';
   // variable to store the billing amount;
   double pay;
 
@@ -33,7 +32,7 @@ class UpiBillState extends State<UpiBill> {
     // getting the billing amount
     BillamountControl.text = (widget.pay.toString());
     //getting the hotel id
-    upicontrol.text="Food@bank";
+    upicontrol.text="abcd@bank";//okicici";
     // stores the list of apps installed in mobile phone for bill payment
     paymentapps = UpiPay.getInstalledUpiApplications();
   }
@@ -59,7 +58,8 @@ class UpiBillState extends State<UpiBill> {
       transactionRef: transactionRef,
       merchantCode: '7372',
     );
-    // print(billingdata);
+     //print(billingdata);
+
   }
 
   @override
@@ -150,7 +150,7 @@ class UpiBillState extends State<UpiBill> {
                                 child: TextField(
                                   controller: BillamountControl,
                                   // readOnly: true,
-                                  enabled: false,//true,
+                                  enabled: true,//false,//true,
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontFamily: 'Sans',
@@ -212,7 +212,7 @@ class UpiBillState extends State<UpiBill> {
                                     key: ObjectKey(i.upiApplication),
                                     color: Colors.grey[200],
                                     child: InkWell(
-                                      onTap: () => openpaymentapp(i),
+                                      onTap: () =>openpaymentapp(i),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment: MainAxisAlignment.center,
