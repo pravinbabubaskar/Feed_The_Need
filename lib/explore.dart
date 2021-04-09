@@ -17,38 +17,36 @@ class _ExploreState extends State<Explore> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Expanded(
-          child: TextField(
-            cursorColor: Colors.teal,
-            controller: _controller,
+        title: TextField(
+          cursorColor: Colors.teal,
+          controller: _controller,
 
-            onChanged: (val) {
-              setState(() {
-                name = "";
-                name = val;
-                if (name.isNotEmpty)
-                  print(
-                      name[0].toUpperCase() + name.substring(1).toLowerCase());
-              });
-            },
-            decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  onPressed: _controller.clear,
-                  icon: Icon(Icons.clear),
-                  color: Colors.teal[100],
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.grey, width: 0.0),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.teal, width: 0.0),
-                ),
-                contentPadding: EdgeInsets.only(left: 25.0),
-                hintText: 'Search by name',
-                border: OutlineInputBorder(
-                    borderSide: new BorderSide(color: Colors.teal),
-                    borderRadius: BorderRadius.circular(4.0))),
-          )
+          onChanged: (val) {
+            setState(() {
+              name = "";
+              name = val;
+              if (name.isNotEmpty)
+                print(
+                    name[0].toUpperCase() + name.substring(1).toLowerCase());
+            });
+          },
+          decoration: InputDecoration(
+              suffixIcon: IconButton(
+                onPressed: _controller.clear,
+                icon: Icon(Icons.clear),
+                color: Colors.teal[100],
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.teal, width: 0.0),
+              ),
+              contentPadding: EdgeInsets.only(left: 25.0),
+              hintText: 'Search by name',
+              border: OutlineInputBorder(
+                  borderSide: new BorderSide(color: Colors.teal),
+                  borderRadius: BorderRadius.circular(4.0))),
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(

@@ -7,7 +7,7 @@ import 'Past_orders.dart';
 import 'welcome.dart';
 import 'web_scrapping.dart';
 import 'donate.dart';
-import '';
+import 'analysis.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Account extends StatefulWidget {
@@ -72,6 +72,8 @@ class _AccountState extends State<Account> {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => Past_order()));
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +164,23 @@ class _AccountState extends State<Account> {
                 //margin: EdgeInsets.all(20),
                 margin: EdgeInsets.only(top: 10, bottom: 10),
                 child: Text('Donate For a Cause',
+                    style: TextStyle(
+                        fontFamily: 'Sans',
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
+            Divider(thickness: 0.5, color: Colors.grey),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => TimeSeries()));
+              },
+              child: Container(
+                //margin: EdgeInsets.all(20),
+                margin: EdgeInsets.only(top: 10, bottom: 10),
+                child: Text('Time Series Prediction',
                     style: TextStyle(
                         fontFamily: 'Sans',
                         fontSize: 15,

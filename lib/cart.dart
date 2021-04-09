@@ -43,7 +43,7 @@ class _CartState extends State<Cart> {
       totalCost-=0;
     }
     else{
-      totalCost=cost;
+      totalCost=(cost/2).round();
     }
 
   }
@@ -175,7 +175,7 @@ class _CartState extends State<Cart> {
                             fontSize: 16,
                             color: Colors.grey
                         ),),
-                        Text(isNGOVerified==true? "- $totalCost":"- "+ (totalCost/2).toString() , style: TextStyle(
+                        Text(isNGOVerified==true? "- $withOut":"- "+ (withOut/2).toString() , style: TextStyle(
                             fontFamily: 'Sans',
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
@@ -193,7 +193,7 @@ class _CartState extends State<Cart> {
                           fontWeight: FontWeight.w700,
                           fontSize: 18,
                         ),),
-                        Text(((withOut+(withOut*0.1))).toString(), style: TextStyle(
+                        Text(((totalCost+(withOut*0.1))).toString(), style: TextStyle(
                             fontFamily: 'Sans',
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
@@ -207,7 +207,7 @@ class _CartState extends State<Cart> {
                       height: 10,
                     ),
                     InkWell(
-                      onTap: ()=>navigateToBilling(withOut),//openSuccessPage,
+                      onTap: ()=>navigateToBilling((totalCost+(withOut*0.1)).round()),//openSuccessPage,
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                         decoration: BoxDecoration(
@@ -282,7 +282,8 @@ class _CartState extends State<Cart> {
                     else {
                         map[mp]--;
                        // totalCost-=int.parse(mp["price"]);
-                        withOut-=int.parse(mp["price"]);
+                        cost-=int.parse(mp["price"]);
+                        total();
                     }
                   });
                 },
@@ -313,7 +314,8 @@ class _CartState extends State<Cart> {
                   setState(() {
                     map[mp]++;
                     //totalCost+=int.parse(mp["price"]);
-                    withOut+=int.parse(mp["price"]);
+                    cost+=int.parse(mp["price"]);
+                    total();
                   });
                 },
                 child: Text("+", style: TextStyle(
