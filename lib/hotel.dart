@@ -38,7 +38,7 @@ class _HotelPageState extends State<HotelPage> {
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       colorFilter: new ColorFilter.mode(
-                          Colors.black.withOpacity(0.4), BlendMode.dstATop),
+                          Colors.black.withOpacity(0.5), BlendMode.dstATop),
                       image: data['imageUrl'] == null
                           ? AssetImage('images/food.png')
                           : NetworkImage(data['imageUrl']),
@@ -94,8 +94,8 @@ class _HotelPageState extends State<HotelPage> {
                                   starCount: 5,
                                   rating: 2,
                                   isReadOnly: true,
-                                  color: Colors.teal,
-                                  borderColor: Colors.teal[100],
+                                  color: Colors.lime,
+                                  borderColor: Colors.lime[100],
                                   spacing: -0.5),
                             ],
                           ),
@@ -137,7 +137,7 @@ class _HotelPageState extends State<HotelPage> {
                       child: Row(
                         children: [
                           InkWell(
-                            child: Icon(Icons.call, size: 30.0, color: Colors.teal[100]),
+                            child: Icon(Icons.call, size: 30.0, color: Colors.lime),
                             onTap: (){
                               int num = int.parse(data["number"]);
                               launch("tel:$num");
@@ -145,7 +145,7 @@ class _HotelPageState extends State<HotelPage> {
                           ),
                           SizedBox(width: 20,),
                           InkWell(
-                            child: Icon(Icons.map, size: 30.0, color: Colors.teal[100]),
+                            child: Icon(Icons.map, size: 30.0, color: Colors.lime),
                             onTap: (){
                               double lat = latlong.latitude;
                               double long = latlong.longitude;
@@ -307,7 +307,7 @@ class _HotelPageState extends State<HotelPage> {
                   padding: const EdgeInsets.only(top: 50),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.teal[100], // background
+                      primary: Colors.green, // background
                     ),
                     onPressed: () {
                       setState(() {
@@ -385,24 +385,7 @@ class _HotelPageState extends State<HotelPage> {
         },
       ),
     );
-
-    final snackBar3 = SnackBar(
-      duration: Duration(seconds: 5),
-      backgroundColor: Colors.green,
-      content: Text(
-        'Hotel Out of your City 😔',
-        style: TextStyle(
-          fontFamily: 'Sans',
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
-          fontSize: 15,
-        ),
-      ),
-    );
-    if(data['district']!=loc1){
-      ScaffoldMessenger.of(context).showSnackBar(snackBar3);
-    }
-    else if (barName == null || barName == data['name']) {
+    if (barName == null || barName == data['name']) {
       ScaffoldMessenger.of(context).showSnackBar(snackBar1);
       barName = data['name'];
     } else {

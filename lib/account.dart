@@ -64,8 +64,12 @@ class _AccountState extends State<Account> {
   }
 
   Donate() async {
+    if (isNGOVerified) {
+      showError("Only User can donate...");
+    } else {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => donate()));
+    }
   }
 
   Past_orders() async {
@@ -78,15 +82,6 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Stack(
-        children: [
-          Container(
-            child: Image.asset('images/room.png'),
-            height: 300.0,
-            width: double.infinity,
-          ),
-        ],
-      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
