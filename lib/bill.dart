@@ -41,7 +41,6 @@ bool ispause=false;
           height:MediaQuery.of(context).size.height/2,
           duration:20,
           fillColor:Colors.blue,
-            color:Colors.white,
           controller:time,
           backgroundColor:null,//Colors.white,
           strokeWidth:10.0,
