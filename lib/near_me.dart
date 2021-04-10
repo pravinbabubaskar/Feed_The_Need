@@ -77,15 +77,14 @@ class _NearMeState extends State<NearMe> {
                   ),
                 ],
               ),
-              Text(
+              isNGOVerified == true ?Text(
                 "NGO+",
                 style: TextStyle(
                     fontFamily: 'Sans',
-                    color:
-                        isNGOVerified == true ? Colors.teal[100] : Colors.white,
+                    color:Colors.teal[100],
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
-              ),
+              ):Text(""),
             ],
           ),
         ),
