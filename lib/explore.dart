@@ -60,114 +60,119 @@ class _ExploreState extends State<Explore> {
                 .snapshots()
             : FirebaseFirestore.instance.collection("hotel").snapshots(),
         builder: (context, snapshot) {
-          int len = snapshot.data.docs.length;
-          return (snapshot.connectionState == ConnectionState.waiting)
-              ? Center(child: CircularProgressIndicator())
-              : AnimationLimiter(
-                  child: ListView.builder(
-                    itemCount: snapshot.data.docs.length,
-                    itemBuilder: (context, index) {
-                      DocumentSnapshot data = snapshot.data.docs[index];
-                      if (len == 0) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset('images/table.png'),
-                            Text(
-                              'No More Waste',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: "Poppins",
-                                letterSpacing: -1,
-                                color: Colors.black,
-                                fontSize: 20,
-                              ),
-                            ),
-                            Text(
-                              "No Restaurents Available..",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: "Sans",
-                                letterSpacing: -1,
-                                color: Colors.grey,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ],
-                        );
-                      } else
-                        return AnimationConfiguration.staggeredList(
-                            position: index,
-                            duration: const Duration(milliseconds: 2000),
-                            child: SlideAnimation(
-                              verticalOffset: 50.0,
-                              child: FadeInAnimation(
-                                  child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HotelPage(
-                                                hotelData:
-                                                    snapshot.data.docs[index],
-                                              )));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(color: Colors.grey)),
-                                    child: Row(
-                                      children: <Widget>[
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                          child: Image.network(
-                                            data['imageUrl'],
-                                            width: 125,
-                                            height: 100,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 25,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              data['name'],
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              data['type'],
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w200,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+          if (snapshot.hasError)
+            return Center(child: new Text('Error: ${snapshot.error}'));
+          if (snapshot.data == null) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.data.docs.length < 1) {
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'images/table.png',
+                  height: 150,
+                ),
+                Text(
+                  'No Restaurents available..',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    letterSpacing: -1,
+                    color: Colors.black,
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  "Try another one",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "Sans",
+                    letterSpacing: -1,
+                    color: Colors.grey,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ));
+          } else
+            return AnimationLimiter(
+              child: ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot data = snapshot.data.docs[index];
+
+                  return AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 2000),
+                      child: SlideAnimation(
+                        verticalOffset: 50.0,
+                        child: FadeInAnimation(
+                            child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HotelPage(
+                                          hotelData: snapshot.data.docs[index],
+                                        )));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.grey)),
+                              child: Row(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    child: Image.network(
+                                      data['imageUrl'],
+                                      width: 125,
+                                      height: 100,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                ),
-                              )),
-                            ));
-                    },
-                  ),
-                );
+                                  SizedBox(
+                                    width: 25,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        data['name'],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        data['type'],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w200,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )),
+                      ));
+                },
+              ),
+            );
         },
       ),
     );

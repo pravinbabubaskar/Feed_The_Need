@@ -12,14 +12,33 @@ class _OrderState extends State<Order> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("order"),
+          iconTheme: IconThemeData(color: black),
+          backgroundColor: white,
+          elevation: 0.0,
+          title: CustomText(
+            text: "Orders",
+            size: 20,
+          ),
+          leading: IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                Navigator.pop(context);
+                //  Navigator.pop(context);
+
+                //  Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => Home(_id)));
+              }),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('images/order.jpg'),
+            Image.asset(
+              'images/delivery.png',
+              height: 150,
+              width: double.infinity,
+            ),
             Text(
-              'No More Waste',
+              'No Orders right now..',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: "Poppins",
@@ -29,7 +48,7 @@ class _OrderState extends State<Order> {
               ),
             ),
             Text(
-              "No Orders right now..",
+              "Wait for Orders",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: "Sans",

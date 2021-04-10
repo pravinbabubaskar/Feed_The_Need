@@ -77,11 +77,18 @@ class _AccountState extends State<Account> {
         context, MaterialPageRoute(builder: (context) => Past_order()));
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Stack(
+        children: [
+          Container(
+            child: Image.asset('images/room.png'),
+            height: 150.0,
+            width: double.infinity,
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
@@ -168,9 +175,9 @@ class _AccountState extends State<Account> {
             ),
             Divider(thickness: 0.5, color: Colors.grey),
             GestureDetector(
-              onTap: (){
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => TimeSeries()));
+              onTap: () {
+                //    Navigator.push(
+                //      context, MaterialPageRoute(builder: (context) => TimeSeries()));
               },
               child: Container(
                 //margin: EdgeInsets.all(20),
