@@ -11,29 +11,34 @@ class _OrderState extends State<Order> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: black),
-        backgroundColor: white,
-        elevation: 0.0,
-        title: CustomText(text: "Orders"),
-        leading: IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-      ),
-      body: ListView.builder(
-          itemCount: 5,
-          itemBuilder: (_, index) {
-            return ListTile(
-              leading: CustomText(
-                text: "order",
-                weight: FontWeight.bold,
+        appBar: AppBar(
+          title: Text("order"),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('images/order.jpg'),
+            Text(
+              'No More Waste',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: "Poppins",
+                letterSpacing: -1,
+                color: Colors.black,
+                fontSize: 20,
               ),
-              title: Text("name"),
-              subtitle: Text("date"),
-            );
-          }),
-    );
+            ),
+            Text(
+              "No Orders right now..",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: "Sans",
+                letterSpacing: -1,
+                color: Colors.grey,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ));
   }
 }

@@ -177,7 +177,20 @@ class _DashboardState extends State<Dashboard> {
             size: 16,
             weight: FontWeight.w300,
           )),
-
+      ListTile(
+          onTap: () {
+            //null
+          },
+          leading: Icon(
+            Icons.bar_chart,
+            color: Colors.black,
+          ),
+          title: CustomText(
+            text: "Graph",
+            color: black,
+            size: 16,
+            weight: FontWeight.w300,
+          )),
       ListTile(
           onTap: () {
             Navigator.pushReplacement(

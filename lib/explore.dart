@@ -53,6 +53,7 @@ class _ExploreState extends State<Explore> {
                 .snapshots()
             : FirebaseFirestore.instance.collection("hotel").snapshots(),
         builder: (context, snapshot) {
+          int len = snapshot.data.docs.length;
           return (snapshot.connectionState == ConnectionState.waiting)
               ? Center(child: CircularProgressIndicator())
               : AnimationLimiter(
@@ -60,63 +61,91 @@ class _ExploreState extends State<Explore> {
                     itemCount: snapshot.data.docs.length,
                     itemBuilder: (context, index) {
                       DocumentSnapshot data = snapshot.data.docs[index];
-                      return AnimationConfiguration.staggeredList(
-                        position: index,
-                        duration: const Duration(milliseconds: 2000),
-                        child: SlideAnimation(
-                            verticalOffset: 50.0,
-                            child: FadeInAnimation(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HotelPage(
-                                                hotelData:
-                                                    snapshot.data.docs[index],
-                                              )));
-                                },
-                                child: Card(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Image.network(
-                                        data['imageUrl'],
-                                        width: 150,
-                                        height: 100,
-                                        fit: BoxFit.fill,
-                                      ),
-                                      SizedBox(
-                                        width: 25,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            data['name'],
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20,
+                      if (len == 0) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset('images/table.png'),
+                            Text(
+                              'No More Waste',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: "Poppins",
+                                letterSpacing: -1,
+                                color: Colors.black,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Text(
+                              "No Restaurents Available..",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: "Sans",
+                                letterSpacing: -1,
+                                color: Colors.grey,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        );
+                      } else
+                        return AnimationConfiguration.staggeredList(
+                          position: index,
+                          duration: const Duration(milliseconds: 2000),
+                          child: SlideAnimation(
+                              verticalOffset: 50.0,
+                              child: FadeInAnimation(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => HotelPage(
+                                                  hotelData:
+                                                      snapshot.data.docs[index],
+                                                )));
+                                  },
+                                  child: Card(
+                                    child: Row(
+                                      children: <Widget>[
+                                        Image.network(
+                                          data['imageUrl'],
+                                          width: 150,
+                                          height: 100,
+                                          fit: BoxFit.fill,
+                                        ),
+                                        SizedBox(
+                                          width: 25,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data['name'],
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 20,
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            data['type'],
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w200,
-                                              fontSize: 15,
+                                            SizedBox(
+                                              height: 5,
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                            Text(
+                                              data['type'],
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w200,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )),
-                      );
+                              )),
+                        );
                     },
                   ),
                 );
