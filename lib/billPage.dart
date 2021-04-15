@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:typed_data';
 import 'dart:async';
+import 'package:feedthenead/donate.dart';
 import 'UpiPayment.dart';
 import 'package:flutter/material.dart';
 import 'UpiBill.dart';
@@ -40,39 +41,80 @@ class billPageState extends State<billPage> {
           centerTitle: true),
 body:
         Container(
-        child:
-        GestureDetector(
-        child:
-        Card(
-        child:ListTile(
-        title:Text( "Proceed Payment",style: TextStyle(
-    fontFamily: 'Sans',
-    fontSize: 20,
-    color: Colors.black,
-    fontWeight: FontWeight.bold),
-    ),
+        child:ListView(children: [
+          GestureDetector(
+              child:
+              Card(
+                child:
+                ListTile(
+                  title:Text( "Proceed Payment",style: TextStyle(
+                      fontFamily: 'Sans',
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                  ),
 
-    subtitle:Text('Total Bill \₹'+((widget.bill+(widget.bill*0.1))).toString(),style: TextStyle(
-    fontFamily: 'Sans',
-    fontSize: 15,
-    color: Colors.blueGrey,
-    fontWeight: FontWeight.bold),
-    ),
+                  subtitle:Text('Total Bill \₹'+((widget.bill+(widget.bill*0.1))).toString(),style: TextStyle(
+                      fontFamily: 'Sans',
+                      fontSize: 15,
+                      color: Colors.blueGrey,
+                      fontWeight: FontWeight.bold),
+                  ),
 
-    ),
+                ),
 
-    ),
-    onTap: () {
-    Navigator.push(context,
-    MaterialPageRoute(
-    builder: (context) => UpiBill((widget.bill*0.1)+widget.bill ),
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(
+                      builder: (context) => UpiBill((widget.bill*0.1)+widget.bill ),
 
-    ));
-    }
-    ),
+                    ));
+              }
+
+
+          ),
+
+
+          GestureDetector(
+              child:
+              Card(
+                child:
+                ListTile(
+                  title:Text( "Donate Us",style: TextStyle(
+                      fontFamily: 'Sans',
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                  ),
+
+                  subtitle:Text( "Donate NGO's to feed the needy people",style: TextStyle(
+                      fontFamily: 'Sans',
+                      fontSize: 15,
+                      color: Colors.blueGrey,
+                      fontWeight: FontWeight.bold),
+                  ),
+
+                ),
+
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(
+                      builder: (context) => donate()
+
+                    ));
+              }
+
+
+          ),
+
+        ],),
+
 
 
         ),
+
     );
     throw UnimplementedError();
   }

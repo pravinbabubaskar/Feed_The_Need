@@ -1,6 +1,7 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:feedthenead/Past_orders.dart';
 import 'package:feedthenead/data.dart';
+//import 'package:feedthenead/helpers/style.dart';
 import 'package:flutter/material.dart';
 import 'package:feedthenead/home.dart';
 
@@ -64,7 +65,7 @@ class billState extends State<bill> {
           ).show();*/
           },
           textStyle: TextStyle(fontSize: 50.0, color: Colors.black),
-          ringColor: null,
+          ringColor: Colors.white,
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
