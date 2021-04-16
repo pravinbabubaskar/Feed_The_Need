@@ -48,13 +48,13 @@ class UpiBillState extends State<UpiBill> {
     });
 
     final transactionRef = Random.secure().nextInt(1 << 32).toString();
-    print("Billing with id $transactionRef");
+   // print("Billing with id $transactionRef");
 
     // to start payment transaction.
     final billingdata = await UpiPay.initiateTransaction(
       amount: BillamountControl.text,
       app: app.upiApplication,
-      receiverName: 'Pravinbabu',
+      receiverName: 'Restaurant',
       receiverUpiAddress: upicontrol.text,
       transactionRef: transactionRef,
       merchantCode: '7372',
@@ -102,7 +102,7 @@ class UpiBillState extends State<UpiBill> {
                           Expanded(
                             child: TextFormField(
                               controller:upicontrol,
-                              enabled: false,//true,
+                              enabled: false,//
                               style: TextStyle(
                                   fontSize: 15,
                                   fontFamily: 'Sans',
@@ -143,7 +143,7 @@ class UpiBillState extends State<UpiBill> {
                               child: TextField(
                                 controller: BillamountControl,
                                 // readOnly: true,
-                                enabled: false,//true,
+                                enabled: true,//false,//true,
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontFamily: 'Sans',
