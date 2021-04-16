@@ -1,37 +1,8 @@
 
-import 'dart:typed_data';
 import 'dart:async';
-import 'package:firebase_core/firebase_core.dart';
-
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'DetailPage.dart';
-
-//final CollectionReference userref=FirebaseFirestore.instance.collection('NGO');
-/*Future<void> _launched;
-  String launchURL ='upi://pay?pa=pravinbabu171@okhdfc&pn=Hussain%20Imthiaz%20Hussain&aid=uGICAgIDNz7WSBw';
-  Future<void> _launchapp(String url) async {
-    if (await canLaunch(url)) {
-      final bool nativeAppLaunchSucceeded = await launch(
-        url,
-        forceSafariVC: false,
-        universalLinksOnly: true,
-      );
-      if (!nativeAppLaunchSucceeded) {
-        await launch(url, forceSafariVC: true);
-      }
-    } else {
-      throw 'Could not launch';
-    }
-  }
-  //@override
-  void initState() {
-    super.initState();
-     _launchapp(launchURL);
-  }
-*/
 
 class donate extends StatefulWidget {
 

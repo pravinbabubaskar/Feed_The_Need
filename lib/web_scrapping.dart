@@ -20,10 +20,10 @@ class _WebScraperAppState extends State<WebScraperApp> {
   List<String> dummy;
   int pos,ind;
   String result;
+  var address;
   bool flag = false,progress=false;
   String name;
   void findPerson(List<String> people, String Name,int i) async{
-    print(people);
     if(people[0][0].codeUnitAt(0)>Name[0].codeUnitAt(0)){
       setState(() {
         flag = true;
@@ -44,10 +44,24 @@ class _WebScraperAppState extends State<WebScraperApp> {
         flag = true;
         progress=false;
         makeVerified();
+        findAddress();
         //showResult('NGO Verified',name);
       });
 
     }
+  }
+
+  void findAddress() async {
+    var elements;
+    final webScraper = WebScraper();
+    if (await webScraper.loadFullURL(
+        'https://ngodarpan.gov.in/index.php/home/statewise_ngo/7589/33/1?per_page=100')) {
+        elements = webScraper.getElementTitle('tbody > tr > td:nth-child(4)');
+        print(elements[88]);
+    }
+    FirebaseFirestore.instance.collection('NGO').doc(name)
+        .update({'address':elements[ind]});
+
   }
 
   void makeVerified() async{
@@ -121,9 +135,8 @@ class _WebScraperAppState extends State<WebScraperApp> {
   @override
   void initState() {
     super.initState();
+
     // Requesting to fetch before UI drawing starts
-
-
   }
 
   @override

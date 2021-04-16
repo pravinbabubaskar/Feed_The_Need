@@ -64,12 +64,10 @@ class _AccountState extends State<Account> {
   }
 
   Donate() async {
-    if (isNGOVerified) {
-      showError("Only User can donate...");
-    } else {
+
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => donate()));
-    }
+
   }
 
   Past_orders() async {

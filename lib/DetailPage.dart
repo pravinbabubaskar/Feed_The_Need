@@ -28,7 +28,7 @@ class _DetailPageState extends State<DetailPage>{
 
       appBar:AppBar(
           backgroundColor: Colors.white,
-          title:Text(widget.post.get('name'),style: TextStyle(
+          title:Text('NGO Details',style: TextStyle(
               fontFamily: 'Sans',
               fontSize: 20,
               color: Colors.black,
@@ -40,35 +40,92 @@ class _DetailPageState extends State<DetailPage>{
       body:
       Container(
   child:
-  GestureDetector(
-        child:
-        Card(
-          child:ListTile(
-            title:Text( widget.post.get('name'),style: TextStyle(
-                fontFamily: 'Sans',
-                fontSize: 15,
-                color: Colors.blueGrey,
-                fontWeight: FontWeight.bold),
+  Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: ListView(
+      children: [
+        Column(
+          children: [
+            Row(
+              children: [
+                Text("Trust Name :  ",  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 20,
+                    color: Colors.grey,
+                    ),),
+                Text(widget.post.get('name'),  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),),
+              ],
             ),
-
-            subtitle:Text(widget.post.get('user'),style: TextStyle(
-                fontFamily: 'Sans',
-                fontSize: 15,
-                color: Colors.blueGrey,
-                fontWeight: FontWeight.bold),
+            SizedBox(height: 20,),
+            Row(
+              children: [
+                Text("Address:  ",  style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 20,
+                  color: Colors.grey,
+                ),),
+                Expanded(
+                  child: Text(widget.post.get('address'),  style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),),
+                ),
+              ],
             ),
-
-          ),
-
+            SizedBox(height: 20,),
+            Row(
+              children: [
+                Text("Mail@:  ",  style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 20,
+                  color: Colors.grey,
+                ),),
+                Text(widget.post.get('user'),  style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 20,
+                  color: Colors.black,
+                ),),
+              ],
+            ),
+            SizedBox(height: 20,),
+          ],
         ),
-    onTap: () {
-      Navigator.push(context,
-          MaterialPageRoute(
-            builder: (context) => UpiPayment(widget.post.get('user')),
 
-          ));
-    }
-      ),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.only(top: 15, bottom: 15),
+                  primary: Colors.teal.shade200, // background
+                  onPrimary: Colors.white,
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(20.0),
+                  ) // foreground
+              ),
+              child: Text(
+                'DONATE',
+                style: TextStyle(
+                  fontFamily: 'Sans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+              onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(
+                    builder: (context) => UpiPayment(widget.post.get('user')),
+                  ));
+            }
+              ),
+        ),
+      ],
+    ),
+  ),
 
       ),
     );
