@@ -14,20 +14,15 @@ final supportStyle = TextStyle(
   color: Colors.black,
   height: 1.5,
 );
- final buttonStyle = TextStyle(
-   fontSize: 20,
-   fontFamily: 'Poppins',
-   fontWeight: FontWeight.bold,
- );
-
-final errorStyle = TextStyle(
-  fontSize: 25,
-  fontFamily: 'Sans',
+final buttonStyle = TextStyle(
+  fontSize: 20,
+  fontFamily: 'Poppins',
   fontWeight: FontWeight.bold,
 );
+
+final errorStyle = TextStyle();
 
 final messageStyle = TextStyle(
   fontSize: 15,
   fontFamily: 'Sans',
-
 );
