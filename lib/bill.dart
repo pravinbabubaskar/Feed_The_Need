@@ -23,7 +23,7 @@ class billState extends State<bill> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          "YOUR ORDER CONFIRMED",
+          "YOUR ORDER STATUS",
           style: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
@@ -107,7 +107,7 @@ showAlertDialog(BuildContext context) {
   // Create AlertDialog
   AlertDialog alert = AlertDialog(
     title: Text("Time Out"),
-    content: Text("Your Order Cancelled."),
+    content: Text("Your Order Confirmed."),
     actions: [
       okButton,
     ],
