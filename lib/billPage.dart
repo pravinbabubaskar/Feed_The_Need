@@ -51,7 +51,7 @@ class billPageState extends State<billPage> {
       ),
       appBar:AppBar(
           backgroundColor: Colors.white,
-          title:Text("Confirm Your Order"/*(widget.bill+(widget.bill*0.1)).toString()*/,style: TextStyle(
+          title:Text("Confirm Your Order",style: TextStyle(
               fontFamily: 'Sans',
               fontSize: 25,
               color: Colors.black,
@@ -81,7 +81,7 @@ body:
                       fontWeight: FontWeight.bold),
                   ),
 
-                  subtitle:Text('Total Bill \₹'+((widget.bill+(widget.bill*0.1))).toString(),style: TextStyle(
+                  subtitle:Text('Total Bill \₹'+((widget.bill)).toString(),style: TextStyle(
                       fontFamily: 'Sans',
                       fontSize: 15,
                       color: Colors.blueGrey,
@@ -94,7 +94,7 @@ body:
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(
-                      builder: (context) => UpiBill((widget.bill*0.1)+widget.bill ),
+                      builder: (context) => UpiBill(widget.bill.roundToDouble() ),
                     ));
               }
 
