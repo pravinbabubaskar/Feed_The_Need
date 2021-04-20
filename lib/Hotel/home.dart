@@ -60,8 +60,8 @@ class _HomeState extends State<Home> {
         title: CustomText(
           text: _name,
           color: white,
-          fontfamily: "poppin",
-          size: 20,
+          fontfamily: "sans",
+          size: 25,
         ),
         actions: <Widget>[],
       ),

@@ -180,10 +180,10 @@ class _DashboardState extends State<Dashboard> {
           )),
       ListTile(
           onTap: () {
-            //Navigator.push(
-                //context,
-                //MaterialPageRoute(
-                //    builder: (context) => graph()));
+            Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => graph()));
           },
           leading: Icon(
             Icons.bar_chart,

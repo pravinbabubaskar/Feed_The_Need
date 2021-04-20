@@ -42,13 +42,20 @@ class UpiBillState extends State<UpiBill> {
 
   //  opens user selected Payment app.
   Future<void> openpaymentapp(ApplicationMeta app) async {
+    final err = validatePID(upicontrol.text);
+    if (err != null) {
+      setState(() {
+        upiErr = err;
+      });
+      return;
+    }
 
     setState(() {
       upiErr = null;
     });
 
     final transactionRef = Random.secure().nextInt(1 << 32).toString();
-   // print("Billing with id $transactionRef");
+    print("Billing with id $transactionRef");
 
     // to start payment transaction.
     final billingdata = await UpiPay.initiateTransaction(
@@ -59,7 +66,8 @@ class UpiBillState extends State<UpiBill> {
       transactionRef: transactionRef,
       merchantCode: '7372',
     );
-     //print(billingdata);
+     print(billingdata);
+
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => bill(widget.pay)));
   }
@@ -102,7 +110,7 @@ class UpiBillState extends State<UpiBill> {
                           Expanded(
                             child: TextFormField(
                               controller:upicontrol,
-                              enabled: false,//
+                              enabled: true,//false,
                               style: TextStyle(
                                   fontSize: 15,
                                   fontFamily: 'Sans',
@@ -254,4 +262,17 @@ class UpiBillState extends State<UpiBill> {
         )
     );
   }
+}
+
+String validatePID(String value) {
+  if (value.isEmpty) {
+    return 'Enter UPI Address.';
+  }
+
+  if (!UpiPay.checkIfUpiAddressIsValid(value)) {
+    print('             **Invalid UPI ID.**                ');
+    return 'Invalid UPI ID.';
+  }
+
+  return null;
 }

@@ -6,7 +6,6 @@ class UpiPayment extends StatefulWidget {
   static const routeName = '/upipayment';
   // string to store the UPI id of the NGO;
   String payid;
-
   // getting UPI id
   UpiPayment(this.payid);
 
@@ -46,7 +45,7 @@ class UpiPaymentState extends State<UpiPayment> {
 
   //  opens user selected Payment app.
   Future<void> openpaymentapp(ApplicationMeta app) async {
-    /*final err = validatePID(upicontrol.text);
+    final err = validatePID(upicontrol.text);
     if (err != null) {
       setState(() {
         upiError = err;
@@ -54,7 +53,7 @@ class UpiPaymentState extends State<UpiPayment> {
       return;
     }
 
-     */
+
     setState(() {
       upiError = null;
     });
@@ -71,6 +70,8 @@ class UpiPaymentState extends State<UpiPayment> {
       transactionRef: transactionRef,
       merchantCode: '7372',
     );
+
+
   }
 
   @override
@@ -114,7 +115,7 @@ class UpiPaymentState extends State<UpiPayment> {
                       Expanded(
                         child: TextFormField(
                           controller: upicontrol,
-                          enabled: false,
+                          enabled: true,//false,
                           style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'OpenSans',
@@ -273,8 +274,9 @@ String validatePID(String value) {
   }
 
   if (!UpiPay.checkIfUpiAddressIsValid(value)) {
+    print('             **Invalid UPI ID.**                ');
     return 'Invalid UPI ID.';
   }
 
-  return "";
+  return null;
 }

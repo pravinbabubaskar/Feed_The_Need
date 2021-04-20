@@ -1,4 +1,5 @@
 import 'package:feedthenead/helpers/style.dart';
+import 'package:feedthenead/home.dart';
 import 'package:feedthenead/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 

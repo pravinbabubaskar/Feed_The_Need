@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:feedthenead/Hotel/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:feedthenead/data.dart';
 import 'package:feedthenead/helpers/style.dart';
 import 'package:feedthenead/widgets/custom_file_button.dart';
 import 'package:feedthenead/widgets/custom_text.dart';
@@ -54,22 +55,77 @@ class _Add_productState extends State<Add_product> {
 
         setState(() {
           imageUrl = downloadUrl;
-          users
-              .doc(widget._id)
-              .update({
-                "product": FieldValue.arrayUnion([
-                  {
-                    "name": _name,
-                    "price": _price,
-                    "description": _des,
-                    "p_id": _pid,
-                    "p_url": imageUrl,
-                    "quantity": quantity,
-                  },
-                ]),
-              })
-              .then((value) => print("Image Updated"))
-              .catchError((error) => print("Failed to update image: $error"));
+          users.doc(widget._id).update({
+            "product": FieldValue.arrayUnion([
+              {
+                "name": _name,
+                "price": _price,
+                "description": _des,
+                "p_id": _pid,
+                "p_url": imageUrl,
+                "quantity": quantity,
+              },
+            ]),
+          }).then((value) {
+            print("product Updated");
+            Timestamp sec_date = Timestamp.now();
+
+            FirebaseFirestore.instance
+                .collection('quantity')
+                .doc('date')
+                .get()
+                .then((DocumentSnapshot documentSnapshot) {
+              Timestamp fir_date = documentSnapshot.data()['fir_date'];
+              int data_quantity = documentSnapshot.data()['data_quantity'];
+
+              int fir_datee = fir_date.toDate().day;
+              int sec_datee = sec_date.toDate().day;
+              print("firt date=${fir_date.toDate().day}");
+              print("second date=${sec_date.toDate().day}");
+
+              if (fir_datee != sec_datee) {
+                data_quantity = 0 + quantity;
+                FirebaseFirestore.instance
+                    .collection('quantity')
+                    .doc('date')
+                    .update({
+                  'fir_date': sec_date,
+                  'data_quantity': data_quantity,
+                });
+                var d = sec_date.toDate().day.toString();
+                var m = sec_date.toDate().month.toString();
+                var y = sec_date.toDate().year.toString();
+                String res = d + '-' + m + '-' + y;
+                FirebaseFirestore.instance
+                    .collection('quantity')
+                    .doc('data')
+                    .update({
+                  '$res': data_quantity,
+                });
+              } else {
+                var d = sec_date.toDate().day.toString();
+                var m = sec_date.toDate().month.toString();
+                var y = sec_date.toDate().year.toString();
+                String res = d + '-' + m + '-' + y;
+
+                data_quantity += quantity;
+                FirebaseFirestore.instance
+                    .collection('quantity')
+                    .doc('data')
+                    .update({
+                  '$res': data_quantity,
+                });
+                FirebaseFirestore.instance
+                    .collection('quantity')
+                    .doc('date')
+                    .update({
+                  'data_quantity': data_quantity,
+                });
+              }
+              // var diff = sec_date.toDate().difference(fir_date.toDate());
+              //print(diff.inDays);
+            });
+          }).catchError((error) => print("Failed to update image: $error"));
           print(imageUrl);
         });
       } else {
