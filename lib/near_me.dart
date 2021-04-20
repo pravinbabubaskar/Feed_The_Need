@@ -33,12 +33,13 @@ class _NearMeState extends State<NearMe> {
     for (var t in hotelData) {
       if (t['district'] == loc1) {
         hotel.add(t);
-        //getDistance(t['latitue'],t['longitude']);
+        getDistance(t['latitue'],t['longitude']);
       }
     }
   }
 
   getDistance(double lat, double long) async {
+
     var dio = Dio();
     double Ulat = latlong.latitude;
     double Ulong = latlong.longitude;
@@ -46,7 +47,9 @@ class _NearMeState extends State<NearMe> {
         'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=$Ulat,$Ulong&destinations=$lat,$long&key=AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk');
     Map data = response.data;
     setState(() {
-      duration[i++] = data['rows'][0]["elements"][0]["duration"]["text"];
+      duration[i] = data['rows'][0]["elements"][0]["duration"]["text"];
+      print(duration[i]);
+      i++;
     });
   }
 

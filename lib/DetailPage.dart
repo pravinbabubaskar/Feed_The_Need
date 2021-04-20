@@ -53,11 +53,13 @@ class _DetailPageState extends State<DetailPage>{
                     fontSize: 20,
                     color: Colors.grey,
                     ),),
-                Text(widget.post.get('name'),  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),),
+                Expanded(
+                  child: Text(widget.post.get('name'),  style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),),
+                ),
               ],
             ),
             SizedBox(height: 20,),
@@ -85,11 +87,13 @@ class _DetailPageState extends State<DetailPage>{
                   fontSize: 20,
                   color: Colors.grey,
                 ),),
-                Text(widget.post.get('user'),  style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 20,
-                  color: Colors.black,
-                ),),
+                Expanded(
+                  child: Text(widget.post.get('user'),  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),),
+                ),
               ],
             ),
             SizedBox(height: 20,),

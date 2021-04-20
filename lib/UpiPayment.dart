@@ -1,12 +1,13 @@
 import 'dart:math';
+import 'package:feedthenead/donate.dart';
 import 'package:flutter/material.dart';
 import 'package:upi_pay/upi_pay.dart';
-
+import 'package:feedthenead/data.dart';
+import 'home.dart';
 class UpiPayment extends StatefulWidget {
-  static const routeName = '/upipayment';
+  //static const routeName = '/upipayment';
   // string to store the UPI id of the NGO;
   String payid;
-
   // getting UPI id
   UpiPayment(this.payid);
 
@@ -44,9 +45,107 @@ class UpiPaymentState extends State<UpiPayment> {
     super.dispose();
   }
 
+
+  showAlertFail(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>donate()
+            ));
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Payment status"),
+      content: Text("Failed!"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertSuccess(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>HomePage(
+                  location: loc1,
+                )
+            ));
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Payment status"),
+      content: Text("Success!"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertSubmitted(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>HomePage(
+                  location: loc1,
+                )
+            ));
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Payment status"),
+      content: Text("Submitted"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   //  opens user selected Payment app.
   Future<void> openpaymentapp(ApplicationMeta app) async {
-    /*final err = validatePID(upicontrol.text);
+    final err = validatePID(upicontrol.text);
     if (err != null) {
       setState(() {
         upiError = err;
@@ -54,7 +153,7 @@ class UpiPaymentState extends State<UpiPayment> {
       return;
     }
 
-     */
+
     setState(() {
       upiError = null;
     });
@@ -71,6 +170,18 @@ class UpiPaymentState extends State<UpiPayment> {
       transactionRef: transactionRef,
       merchantCode: '7372',
     );
+    String s=paymentdata.status.toString();
+    print(s);
+    if(s=="UpiTransactionStatus.failure") {
+      showAlertFail(context);
+      return;
+    }
+    if(s=="UpiTransactionStatus.success") {
+      showAlertSuccess(context);
+      return;
+    }
+
+      showAlertSubmitted(context);
   }
 
   @override
@@ -114,7 +225,7 @@ class UpiPaymentState extends State<UpiPayment> {
                       Expanded(
                         child: TextFormField(
                           controller: upicontrol,
-                          enabled: false,
+                          enabled: true,//false,
                           style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'OpenSans',
@@ -273,8 +384,10 @@ String validatePID(String value) {
   }
 
   if (!UpiPay.checkIfUpiAddressIsValid(value)) {
+    print('             **Invalid UPI ID.**                ');
     return 'Invalid UPI ID.';
   }
 
-  return "";
+  return null;
 }
+
