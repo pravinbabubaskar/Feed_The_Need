@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'data.dart';
 import 'billPage.dart';
-import 'dart:typed_data';
-import 'dart:async';
+
 
 class Cart extends StatefulWidget {
   @override

@@ -123,7 +123,7 @@ class _ExploreState extends State<Explore> {
                             child: Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.grey)),
+                                 ),
                               child: Row(
                                 children: <Widget>[
                                   ClipRRect(

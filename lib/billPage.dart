@@ -1,10 +1,8 @@
-import 'dart:ffi';
-import 'dart:typed_data';
-import 'dart:async';
 import 'package:feedthenead/donate.dart';
-import 'UpiPayment.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'UpiBill.dart';
+
 class billPage extends StatefulWidget{
 
   final int bill;
@@ -17,11 +15,40 @@ class billPage extends StatefulWidget{
 }
 
 class billPageState extends State<billPage> {
-  //var bill=super.bill;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 20, 10, 50),
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                  text: 'Any idea to donate 💲',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontFamily: 'Raleway',
+                      fontWeight: FontWeight.bold),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'Most Welcomed 🥳 ',
+                      style: TextStyle(color: Colors.blue[300]),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(context,
+                              MaterialPageRoute(
+                                builder: (context) => donate(),
+                              ));
+                        },
+                    ),
+
+                  ]),
+            ),
+          )
+        ],
+      ),
       appBar:AppBar(
           backgroundColor: Colors.white,
           title:Text("Confirm Your Order"/*(widget.bill+(widget.bill*0.1)).toString()*/,style: TextStyle(
@@ -32,7 +59,7 @@ class billPageState extends State<billPage> {
 
           ),
           leading: IconButton(
-            icon:Icon(Icons.arrow_back,color: Colors.blue.shade400,),
+            icon:Icon(Icons.arrow_back,color: Colors.teal[100],),
             onPressed: ()
             {
               Navigator.pop(context, false);
@@ -68,41 +95,6 @@ body:
                 Navigator.push(context,
                     MaterialPageRoute(
                       builder: (context) => UpiBill((widget.bill*0.1)+widget.bill ),
-
-                    ));
-              }
-
-
-          ),
-
-
-          GestureDetector(
-              child:
-              Card(
-                child:
-                ListTile(
-                  title:Text( "Donate Us",style: TextStyle(
-                      fontFamily: 'Sans',
-                      fontSize: 20,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                  ),
-
-                  subtitle:Text( "Donate NGO's to feed the needy people",style: TextStyle(
-                      fontFamily: 'Sans',
-                      fontSize: 15,
-                      color: Colors.blueGrey,
-                      fontWeight: FontWeight.bold),
-                  ),
-
-                ),
-
-              ),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(
-                      builder: (context) => donate()
-
                     ));
               }
 
