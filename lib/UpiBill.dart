@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:upi_pay/upi_pay.dart';
 import 'bill.dart';
 class UpiBill extends StatefulWidget {
-  static const routeName = '/upipayment';
+ // static const routeName = '/upipayment';
   // variable to store the billing amount;
   double pay;
 
@@ -37,6 +37,37 @@ class UpiBillState extends State<UpiBill> {
     // stores the list of apps installed in mobile phone for bill payment
     paymentapps = UpiPay.getInstalledUpiApplications();
   }
+  showAlertFail(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>UpiBill(widget.pay)
+            ));
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Payment status"),
+      content: Text("Failed!"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
 
   @override
 
@@ -68,8 +99,22 @@ class UpiBillState extends State<UpiBill> {
     );
      print(billingdata);
 
+    String s=billingdata.status.toString();
+    print(s);
+    if(s=="UpiTransactionStatus.failure") {
+      showAlertFail(context);
+      return;
+    }
+    /*if(s=="UpiTransactionStatus.success") {
+      showAlertSuccess(context);
+      return;
+    }
+
+    showAlertSubmitted(context);*/
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => bill(widget.pay)));
+        context, MaterialPageRoute(
+        builder: (context) => bill(widget.pay)
+    ));
   }
 
   @override
