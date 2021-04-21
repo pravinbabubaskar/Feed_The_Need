@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:feedthenead/home.dart';
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 class bill extends StatefulWidget {
   double pay;
   @override
@@ -13,7 +12,7 @@ class bill extends StatefulWidget {
 }
 
 class billState extends State<bill> {
-  int count;// = 10;
+  int count;
   Timer _t;
 
   void _startTimer() {
@@ -35,7 +34,7 @@ class billState extends State<bill> {
 
   ShowAlert(BuildContext context) {
     // Create button
-    Widget okButton = FlatButton(
+    Widget ok = FlatButton(
       child: Text("OK"),
       onPressed: () {
         Navigator.push(
@@ -46,24 +45,12 @@ class billState extends State<bill> {
                 )));
       },
     );
-   /* Widget cancel = FlatButton(
-      child: Text("Cancel"),
-      onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomePage(
-                  location: loc1,
-                )));
-      },
-    );
-*/
 
     AlertDialog a = AlertDialog(
       title: Text("Time Out"),
       content: Text("Your Order Confirmed."),
       actions: [
-        okButton,
+        ok,
       ],
     );
 
@@ -75,6 +62,37 @@ class billState extends State<bill> {
     );
   }
 
+
+
+  ShowAlertCancel(BuildContext context) {
+    // Create button
+    Widget cancel = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomePage(
+                  location: loc1,
+                )));
+      },
+    );
+
+    AlertDialog a = AlertDialog(
+      title: Text("Cancel"),
+      content: Text("Your Order Cancelled."),
+      actions: [
+        cancel,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return a;
+      },
+    );
+  }
   @override
   void initState(){
     _startTimer();
@@ -88,7 +106,7 @@ class billState extends State<bill> {
           style: TextStyle(
             fontFamily: 'Impress',
             fontWeight: FontWeight.bold,
-            fontSize: 15,
+            fontSize: 25,
           ),
         ),
         centerTitle: true,
@@ -124,12 +142,7 @@ class billState extends State<bill> {
             RaisedButton(
               onPressed: () {
                 _t.cancel();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HomePage(
-                          location: loc1,
-                        )));
+                ShowAlertCancel(context);
               },
               child: Text("Cancel Order"),
             ),
