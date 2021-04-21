@@ -68,6 +68,7 @@ class _Add_productState extends State<Add_product> {
             ]),
           }).then((value) {
             print("product Updated");
+
             Timestamp sec_date = Timestamp.now();
 
             FirebaseFirestore.instance
@@ -93,6 +94,9 @@ class _Add_productState extends State<Add_product> {
                   'data_quantity': data_quantity,
                 });
                 var d = sec_date.toDate().day.toString();
+                if (d.length == 1) {
+                  d = '0' + d;
+                }
                 var m = sec_date.toDate().month.toString();
                 var y = sec_date.toDate().year.toString();
                 String res = d + '-' + m + '-' + y;
@@ -102,8 +106,31 @@ class _Add_productState extends State<Add_product> {
                     .update({
                   '$res': data_quantity,
                 });
+                FirebaseFirestore.instance
+                    .collection('hotel')
+                    .doc(widget._id)
+                    .update({
+                  'net-quantity': quantity,
+                });
               } else {
+                FirebaseFirestore.instance
+                    .collection('hotel')
+                    .doc(widget._id)
+                    .get()
+                    .then((DocumentSnapshot documentSnapshot) {
+                  int nq = documentSnapshot.data()['net-quantity'];
+                  nq += quantity;
+                  FirebaseFirestore.instance
+                      .collection('hotel')
+                      .doc(widget._id)
+                      .update({
+                    'net-quantity': nq,
+                  });
+                });
                 var d = sec_date.toDate().day.toString();
+                if (d.length == 1) {
+                  d = '0' + d;
+                }
                 var m = sec_date.toDate().month.toString();
                 var y = sec_date.toDate().year.toString();
                 String res = d + '-' + m + '-' + y;
