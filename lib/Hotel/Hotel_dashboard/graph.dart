@@ -3,52 +3,51 @@ import 'package:feedthenead/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'DatabaseManager.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
-class graph extends StatefulWidget{
+class graph extends StatefulWidget {
   final String _id;
   graph(this._id);
   @override
   graphState createState() => graphState();
 }
-class graphState extends State<graph>
-{
 
+class graphState extends State<graph> {
   List ItemList = [];
 
-  CollectionReference collection = FirebaseFirestore.instance.collection('hotel');
+  CollectionReference collection =
+      FirebaseFirestore.instance.collection('hotel');
   //= profileList.doc(widget._id);
 
   Future getUsersList(String id) async {
     List itemsList = [];
 
     try {
-      DocumentSnapshot s=await collection.doc(id).get();
-      itemsList=s.get('product');
+      DocumentSnapshot s = await collection.doc(id).get();
+      itemsList = s.get('product');
       /*.then((querySnapshot) {
        querySnapshot.docs.forEach((element) {
        itemsList.add(element.get("name"));
       });
       });*/
-      print("                        =X=X=X=   Success   =X=X=X=                        ");
+      print(
+          "                        =X=X=X=   Success   =X=X=X=                        ");
       print(itemsList);
       print(itemsList.length);
       return itemsList;
-    }
-    catch (e) {
+    } catch (e) {
       print(e.toString());
       return null;
     }
-
   }
-  @override
 
+  @override
   void initState() {
     super.initState();
     fetchDatabaseList();
   }
+
   /*void init()
   {
     CollectionReference users = FirebaseFirestore.instance.collection('hotel');
@@ -67,40 +66,37 @@ class graphState extends State<graph>
     }
   }
 
-
   Widget build(BuildContext context) {
-
     return Scaffold(
       //backgroundColor: Colors.blue[100],
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title:Text('Food Wasted Graph',
+        title: Text(
+          'Food Wasted Graph',
           style: TextStyle(
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'Southern',
-          color: Colors.blueGrey,
-        ),
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Southern',
+            color: Colors.blueGrey,
+          ),
         ),
         centerTitle: true,
       ),
-      body:Center(
+      body: Center(
         //backgroundColor: Colors.white,
-        child:Row(
-
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children:[
+          children: [
             //child:Center(
             //    child:
             Text(
               'Graph',
-              textAlign:TextAlign.center,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Raleway',
                 color: Colors.blueGrey,
-
               ),
               //  textAlign: TextAlign.center
             ),
@@ -112,12 +108,9 @@ class graphState extends State<graph>
             ),
             // ),
           ],
-
         ),
-
       ),
     );
     //throw UnimplementedError();
   }
-
 }

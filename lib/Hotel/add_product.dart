@@ -107,22 +107,36 @@ class _Add_productState extends State<Add_product> {
                     .update({
                   '$res': data_quantity,
                 });
-                users.doc(widget._id).update({
-                  "net-quantity": FieldValue.arrayUnion([data_quantity]),
-                }).then((value) {
-                  print("net quantity for specic hotel updated");
-                });
-              } else {
                 FirebaseFirestore.instance
                     .collection('hotel')
                     .doc(widget._id)
                     .get()
                     .then((DocumentSnapshot documentSnapshot) {
                   List nq_list = documentSnapshot.data()['net-quantity'];
+                  nq_list.add(data_quantity);
 
-                  int nq = nq_list[nq_list.length - 1];
-                  nq += quantity;
-                  nq_list[nq_list.length - 1] = nq;
+                  FirebaseFirestore.instance
+                      .collection('hotel')
+                      .doc(widget._id)
+                      .update({
+                    'net-quantity': nq_list,
+                  });
+                });
+              } else {
+                data_quantity += quantity;
+
+                FirebaseFirestore.instance
+                    .collection('hotel')
+                    .doc(widget._id)
+                    .get()
+                    .then((DocumentSnapshot documentSnapshot) {
+                  List nq_list = documentSnapshot.data()['net-quantity'];
+                  if (nq_list.isEmpty)
+                    nq_list.add(quantity);
+                  else {
+                    nq_list[nq_list.length - 1] = (nq_list.last) + quantity;
+                  }
+
                   FirebaseFirestore.instance
                       .collection('hotel')
                       .doc(widget._id)
@@ -138,7 +152,6 @@ class _Add_productState extends State<Add_product> {
                 var y = sec_date.toDate().year.toString();
                 String res = d + '-' + m + '-' + y;
 
-                data_quantity += quantity;
                 FirebaseFirestore.instance
                     .collection('quantity')
                     .doc('data')
