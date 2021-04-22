@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:feedthenead/Hotel/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -106,11 +107,10 @@ class _Add_productState extends State<Add_product> {
                     .update({
                   '$res': data_quantity,
                 });
-                FirebaseFirestore.instance
-                    .collection('hotel')
-                    .doc(widget._id)
-                    .update({
-                  'net-quantity': quantity,
+                users.doc(widget._id).update({
+                  "net-quantity": FieldValue.arrayUnion([data_quantity]),
+                }).then((value) {
+                  print("net quantity for specic hotel updated");
                 });
               } else {
                 FirebaseFirestore.instance
@@ -118,13 +118,16 @@ class _Add_productState extends State<Add_product> {
                     .doc(widget._id)
                     .get()
                     .then((DocumentSnapshot documentSnapshot) {
-                  int nq = documentSnapshot.data()['net-quantity'];
+                  List nq_list = documentSnapshot.data()['net-quantity'];
+
+                  int nq = nq_list[nq_list.length - 1];
                   nq += quantity;
+                  nq_list[nq_list.length - 1] = nq;
                   FirebaseFirestore.instance
                       .collection('hotel')
                       .doc(widget._id)
                       .update({
-                    'net-quantity': nq,
+                    'net-quantity': nq_list,
                   });
                 });
                 var d = sec_date.toDate().day.toString();
