@@ -125,8 +125,12 @@ class UpiBillState extends State<UpiBill> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.teal[100],
-            title: Text('Proceed Payment'),
-            //backgroundColor: Colors.blue,
+            title: Text('Proceed Payment',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Sans'),
+            ),
+
             leading: IconButton(
               icon:Icon(Icons.arrow_back),
               onPressed: ()
@@ -153,6 +157,12 @@ class UpiBillState extends State<UpiBill> {
                       child: Row(
                         children: <Widget>[
                           Expanded(
+                      child: Theme(
+                        data: new ThemeData(
+                        primaryColor: Colors.black,
+                        //primaryColor: Colors.grey,
+                        primaryColorDark: Colors.grey,
+                      ),
                             child: TextFormField(
                               controller:upicontrol,
                               enabled: true,//false,
@@ -170,6 +180,7 @@ class UpiBillState extends State<UpiBill> {
                                     color:Colors.black),
                               ),
                             ),
+                      ),
                           ),
                         ],
                       ),
@@ -190,7 +201,7 @@ class UpiBillState extends State<UpiBill> {
                           Expanded(
                             child: Theme(
                               data: new ThemeData(
-                                primaryColor: Colors.grey,
+                                primaryColor: Colors.black,
                                 primaryColorDark: Colors.grey,
                               ),
                               child: TextField(
@@ -261,39 +272,38 @@ class UpiBillState extends State<UpiBill> {
                                 shrinkWrap: true,
                                 mainAxisSpacing: 10,
                                 crossAxisSpacing: 10,
-                                childAspectRatio: 1.6,
+                                childAspectRatio: 2.0,
+
                                 physics: NeverScrollableScrollPhysics(),
                                 children: snapshot.data.map((i) => Material(
                                   key: ObjectKey(i.upiApplication),
-                                  color: Colors.grey[200],
+                                  color: Colors.teal[50],
                                   child: InkWell(
                                     onTap: () => openpaymentapp(i),
                                     child: Column(
-                                      mainAxisSize: MainAxisSize.min,
+                                      // mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: <Widget>[
                                         Image.memory(
                                           i.icon,
-                                          width: 64,
-                                          height: 50,
+                                          width: 80,
+                                          height: 70,
                                         ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
+
                                         Container(
                                           margin: EdgeInsets.only(top: 4),
                                           child: Text(
-                                            i.upiApplication.getAppName(),style: TextStyle(
-                                              fontSize: 20,
-                                              fontFamily: 'Sans'
-                                          ),
+                                            i.upiApplication.getAppName(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                )
-                                ).toList(),
+                                ))
+                                    .toList(),
                               );
                             },
                           ),

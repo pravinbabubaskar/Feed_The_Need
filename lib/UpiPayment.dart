@@ -197,32 +197,25 @@ class UpiPaymentState extends State<UpiPayment> {
               'Payment',
               style: TextStyle(color: Colors.black, fontFamily: 'Sans'),
             ),
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.teal[100],
           ),
           body: SafeArea(
               child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: ListView(
               children: <Widget>[
-                SizedBox(height: 20),
-                Text(' "Giving is not just about making a donation it\'s about making a Difference" ',style:TextStyle (
-                fontFamily: 'Raleway',
-                  fontSize: 20,
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1
-                ),textAlign: TextAlign.center,),
-                Text("-Kathy Calvin",style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 20,
-                    color: Colors.grey,
-                ),textAlign: TextAlign.right,),
-                SizedBox(height: 40),
                 Container(
                   margin: EdgeInsets.only(top: 32),
                   child: Row(
                     children: <Widget>[
-                      Expanded(
+                  Expanded(
+                  child: Theme(
+                    data: new ThemeData(
+                    primaryColor: Colors.black,
+                    //primaryColor: Colors.grey,
+                    primaryColorDark: Colors.grey,
+                  ),
+
                         child: TextFormField(
                           controller: upicontrol,
                           enabled: true,//false,
@@ -240,6 +233,7 @@ class UpiPaymentState extends State<UpiPayment> {
                                 color: Colors.black),
                           ),
                         ),
+          ),
                       ),
                     ],
                   ),
@@ -259,7 +253,8 @@ class UpiPaymentState extends State<UpiPayment> {
                       Expanded(
                         child: Theme(
                           data: new ThemeData(
-                            primaryColor: Colors.grey,
+                            primaryColor: Colors.black,
+                            //primaryColor: Colors.grey,
                             primaryColorDark: Colors.grey,
                           ),
                           child: TextField(
@@ -331,39 +326,37 @@ class UpiPaymentState extends State<UpiPayment> {
                             shrinkWrap: true,
                             mainAxisSpacing: 10,
                             crossAxisSpacing: 10,
-                            childAspectRatio: 1.6,
+                            childAspectRatio: 2.0,
+
                             physics: NeverScrollableScrollPhysics(),
-                            children: snapshot.data
-                                .map((i) => Material(
-                                      key: ObjectKey(i.upiApplication),
-                                      color: Colors.grey[200],
-                                      child: InkWell(
-                                        onTap: () => openpaymentapp(i),
-                                        child: Column(
-                                         // mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Image.memory(
-                                              i.icon,
-                                              width: 64,
-                                              height: 50,
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(top: 4),
-                                              child: Text(
-                                                i.upiApplication.getAppName(),style: TextStyle(
-                                                fontSize: 20,
-                                                fontFamily: 'Sans'
-                                              ),
-                                              ),
-                                            ),
-                                          ],
+                            children: snapshot.data.map((i) => Material(
+                              key: ObjectKey(i.upiApplication),
+                              color: Colors.teal[50],
+                              child: InkWell(
+                                onTap: () => openpaymentapp(i),
+                                child: Column(
+                                  // mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image.memory(
+                                      i.icon,
+                                      width: 80,
+                                      height: 70,
+                                    ),
+
+                                    Container(
+                                      margin: EdgeInsets.only(top: 4),
+                                      child: Text(
+                                        i.upiApplication.getAppName(),
+                                        style: TextStyle(
+                                          color: Colors.black,
                                         ),
                                       ),
-                                    ))
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ))
                                 .toList(),
                           );
                         },
