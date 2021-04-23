@@ -33,12 +33,12 @@ class _NearMeState extends State<NearMe> {
     for (var t in hotelData) {
       if (t['district'] == loc1) {
         hotel.add(t);
-        getDistance(t['latitue'],t['longitude']);
+        // getDistance(t['latitue'],t['longitude']);
       }
     }
   }
 
-  getDistance(double lat, double long) async {
+  /*getDistance(double lat, double long) async {
 
     var dio = Dio();
     double Ulat = latlong.latitude;
@@ -51,7 +51,7 @@ class _NearMeState extends State<NearMe> {
       print(duration[i]);
       i++;
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -80,14 +80,16 @@ class _NearMeState extends State<NearMe> {
                   ),
                 ],
               ),
-              isNGOVerified == true ?Text(
-                "NGO+",
-                style: TextStyle(
-                    fontFamily: 'Sans',
-                    color:Colors.teal[100],
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-              ):Text(""),
+              isNGOVerified == true
+                  ? Text(
+                      "NGO+",
+                      style: TextStyle(
+                          fontFamily: 'Sans',
+                          color: Colors.teal[100],
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    )
+                  : Text(""),
             ],
           ),
         ),

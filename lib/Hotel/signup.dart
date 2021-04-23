@@ -120,7 +120,7 @@ class _Sign_upState extends State<Sign_up> {
             'email': "none",
             'number': "none",
             'product': [],
-            'net-quantity': 0,
+            'net-quantity': [],
             'imageUrl':
                 'https://firebasestorage.googleapis.com/v0/b/feedtheneed-ad7d0.appspot.com/o/food.png?alt=media&token=b594a56c-fadc-4399-9900-a233bd61d802',
           })
