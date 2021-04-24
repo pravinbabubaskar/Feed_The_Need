@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:feedthenead/Hotel/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -68,6 +69,7 @@ class _Add_productState extends State<Add_product> {
             ]),
           }).then((value) {
             print("product Updated");
+
             Timestamp sec_date = Timestamp.now();
 
             FirebaseFirestore.instance
@@ -93,6 +95,9 @@ class _Add_productState extends State<Add_product> {
                   'data_quantity': data_quantity,
                 });
                 var d = sec_date.toDate().day.toString();
+                if (d.length == 1) {
+                  d = '0' + d;
+                }
                 var m = sec_date.toDate().month.toString();
                 var y = sec_date.toDate().year.toString();
                 String res = d + '-' + m + '-' + y;
@@ -102,13 +107,51 @@ class _Add_productState extends State<Add_product> {
                     .update({
                   '$res': data_quantity,
                 });
+                FirebaseFirestore.instance
+                    .collection('hotel')
+                    .doc(widget._id)
+                    .get()
+                    .then((DocumentSnapshot documentSnapshot) {
+                  List nq_list = documentSnapshot.data()['net-quantity'];
+                  nq_list.add(data_quantity);
+
+                  FirebaseFirestore.instance
+                      .collection('hotel')
+                      .doc(widget._id)
+                      .update({
+                    'net-quantity': nq_list,
+                  });
+                });
               } else {
+                data_quantity += quantity;
+
+                FirebaseFirestore.instance
+                    .collection('hotel')
+                    .doc(widget._id)
+                    .get()
+                    .then((DocumentSnapshot documentSnapshot) {
+                  List nq_list = documentSnapshot.data()['net-quantity'];
+                  if (nq_list.isEmpty)
+                    nq_list.add(quantity);
+                  else {
+                    nq_list[nq_list.length - 1] = (nq_list.last) + quantity;
+                  }
+
+                  FirebaseFirestore.instance
+                      .collection('hotel')
+                      .doc(widget._id)
+                      .update({
+                    'net-quantity': nq_list,
+                  });
+                });
                 var d = sec_date.toDate().day.toString();
+                if (d.length == 1) {
+                  d = '0' + d;
+                }
                 var m = sec_date.toDate().month.toString();
                 var y = sec_date.toDate().year.toString();
                 String res = d + '-' + m + '-' + y;
 
-                data_quantity += quantity;
                 FirebaseFirestore.instance
                     .collection('quantity')
                     .doc('data')

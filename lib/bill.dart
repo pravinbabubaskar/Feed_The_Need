@@ -1,9 +1,8 @@
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:feedthenead/Past_orders.dart';
+//import 'package:feedthenead/Past_orders.dart';
 import 'package:feedthenead/data.dart';
-//import 'package:feedthenead/helpers/style.dart';
 import 'package:flutter/material.dart';
 import 'package:feedthenead/home.dart';
+import 'dart:async';
 
 class bill extends StatefulWidget {
   double pay;
@@ -13,111 +12,150 @@ class bill extends StatefulWidget {
 }
 
 class billState extends State<bill> {
-  CountDownController time = CountDownController();
-  bool ispause = false;
+  int count;
+  Timer _t;
 
+  void _startTimer() {
+    count = 10;
+    if (_t != null) {
+      _t.cancel();
+    }
+    _t = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (count > 0) {
+          count--;
+        } else {
+          _t.cancel();
+          ShowAlert(context);
+        }
+      });
+    });
+  }
+
+  ShowAlert(BuildContext context) {
+    // Create button
+    Widget ok = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomePage(
+                  location: loc1,
+                )));
+      },
+    );
+
+    AlertDialog a = AlertDialog(
+      title: Text("Time Out"),
+      content: Text("Your Order Confirmed."),
+      actions: [
+        ok,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return a;
+      },
+    );
+  }
+
+
+
+  ShowAlertCancel(BuildContext context) {
+    // Create button
+    Widget cancel = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomePage(
+                  location: loc1,
+                )));
+      },
+    );
+
+    AlertDialog a = AlertDialog(
+      title: Text("Cancel"),
+      content: Text("Your Order Cancelled."),
+      actions: [
+        cancel,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return a;
+      },
+    );
+  }
   @override
+  void initState(){
+    _startTimer();
+}
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.blue[100],
+      backgroundColor: Colors.blueGrey[200],
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          "YOUR ORDER STATUS",
+        backgroundColor: Colors.blueGrey[400],
+        title: Text("Order Confirmation",
           style: TextStyle(
-            fontSize: 20.0,
+            fontFamily: 'Impress',
             fontWeight: FontWeight.bold,
-            fontFamily: 'Raleway',
-            color: Colors.black,
+            fontSize: 25,
           ),
         ),
         centerTitle: true,
       ),
-
       body: Center(
-        //backgroundColor: Colors.white,
-        child: CircularCountDownTimer(
-          width: MediaQuery.of(context).size.width / 2,
-          height: MediaQuery.of(context).size.height / 2,
-          duration: 20,
-          fillColor: Colors.blue,
-          controller: time,
-          backgroundColor: null, //Colors.white,
-          strokeWidth: 10.0,
-          strokeCap: StrokeCap.round,
-          isTimerTextShown: true,
-          isReverse: false,
-          onComplete: () {
-            showAlertDialog(context);
-            //Navigator.push(context, MaterialPageRoute(builder: (context) => Past_order()));
-            /*Alert(
-              context:context,
-              title:'done',
-              style:AlertStyle(
-              isCloseButton:true,
-              isButtonVisible:false;
-              titleStyle:TextStyle(
-                  color:Colors.white,
-                  fontSize:30.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+
+            Text("CONFIRMING ORDER",
+              style: TextStyle(
+                fontFamily: 'Impress',
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
               ),
+            ),
+
+            Text("please wait...",
+              style: TextStyle(
+                fontFamily: 'Sans',
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+            ),
+
+            Text(
+              '$count',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 48,
               ),
-          type:AlertType().success
-          ).show();*/
-          },
-          textStyle: TextStyle(fontSize: 50.0, color: Colors.black),
-          ringColor: Colors.white,
+            ),
+            RaisedButton(
+              onPressed: () {
+                _t.cancel();
+                ShowAlertCancel(context);
+              },
+              child: Text("Cancel Order"),
+            ),
+          ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          setState(() {
-            time.pause();
-          });
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomePage(
-                        location: loc1,
-                      )));
-        },
-        //icon:Icon(ispause? Icons.play_arrow:Icons.pause),
-        label: Text("Cancel Order"),
-      ),
     );
+
     throw UnimplementedError();
   }
 //@override
 
 }
 
-showAlertDialog(BuildContext context) {
-  // Create button
-  Widget okButton = FlatButton(
-    child: Text("OK"),
-    onPressed: () {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomePage(
-                    location: loc1,
-                  )));
-    },
-  );
 
-  // Create AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("Time Out"),
-    content: Text("Your Order Confirmed."),
-    actions: [
-      okButton,
-    ],
-  );
 
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-}

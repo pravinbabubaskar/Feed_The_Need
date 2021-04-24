@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:upi_pay/upi_pay.dart';
 import 'bill.dart';
 class UpiBill extends StatefulWidget {
-  static const routeName = '/upipayment';
+ // static const routeName = '/upipayment';
   // variable to store the billing amount;
   double pay;
 
@@ -37,6 +37,37 @@ class UpiBillState extends State<UpiBill> {
     // stores the list of apps installed in mobile phone for bill payment
     paymentapps = UpiPay.getInstalledUpiApplications();
   }
+  showAlertFail(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>UpiBill(widget.pay)
+            ));
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Payment status"),
+      content: Text("Failed!"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
 
   @override
 
@@ -68,8 +99,22 @@ class UpiBillState extends State<UpiBill> {
     );
      print(billingdata);
 
+    String s=billingdata.status.toString();
+    print(s);
+    if(s=="UpiTransactionStatus.failure") {
+      showAlertFail(context);
+      return;
+    }
+    /*if(s=="UpiTransactionStatus.success") {
+      showAlertSuccess(context);
+      return;
+    }
+
+    showAlertSubmitted(context);*/
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => bill(widget.pay)));
+        context, MaterialPageRoute(
+        builder: (context) => bill(widget.pay)
+    ));
   }
 
   @override
@@ -80,8 +125,12 @@ class UpiBillState extends State<UpiBill> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.teal[100],
-            title: Text('Proceed Payment'),
-            //backgroundColor: Colors.blue,
+            title: Text('Proceed Payment',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Sans'),
+            ),
+
             leading: IconButton(
               icon:Icon(Icons.arrow_back),
               onPressed: ()
@@ -108,6 +157,12 @@ class UpiBillState extends State<UpiBill> {
                       child: Row(
                         children: <Widget>[
                           Expanded(
+                      child: Theme(
+                        data: new ThemeData(
+                        primaryColor: Colors.black,
+                        //primaryColor: Colors.grey,
+                        primaryColorDark: Colors.grey,
+                      ),
                             child: TextFormField(
                               controller:upicontrol,
                               enabled: true,//false,
@@ -125,6 +180,7 @@ class UpiBillState extends State<UpiBill> {
                                     color:Colors.black),
                               ),
                             ),
+                      ),
                           ),
                         ],
                       ),
@@ -145,7 +201,7 @@ class UpiBillState extends State<UpiBill> {
                           Expanded(
                             child: Theme(
                               data: new ThemeData(
-                                primaryColor: Colors.grey,
+                                primaryColor: Colors.black,
                                 primaryColorDark: Colors.grey,
                               ),
                               child: TextField(
@@ -216,39 +272,38 @@ class UpiBillState extends State<UpiBill> {
                                 shrinkWrap: true,
                                 mainAxisSpacing: 10,
                                 crossAxisSpacing: 10,
-                                childAspectRatio: 1.6,
+                                childAspectRatio: 2.0,
+
                                 physics: NeverScrollableScrollPhysics(),
                                 children: snapshot.data.map((i) => Material(
                                   key: ObjectKey(i.upiApplication),
-                                  color: Colors.grey[200],
+                                  color: Colors.teal[50],
                                   child: InkWell(
                                     onTap: () => openpaymentapp(i),
                                     child: Column(
-                                      mainAxisSize: MainAxisSize.min,
+                                      // mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: <Widget>[
                                         Image.memory(
                                           i.icon,
-                                          width: 64,
-                                          height: 50,
+                                          width: 80,
+                                          height: 70,
                                         ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
+
                                         Container(
                                           margin: EdgeInsets.only(top: 4),
                                           child: Text(
-                                            i.upiApplication.getAppName(),style: TextStyle(
-                                              fontSize: 20,
-                                              fontFamily: 'Sans'
-                                          ),
+                                            i.upiApplication.getAppName(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                )
-                                ).toList(),
+                                ))
+                                    .toList(),
                               );
                             },
                           ),
