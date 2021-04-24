@@ -33,7 +33,7 @@ class UpiBillState extends State<UpiBill> {
     // getting the billing amount
     BillamountControl.text = (widget.pay.toString());
     //getting the hotel id
-    upicontrol.text="abcd@bank";
+    upicontrol.text="srikalamani1970@oksbi";
     // stores the list of apps installed in mobile phone for bill payment
     paymentapps = UpiPay.getInstalledUpiApplications();
   }

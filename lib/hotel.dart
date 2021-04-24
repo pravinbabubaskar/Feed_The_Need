@@ -90,9 +90,9 @@ class _HotelPageState extends State<HotelPage> {
                               ),
                               SmoothStarRating(
                                   size: 25,
-                                  allowHalfRating: false,
+                                  allowHalfRating: true,
                                   starCount: 5,
-                                  rating: 2,
+                                  rating: double.parse(data['r']),
                                   isReadOnly: true,
                                   color: Colors.lime,
                                   borderColor: Colors.lime[100],
