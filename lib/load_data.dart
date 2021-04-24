@@ -64,7 +64,7 @@ class _LoadState extends State<Load> {
     long = loc.longitude;
     final coordinates = new Coordinates(position.latitude, position.longitude);
     var addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
     setState(() {
       Userdistrict = first.subAdminArea;
@@ -75,7 +75,6 @@ class _LoadState extends State<Load> {
 
   getUser() async {
     User firebaseUser = await _auth.currentUser;
-    await firebaseUser?.reload();
     firebaseUser = await _auth.currentUser;
 
     if (firebaseUser != null) {
@@ -96,7 +95,7 @@ class _LoadState extends State<Load> {
           context,
           MaterialPageRoute(
               builder: (context) => HomePage(location: Userdistrict)),
-          (route) => false);
+              (route) => false);
     });
   }
 

@@ -33,7 +33,7 @@ class _NearMeState extends State<NearMe> {
     for (var t in hotelData) {
       if (t['district'] == loc1) {
         hotel.add(t);
-        getDistance(t['latitue'],t['longitude']);
+      //  getDistance(t['latitue'],t['longitude']);
       }
     }
   }
@@ -131,6 +131,7 @@ class _NearMeState extends State<NearMe> {
                                   hotel[index]['name'],
                                   hotel[index]['type'],
                                   hotel[index]['imageUrl'],
+                                  hotel[index]['r'],
                                   duration[index]),
                             ),
                           ),
@@ -143,7 +144,7 @@ class _NearMeState extends State<NearMe> {
         ));
   }
 
-  Row placesWidget(String name, String abt, String url, String time) {
+  Row placesWidget(String name, String abt, String url,String r, String time) {
     return Row(
       children: [
         Container(
@@ -181,9 +182,9 @@ class _NearMeState extends State<NearMe> {
               ),
               SmoothStarRating(
                   size: 20,
-                  allowHalfRating: false,
+                  allowHalfRating: true,
                   starCount: 5,
-                  rating: 2,
+                  rating: double.parse(r),
                   isReadOnly: true,
                   color: Colors.teal,
                   borderColor: Colors.teal[100],

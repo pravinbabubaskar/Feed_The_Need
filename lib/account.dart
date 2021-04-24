@@ -17,7 +17,6 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   showError(String errormessage) {
     showDialog(
         context: context,
@@ -46,6 +45,7 @@ class _AccountState extends State<Account> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
   }
 
   signOut() async {
@@ -174,8 +174,8 @@ class _AccountState extends State<Account> {
             Divider(thickness: 0.5, color: Colors.grey),
             GestureDetector(
               onTap: () {
-                //    Navigator.push(
-                //      context, MaterialPageRoute(builder: (context) => TimeSeries()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Analysis()));
               },
               child: Container(
                 //margin: EdgeInsets.all(20),
