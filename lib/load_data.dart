@@ -54,6 +54,7 @@ class _LoadState extends State<Load> {
     setState(() {
       hotelData = data;
     });
+
   }
 
   Future getLocation() async {

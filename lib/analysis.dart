@@ -35,7 +35,6 @@ class _AnalysisState extends State<Analysis> {
   void getCurrent(){
     List<String> Date = ["Mon","Tue","Wed","Thur","Fri","Sat","Sun"];
     var day =  DateFormat('EEEE').format(DateTime.now());
-    print(day);
     for(String val in Date){
       if(day.substring(0,val.length)==val)
         startIndex = Date.indexOf(val);
@@ -56,12 +55,13 @@ class _AnalysisState extends State<Analysis> {
     var document = await _store.collection('quantity').get();
     for( var m in document.docs){
       if(m.id=='data') {
-        // print(m.data());
-        m.data().forEach((key, value) {
-          quantity.add(value);
-        });
+        for(int i in m.data()['waste']){
+          quantity.add(i.toDouble());
+        }
+        break;
       }
     }
+    print(quantity);
     setState(() {
       quantity.removeRange(0, quantity.length-3);
       for(var val in quantity){
@@ -127,6 +127,7 @@ class _AnalysisState extends State<Analysis> {
                               child: Center(child: Text(quantity[index].toString(),
                                 style: TextStyle(
                                   fontSize: 30,
+                                  color: Colors.teal,
                                   fontFamily: 'Poppins'
                                 ),),
                               )
@@ -172,35 +173,32 @@ class _AnalysisState extends State<Analysis> {
                 ),
               ),
               showGraph==true?Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 10, 30),
+                padding: const EdgeInsets.fromLTRB(10, 10, 20, 10),
                 child: Column(
                   children: [
                     Container(
                       height: 400,
+                      width: double.infinity,
                       child: LineChart(
                           mainData()
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 30,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(30.0),
-                      child: Center(
-                        child: Row(
-                          children: [
-                            Text("Estimated Average : ",style: TextStyle(
-                              fontFamily: 'Sans',
-                              fontSize: 30
-                            ),),
-                            Text(average.round().toString() ,style: TextStyle(
-                                fontFamily: 'Sans',
-                                fontSize: 30,
-                              fontWeight: FontWeight.bold
-                            ),),
-                          ],
-                        ),
-                      ),
+                    Row(
+                      children: [
+                        Text("Estimated Average : ",style: TextStyle(
+                          fontFamily: 'Sans',
+                          fontSize: 30
+                        ),),
+                        Text(average.round().toString() ,style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 30,
+                          color: Colors.deepOrange,
+                          fontWeight: FontWeight.bold
+                        ),),
+                      ],
                     )
                   ],
                 ),
@@ -257,6 +255,8 @@ class _AnalysisState extends State<Analysis> {
                 return 100.toString();
               case 150:
                 return 150.toString();
+              case 200:
+                return 200.toString();
             }
             return '';
           },
@@ -269,7 +269,7 @@ class _AnalysisState extends State<Analysis> {
       minX: 0,
       maxX: 6,
       minY: 0,
-      maxY: 150,
+      maxY: 200,
       lineBarsData: [
         LineChartBarData(
           spots: [
