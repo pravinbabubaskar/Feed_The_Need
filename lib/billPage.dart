@@ -18,7 +18,22 @@ class billPageState extends State<billPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.teal[100],
+      bottomNavigationBar: Stack(
+        children: [
 
+          Container(
+            //margin: EdgeInsets.all(5.0),
+            //padding: const EdgeInsets.all(5),
+            child: Image(image: NetworkImage('https://b8g9x2x5.rocketcdn.me/wp-content/uploads/2018/08/robot-shopping-commerce-ai-ss-1920_p9zldb.gif'),
+            ),//asset('images/bill2crp.png'),
+            height: 500.0,
+            alignment:Alignment.center,
+            width:600.0,
+          ),
+
+        ],
+      ),
       appBar:AppBar(
           backgroundColor: Colors.white,
           title:Text("Confirm Your Order",style: TextStyle(
@@ -106,8 +121,7 @@ body:
 
             ),
 
-          ],),
-
+          ],)
         ),
         );
     throw UnimplementedError();

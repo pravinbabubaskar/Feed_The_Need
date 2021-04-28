@@ -14,8 +14,10 @@ class graphState extends State<graph>
 {
 
   int iftouch;
+  // ignore: deprecated_member_use
   List<String> productName =new List();
-  List<dynamic> quantity = new List();
+  // ignore: deprecated_member_use
+  List<dynamic> quantity= new List();
   CollectionReference collection = FirebaseFirestore.instance.collection('hotel');
 
   void getUsersList(String id) async {
@@ -26,7 +28,6 @@ class graphState extends State<graph>
         for(var values in m.data()['product']){
           productName.add(values['name']);
           quantity.add(values['quantity'].toDouble());
-          //temp.add(values['quantity'].toDouble());
         }
 
       }
@@ -172,10 +173,10 @@ class graphState extends State<graph>
        Container(
       height: 450,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18.0),
+        borderRadius: BorderRadius.circular(30.0),
         color:Colors.blueGrey,
       ),
-      margin: EdgeInsets.all(10.0),
+      margin: EdgeInsets.all(20.0),
       padding: const EdgeInsets.all(16),
       child:Center(
       child: Column(
