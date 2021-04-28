@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 import 'package:geocoder/geocoder.dart';
@@ -34,7 +35,6 @@ class _LoadState extends State<Load> {
     //getDistance();
   }
 
-
   // getDistance() async{
   //   var dio = Dio();
   //   final response = await dio.get('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=11.1728779,76.9961671&destinations=11.1728779,76.9961671&key=$_key');
@@ -64,7 +64,7 @@ class _LoadState extends State<Load> {
     long = loc.longitude;
     final coordinates = new Coordinates(position.latitude, position.longitude);
     var addresses =
-    await Geocoder.local.findAddressesFromCoordinates(coordinates);
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
     setState(() {
       Userdistrict = first.subAdminArea;
@@ -89,13 +89,13 @@ class _LoadState extends State<Load> {
 
   ///hide your splash screen
   Future<void> hideScreen() async {
-    Future.delayed(Duration(milliseconds: 5600), () {
+    Future.delayed(Duration(milliseconds: 5200), () {
       FlutterSplashScreen.hide();
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
               builder: (context) => HomePage(location: Userdistrict)),
-              (route) => false);
+          (route) => false);
     });
   }
 
@@ -105,9 +105,17 @@ class _LoadState extends State<Load> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
-          child: Text(
-            'Loading Data...',
-            style: headingStyle,
+          child: AnimatedTextKit(
+            animatedTexts: [
+              TyperAnimatedText(
+                'Loading Data',
+                textStyle: headingStyle,
+                speed: Duration(milliseconds: 40),
+              ),
+            ],
+            onTap: () {
+              print("Tap Event");
+            },
           ),
         ),
       ),
