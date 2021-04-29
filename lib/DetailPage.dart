@@ -25,7 +25,7 @@ class _DetailPageState extends State<DetailPage>{
   Widget build(BuildContext context){
 
     return Scaffold(
-      backgroundColor: Colors.teal[100],
+      backgroundColor: Colors.white,
       bottomNavigationBar: Stack(
         children: [
           Container(
@@ -35,7 +35,7 @@ class _DetailPageState extends State<DetailPage>{
             //),
             margin: EdgeInsets.all(5.0),
             //padding: const EdgeInsets.all(5),
-            child: Image(image: NetworkImage('https://image.freepik.com/free-vector/hand-putting-golden-coin-donation-box-donate-concept-charity-share-illustration-flat-style_256722-27.jpg'),
+            child: Image(image: AssetImage('images/details.png'),
             ),//asset('images/bill2crp.png'),
             height: 350.0,
             alignment:Alignment.center,

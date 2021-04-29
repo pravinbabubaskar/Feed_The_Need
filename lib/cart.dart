@@ -4,6 +4,10 @@ import 'billPage.dart';
 
 
 class Cart extends StatefulWidget {
+  Cart(String hotel){
+   hotelName=hotel;
+  }
+
   @override
   _CartState createState() => _CartState();
 }
@@ -21,6 +25,7 @@ class _CartState extends State<Cart> {
     countOcc();
     total();
     len=Data.length;
+    finalCart=Data;
    // pass=(withOut+(withOut*0.1)) as double;
   }
   countOcc(){
@@ -205,7 +210,10 @@ class _CartState extends State<Cart> {
                       height: 10,
                     ),
                     InkWell(
-                      onTap: ()=>navigateToBilling((totalCost+(withOut*0.1)).round()),//openSuccessPage,
+                      onTap: (){
+                        navigateToBilling((totalCost+(withOut*0.1)).round());
+                        totalValue=(totalCost+(withOut*0.1)).round();
+                        },//openSuccessPage,
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                         decoration: BoxDecoration(

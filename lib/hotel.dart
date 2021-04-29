@@ -21,7 +21,6 @@ class _HotelPageState extends State<HotelPage> {
   List<dynamic> products = new List();
   _HotelPageState(this.data) {
     products = data['product'];
-    print(products);
   }
   @override
   Widget build(BuildContext context) {
@@ -314,6 +313,7 @@ class _HotelPageState extends State<HotelPage> {
                         toto++;
                         cost += int.parse(mp["price"]);
                         openCartPage(mp);
+                        hotelId=data['id'];
                       });
                     },
                     child: Text(
@@ -357,7 +357,7 @@ class _HotelPageState extends State<HotelPage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Cart()),
+            MaterialPageRoute(builder: (context) => Cart(data['name'])),
           );
         },
       ),

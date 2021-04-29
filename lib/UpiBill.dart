@@ -1,10 +1,12 @@
 import 'dart:math';
+import 'package:feedthenead/Hotel/home.dart';
 import 'package:flutter/material.dart';
 import 'package:upi_pay/upi_pay.dart';
 import 'bill.dart';
+import 'home.dart';
+
+
 class UpiBill extends StatefulWidget {
- // static const routeName = '/upipayment';
-  // variable to store the billing amount;
   double pay;
 
   // getting the billin amount
@@ -18,12 +20,8 @@ class UpiBillState extends State<UpiBill> {
 
   // used for storing errors.
   String upiErr;
-
-  // used to store the UPI ID of the hotel and the billing money
   TextEditingController upicontrol = TextEditingController();
   TextEditingController BillamountControl = TextEditingController();
-
-  // used for showing list of UPI apps installed in current device for billing
   Future<List<ApplicationMeta>> paymentapps;
 
   @override
@@ -74,6 +72,7 @@ class UpiBillState extends State<UpiBill> {
   //  opens user selected Payment app.
   Future<void> openpaymentapp(ApplicationMeta app) async {
     final err = validatePID(upicontrol.text);
+
     if (err != null) {
       setState(() {
         upiErr = err;
@@ -97,12 +96,13 @@ class UpiBillState extends State<UpiBill> {
       transactionRef: transactionRef,
       merchantCode: '7372',
     );
-     print(billingdata);
 
     String s=billingdata.status.toString();
     print(s);
     if(s=="UpiTransactionStatus.failure") {
       showAlertFail(context);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+          HomePage()), (Route<dynamic> route) => false);
       return;
     }
     /*if(s=="UpiTransactionStatus.success") {
@@ -113,7 +113,7 @@ class UpiBillState extends State<UpiBill> {
     showAlertSubmitted(context);*/
     Navigator.push(
         context, MaterialPageRoute(
-        builder: (context) => bill(widget.pay)
+        builder: (context) => bill(widget.pay, billingdata.txnId)
     ));
   }
 

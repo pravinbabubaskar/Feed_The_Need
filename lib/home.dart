@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   bool isloggedin = false;
   int _selectedIndex = 0;
   PageController _pageController = PageController();
-  List<Widget> _screen = [NearMe(), Explore(), Cart(), Account()];
+  List<Widget> _screen = [NearMe(), Explore(), Cart(null), Account()];
 
   void _onItemTaped(int SelectedIndex) {
     _pageController.jumpToPage(SelectedIndex);
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   dynamic move() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Cart()),
+      MaterialPageRoute(builder: (context) => Cart(null)),
     );
   }
 
