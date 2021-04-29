@@ -11,7 +11,6 @@ class Analysis extends StatefulWidget {
 
 class _AnalysisState extends State<Analysis> {
   Classifier _classifier;
-
   final _store = FirebaseFirestore.instance;
   List<dynamic> quantity=new List();
   List<double> dataQuantity=new List();

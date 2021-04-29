@@ -1,4 +1,4 @@
-/* 
+
 
 import 'package:flutter/services.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
@@ -52,4 +52,4 @@ class Classifier {
     return results;
   }
 }
-*/
+
