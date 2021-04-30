@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'graph1.dart';
 //import 'package:charts_flutter/flutter.dart' as charts;
 
 class graph extends StatefulWidget{
@@ -80,12 +81,12 @@ class graphState extends State<graph>
         BarChartRodData(
 
           y: isTouched ? yvalue+10: yvalue,
-          colors: isTouched ? [Colors.yellow,Colors.lightGreenAccent,Colors.greenAccent[200],Colors.green[300]] : [Colors.yellow[300]],// : Colors.white,
+          colors: isTouched ? [Colors.yellow[200],Colors.yellow[400],Colors.orange[400],Colors.orange[800]] : [Colors.yellow[300]],// : Colors.white,
           width: 30,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             //y: 40,
-            colors:[Colors.grey[300]] ,
+            colors:[Colors.grey] ,
           ),
         ),
       ],
@@ -104,7 +105,7 @@ class graphState extends State<graph>
         ),*/
         margin: 20,
         getTitles: (double value) {
-          return productName[value.toInt()];
+          return productName[value.toInt()].toString();
         },
       ),
      leftTitles: SideTitles(
@@ -127,7 +128,11 @@ class graphState extends State<graph>
         getTooltipItem: (grp, grpInd, rod, rodIndex) {
           return BarTooltipItem("Item : "+
               productName[grp.x.toInt()] + '\n' + "Quantity : "+quantity[grp.x.toInt()].toString(),//(t).toString(),//(rod.y).toString(),
-            TextStyle(color: Colors.black),
+            TextStyle(
+                color: Colors.black,
+                fontSize: 10,
+                fontWeight: FontWeight.bold
+            ),
           );
         },
       ),
@@ -150,7 +155,48 @@ class graphState extends State<graph>
 
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Stack(
+        children: [
+          Container(
+            //decoration: BoxDecoration(
+            //borderRadius: BorderRadius.circular(30.0),
+            //color:Colors.blueGrey,
+            //),
 
+           // margin: EdgeInsets.all(5.0),
+            //padding: const EdgeInsets.all(5),
+            child:ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.only(top: 10, bottom: 10,left: 25,right: 25),
+                    primary: Colors.teal.shade200, // background
+                    onPrimary: Colors.white,
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(20.0),
+
+                    ) // foreground
+                ),
+                child: Text(
+                  'Total',
+                  style: TextStyle(
+                      fontFamily: 'Sans',
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(
+                        builder: (context) => graph1(widget._id),
+                      ));
+                }
+            ),
+            height: 100.0,
+            alignment:Alignment.center,
+            width:double.infinity,
+          ),
+
+        ],
+      ),
       appBar:AppBar(
           backgroundColor: Colors.white,
           title:Text('FOOD Details',style: TextStyle(
@@ -169,17 +215,18 @@ class graphState extends State<graph>
           ),
           centerTitle: true),
 
-      body:
-       Container(
+      body:Container(
+      child:Container(
       height: 450,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30.0),
-        color:Colors.blueGrey,
+        color:Colors.teal[100],
       ),
       margin: EdgeInsets.all(20.0),
       padding: const EdgeInsets.all(16),
       child:Center(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         //crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -218,10 +265,14 @@ class graphState extends State<graph>
 
             ),
           ),
+
         ],
       ),
       ),
-       ),
+      ),
+
+
+    ),
     );
     //throw UnimplementedError();
   }
