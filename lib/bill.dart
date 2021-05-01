@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'success.dart';
 import 'data.dart';
 
-
 String tID;
 class bill extends StatefulWidget {
   double pay;
