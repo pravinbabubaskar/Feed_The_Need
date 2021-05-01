@@ -61,7 +61,27 @@ class billState extends State<bill> {
                   }
                 ])
               });
+              _store.collection('QrCode').doc(user1.email).update({
+                'data': FieldValue.arrayUnion([
+                  {
+                    'result': "active",
+                    'transaction id': tID,
+                    'user id': user1.email,
+                    'Cost': totalValue,
+                  }
+                ])
+              });
             } else {
+              _store.collection('QrCode').doc(user1.email).set({
+                'data': FieldValue.arrayUnion([
+                  {
+                    'result': "active",
+                    'transaction id': tID,
+                    'user id': user1.email,
+                    'Cost': totalValue,
+                  }
+                ])
+              });
               _store.collection('orders').doc(user1.email).set({
                 'Transaction': FieldValue.arrayUnion([
                   {

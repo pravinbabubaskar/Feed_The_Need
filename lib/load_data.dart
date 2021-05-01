@@ -24,6 +24,8 @@ class _LoadState extends State<Load> {
   User user;
   String _key = "AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk";
   List<dynamic> data = List<dynamic>();
+  List<dynamic> qr = List<dynamic>();
+
   double lat, long;
   bool isloggedin = false;
   void initState() {
@@ -36,12 +38,16 @@ class _LoadState extends State<Load> {
 
   getData() async {
     final snapshots = await _store.collection("hotel").get();
+    final ds = await _store.collection("QrCode").doc(user1.email).get();
+    qr = ds['data'];
+
     for (var m in snapshots.docs) {
       var t = m.data();
       data.add(t);
     }
     setState(() {
       hotelData = data;
+      qrData = qr;
     });
   }
 

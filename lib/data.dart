@@ -7,10 +7,12 @@ User user1;
 List<dynamic> address;
 bool isNGOVerified = false;
 List<dynamic> hotelData;
+List<dynamic> qrData;
+
 Position latlong;
 List<dynamic> cartData = new List();
-List<dynamic> finalCart= new List();
-int totalValue=0;
+List<dynamic> finalCart = new List();
+int totalValue = 0;
 String hotelName;
 String hotelId;
 var barName;
