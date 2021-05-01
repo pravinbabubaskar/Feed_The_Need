@@ -1,9 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedthenead/data.dart';
 import 'package:feedthenead/qr_generate.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Past extends StatelessWidget {
-  const Past({Key key}) : super(key: key);
+class Active extends StatefulWidget {
+  const Active({Key key}) : super(key: key);
+
+  @override
+  _ActiveState createState() => _ActiveState();
+}
+
+class _ActiveState extends State<Active> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _store = FirebaseFirestore.instance;
+  List<dynamic> qr_temp = List<dynamic>();
+  List<dynamic> qr_res = List<dynamic>();
+
+  void initState() {
+    super.initState();
+
+    getData();
+  }
+
+  getData() async {
+    final ds = await _store.collection("QrCode").doc(user1.email).get();
+    setState(() {
+      qr_temp = ds['data'];
+      int l = qrData.length;
+      for (int i = l; i < qr_temp.length; i++) {
+        qr_res.add(qr_temp[i]);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +40,7 @@ class Past extends StatelessWidget {
         alignment: Alignment.center,
         padding: EdgeInsets.all(16),
         child: ListView.builder(
-          itemCount: qrData.length,
+          itemCount: qr_res.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
@@ -61,7 +90,7 @@ class Past extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                "₹ " + qrData[index]['Cost'].toString(),
+                                "₹ " + qr_res[index]['Cost'].toString(),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 15,
@@ -69,7 +98,7 @@ class Past extends StatelessWidget {
                               ),
                               SizedBox(width: 90),
                               Text(
-                                "Completed",
+                                "Active",
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,

@@ -1,5 +1,3 @@
-import 'package:feedthenead/Hotel/Hotel_dashboard/active_order.dart';
-import 'package:feedthenead/Hotel/Hotel_dashboard/completed_order.dart';
 import 'package:feedthenead/Past_orders.dart';
 import 'package:feedthenead/active_orders.dart';
 import 'package:feedthenead/constants.dart';
@@ -25,7 +23,7 @@ class _OrderState extends State<Order> {
               tabs: [
                 Tab(text: 'Active', icon: Icon(Icons.autorenew)),
                 Tab(
-                  text: 'past',
+                  text: 'Completed',
                   icon: Icon(Icons.done_all),
                 ),
               ],
@@ -33,8 +31,8 @@ class _OrderState extends State<Order> {
           ),
           body: TabBarView(
             children: [
-              ActiveR(),
-              Completed(),
+              Active(),
+              Past(),
             ],
           )),
     );
