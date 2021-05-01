@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 import 'package:geocoder/geocoder.dart';
@@ -33,9 +34,6 @@ class _LoadState extends State<Load> {
     getData();
   }
 
-
-
-
   getData() async {
     final snapshots = await _store.collection("hotel").get();
     for (var m in snapshots.docs) {
@@ -45,7 +43,6 @@ class _LoadState extends State<Load> {
     setState(() {
       hotelData = data;
     });
-
   }
 
   Future getLocation() async {
@@ -56,7 +53,7 @@ class _LoadState extends State<Load> {
     long = loc.longitude;
     final coordinates = new Coordinates(position.latitude, position.longitude);
     var addresses =
-    await Geocoder.local.findAddressesFromCoordinates(coordinates);
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
     setState(() {
       Userdistrict = first.subAdminArea;
@@ -87,7 +84,7 @@ class _LoadState extends State<Load> {
           context,
           MaterialPageRoute(
               builder: (context) => HomePage(location: Userdistrict)),
-              (route) => false);
+          (route) => false);
     });
   }
 
@@ -97,9 +94,16 @@ class _LoadState extends State<Load> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
-          child: Text(
-            'Loading Data...',
-            style: headingStyle,
+          child: AnimatedTextKit(
+            animatedTexts: [
+              TypewriterAnimatedText(
+                'Loading Data',
+                textStyle: headingStyle,
+              ),
+            ],
+            onTap: () {
+              print("Tap Event");
+            },
           ),
         ),
       ),
