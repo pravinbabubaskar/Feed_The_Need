@@ -3,7 +3,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'graph1.dart';
+// import 'graph1.dart';
 //import 'package:charts_flutter/flutter.dart' as charts;
 
 class graph extends StatefulWidget {
@@ -174,10 +174,10 @@ class graphState extends State<graph> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(
-                        builder: (context) => graph1(widget._id),
-                      ));
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => graph1(widget._id),
+                  //     ));
                 }
             ),
             height: 100.0,

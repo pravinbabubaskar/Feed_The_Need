@@ -170,8 +170,8 @@ class _AccountState extends State<Account> {
             Divider(thickness: 0.5, color: Colors.grey),
             GestureDetector(
               onTap: () {
-                //Navigator.push(context,
-                // MaterialPageRoute(builder: (context) => Analysis()));
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Analysis()));
               },
               child: Container(
                 //margin: EdgeInsets.all(20),

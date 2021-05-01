@@ -157,13 +157,24 @@ class _WebScraperAppState extends State<WebScraperApp> {
         body: isNGOVerified ?Column(
           children: [
             SizedBox(
-              height: 20,
+              height: 10,
             ),
-            Container(
-              child: Text("Already this user is verified under "+user1.email,style: TextStyle(fontFamily: 'Raleway',fontSize: 25,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                  text: 'Already this user is verified under  ',
+                  style: TextStyle(
+                      color: Colors.black, fontSize: 25,fontFamily: 'Raleway',fontWeight: FontWeight.bold),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text:user1.email,
+                      style: TextStyle(color: Colors.red,fontSize: 25),
+                    ),
+                  ]
+              ),
             ),
             SizedBox(
-              height: 10,
+              height: 15,
             ),
             Text('Get Food 🍱 for free',style: TextStyle(
                 fontFamily: 'Poppins',
@@ -171,7 +182,7 @@ class _WebScraperAppState extends State<WebScraperApp> {
                 fontWeight: FontWeight.bold
             ),textAlign: TextAlign.center,),
             SizedBox(
-              height: 25,
+              height: 15,
             ),
             Container(
               padding: EdgeInsets.only(left: 5,top: 5),

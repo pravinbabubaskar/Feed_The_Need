@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:feedthenead/home.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'data.dart';
 import 'success.dart';
+import 'data.dart';
+
 
 String tID;
 class bill extends StatefulWidget {
@@ -42,6 +43,7 @@ class billState extends State<bill> {
   }
   cancelOrder(){
     ShowAlertCancel(context);
+    cartData.clear();
     _store.collection(user1.email).doc(tID).set({'transaction id':tID,'result':'Canceled','Cost':totalValue,'items':finalCart,'Hotel':hotelName});
   }
   ShowAlertCancel(BuildContext context) {
