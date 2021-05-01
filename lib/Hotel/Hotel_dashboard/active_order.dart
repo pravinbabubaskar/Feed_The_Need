@@ -1,3 +1,4 @@
+import 'package:feedthenead/Hotel/qr_scan.dart';
 import 'package:flutter/material.dart';
 
 class ActiveR extends StatefulWidget {
@@ -18,12 +19,8 @@ class _ActiveState extends State<ActiveR> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                /*   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          GeneratePage(qrData[index]["transaction id"]),
-                    ));*/
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => ScanQR()));
               },
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
