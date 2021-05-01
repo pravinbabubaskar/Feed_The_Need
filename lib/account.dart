@@ -131,7 +131,7 @@ class _AccountState extends State<Account> {
               child: Container(
                 //margin: EdgeInsets.all(20),
                 margin: EdgeInsets.only(top: 10, bottom: 10),
-                child: Text('Past Orders',
+                child: Text('Orders',
                     style: TextStyle(
                         fontFamily: 'Sans',
                         fontSize: 15,

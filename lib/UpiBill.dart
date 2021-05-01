@@ -99,18 +99,12 @@ class UpiBillState extends State<UpiBill> {
 
     String s=billingdata.status.toString();
     print(s);
-    if(s=="UpiTransactionStatus.failure") {
-      showAlertFail(context);
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-          HomePage()), (Route<dynamic> route) => false);
-      return;
-    }
-    /*if(s=="UpiTransactionStatus.success") {
-      showAlertSuccess(context);
-      return;
-    }
-
-    showAlertSubmitted(context);*/
+    // if(s=="UpiTransactionStatus.failure") {
+    //   showAlertFail(context);
+    //   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+    //       HomePage()), (Route<dynamic> route) => false);
+    //   return;
+    // }
     Navigator.push(
         context, MaterialPageRoute(
         builder: (context) => bill(widget.pay, billingdata.txnId)

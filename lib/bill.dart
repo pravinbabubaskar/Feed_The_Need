@@ -32,8 +32,9 @@ class billState extends State<bill> {
         } else {
           _t.cancel();
           cartData.clear();
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+              Success()), (Route<dynamic> route) => false);
           _store.collection(user1.email).doc(tID).set({'transaction id':tID,'result':'Confirmed','Cost':totalValue,'items':finalCart,'Hotel':hotelName});
-
           _store.collection('hotel').doc(hotelId).update({'order': FieldValue.arrayUnion([{'transaction id':tID,'result':'Confirmed','Cost':totalValue,'items':finalCart,'Hotel':hotelName}])});
         }
       });
@@ -43,37 +44,6 @@ class billState extends State<bill> {
     ShowAlertCancel(context);
     _store.collection(user1.email).doc(tID).set({'transaction id':tID,'result':'Canceled','Cost':totalValue,'items':finalCart,'Hotel':hotelName});
   }
-
-  ShowAlert(BuildContext context) {
-    // Create button
-    Widget ok = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.push(
-            context, MaterialPageRoute(
-            builder: (context) => Success()
-        ));
-      },
-    );
-
-    AlertDialog a = AlertDialog(
-      title: Text("Time Out"),
-      content: Text("Your Order Confirmed."),
-      actions: [
-        ok,
-      ],
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return a;
-      },
-    );
-  }
-
-
-
   ShowAlertCancel(BuildContext context) {
     // Create button
     Widget cancel = FlatButton(
