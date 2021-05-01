@@ -1,26 +1,29 @@
-import 'package:feedthenead/data.dart';
-import 'package:feedthenead/qr_generate.dart';
 import 'package:flutter/material.dart';
 
-class Past extends StatelessWidget {
-  const Past({Key key}) : super(key: key);
+class ActiveR extends StatefulWidget {
+  const ActiveR({Key key}) : super(key: key);
 
+  @override
+  _ActiveState createState() => _ActiveState();
+}
+
+class _ActiveState extends State<ActiveR> {
   @override
   Widget build(BuildContext context) {
     return Container(
         alignment: Alignment.center,
         padding: EdgeInsets.all(16),
         child: ListView.builder(
-          itemCount: qrData.length,
+          itemCount: 7,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                Navigator.push(
+                /*   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
                           GeneratePage(qrData[index]["transaction id"]),
-                    ));
+                    ));*/
               },
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -33,7 +36,7 @@ class Past extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(5.0),
                         child: Image.asset(
-                          'images/qr.jpg',
+                          'images/qrscan.jpg',
                           width: 80,
                           height: 80,
                           fit: BoxFit.cover,
@@ -61,7 +64,7 @@ class Past extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                "₹ " + qrData[index]['Cost'].toString(),
+                                "₹ " + "amount",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 15,
@@ -69,7 +72,7 @@ class Past extends StatelessWidget {
                               ),
                               SizedBox(width: 90),
                               Text(
-                                "Completed",
+                                "Active",
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,

@@ -67,6 +67,7 @@ class billState extends State<bill> {
                     'result': "active",
                     'transaction id': tID,
                     'user id': user1.email,
+                    'user name': user1.displayName,
                     'Cost': totalValue,
                   }
                 ])
@@ -78,6 +79,7 @@ class billState extends State<bill> {
                     'result': "active",
                     'transaction id': tID,
                     'user id': user1.email,
+                    'user name': user1.displayName,
                     'Cost': totalValue,
                   }
                 ])
@@ -106,6 +108,18 @@ class billState extends State<bill> {
                 'Cost': totalValue,
                 'items': finalCart,
                 'Hotel': hotelName
+              }
+            ])
+          });
+
+          _store.collection('hotel').doc(hotelId).update({
+            'qr_data': FieldValue.arrayUnion([
+              {
+                'result': "active",
+                'transaction id': tID,
+                'user id': user1.email,
+                'user name': user1.displayName,
+                'Cost': totalValue,
               }
             ])
           });

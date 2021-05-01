@@ -23,7 +23,7 @@ class _OrderState extends State<Order> {
               tabs: [
                 Tab(text: 'Active', icon: Icon(Icons.autorenew)),
                 Tab(
-                  text: 'past',
+                  text: 'Completed',
                   icon: Icon(Icons.done_all),
                 ),
               ],

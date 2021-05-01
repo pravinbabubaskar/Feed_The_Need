@@ -5,6 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'data.dart';
 
 class GeneratePage extends StatefulWidget {
+  final String _tid;
+  GeneratePage(this._tid);
   @override
   State<StatefulWidget> createState() => GeneratePageState();
 }
@@ -21,7 +23,7 @@ class GeneratePageState extends State<GeneratePage> {
             padding: const EdgeInsets.all(40.0),
             child: QrImage(
               data: "abc",
-              //data: qrData[0]["transaction id"],
+              //data: widget._tid,
             ),
           ),
         ));
