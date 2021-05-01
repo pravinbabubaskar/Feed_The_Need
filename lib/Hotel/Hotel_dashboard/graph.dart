@@ -3,6 +3,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'graph1.dart';
 //import 'package:charts_flutter/flutter.dart' as charts;
 
 class graph extends StatefulWidget {
@@ -69,20 +70,15 @@ class graphState extends State<graph> {
 
       barRods: [
         BarChartRodData(
-          y: isTouched ? yvalue + 10 : yvalue,
-          colors: isTouched
-              ? [
-                  Color(0xff02d39a),
-                  Colors.lightGreenAccent,
-                  Colors.greenAccent[200],
-                  Colors.green[300]
-                ]
-              : [Colors.yellow[300]], // : Colors.white,
+
+          y: isTouched ? yvalue+10: yvalue,
+          colors: isTouched ? [Colors.yellow[200],Colors.yellow[400],Colors.orange[400],Colors.orange[800]] : [Colors.yellow[300]],// : Colors.white,
           width: 30,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             //y: 40,
-            colors: [Colors.grey[300]],
+
+            colors:[Colors.grey[600]] ,
           ),
         ),
       ],
@@ -98,11 +94,11 @@ class graphState extends State<graph> {
           color: Color(0xff67727d),
           fontFamily: 'Sans',
           fontWeight: FontWeight.bold,
-          fontSize: 13,
+          fontSize: 10,
         ),
         getTitles: (double value) {
+          return productName[value.toInt()].toString();
 
-          return productName[value.toInt()];
         },
 
       ),
@@ -118,18 +114,18 @@ class graphState extends State<graph> {
   BarTouchData _buildBarTouchData() {
     return BarTouchData(
       touchTooltipData: BarTouchTooltipData(
-        tooltipBgColor: Colors.grey[200],
+        tooltipBgColor: Colors.yellow[300],
         fitInsideHorizontally: true,
         fitInsideVertically: true,
         getTooltipItem: (grp, grpInd, rod, rodIndex) {
-          return BarTooltipItem(
-            "Item : " +
-                productName[grp.x.toInt()] +
-                '\n' +
-                "Quantity : " +
-                quantity[grp.x.toInt()]
-                    .toString(), //(t).toString(),//(rod.y).toString(),
-            TextStyle(color: Colors.black,fontFamily: 'Sans',fontSize: 10),
+          return BarTooltipItem("Item : "+
+              productName[grp.x.toInt()] + '\n' + "Quantity : "+quantity[grp.x.toInt()].toString(),//(t).toString(),//(rod.y).toString(),
+            TextStyle(
+                color: Colors.black,
+                fontFamily:'Sans',
+                fontSize: 10,
+                fontWeight: FontWeight.bold
+            ),
           );
         },
       ),
@@ -149,58 +145,120 @@ class graphState extends State<graph> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.teal[100],
-        title: Text(
-          'Explore ',
-          style: TextStyle(
-              fontFamily: 'Sans',
-              fontSize: 20,
-              color: Colors.white,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Container(
-        height: 500,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18.0),
-          color: Colors.white10,
-        ),
-        margin: EdgeInsets.all(10.0),
-        padding: const EdgeInsets.all(16),
-        child: Center(
-          child: Column(
-            //crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Unused Food',
-                style: TextStyle(
-                  fontFamily: 'Raleway',
-                    color: Colors.black,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-              ),
+      bottomNavigationBar: Stack(
+        children: [
+          Container(
+            //decoration: BoxDecoration(
+            //borderRadius: BorderRadius.circular(30.0),
+            //color:Colors.blueGrey,
+            //),
 
-              const SizedBox(
-                height: 30,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: BarChart(
-                    mainBarData(),
-                    swapAnimationDuration: Duration(milliseconds: 400),
-                    //AnimatedAlign:anim// Optional
-                    //AnimatedContainer:
-                    //:Curves.linear,
-                    //swapAnimationCurve: Curves.linear,
+           // margin: EdgeInsets.all(5.0),
+            //padding: const EdgeInsets.all(5),
+            child:ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.only(top: 10, bottom: 10,left: 25,right: 25),
+                    primary: Colors.teal.shade200, // background
+                    onPrimary: Colors.white,
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(20.0),
+
+                    ) // foreground
+                ),
+                child: Text(
+                  'Total',
+                  style: TextStyle(
+                      fontFamily: 'Sans',
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold
                   ),
                 ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(
+                        builder: (context) => graph1(widget._id),
+                      ));
+                }
+            ),
+            height: 100.0,
+            alignment:Alignment.center,
+            width:double.infinity,
+          ),
+
+        ],
+      ),
+      appBar:AppBar(
+          backgroundColor: Colors.white,
+          title:Text('FOOD Details',style: TextStyle(
+              fontFamily: 'Sans',
+              fontSize: 20,
+              color: Colors.black,
+              fontWeight: FontWeight.bold),
+          ),
+          leading: IconButton(
+            icon:Icon(Icons.arrow_back,color: Colors.teal),
+            onPressed: ()
+            {
+              Navigator.pop(context, false);
+            },
+          ),
+          centerTitle: true),
+
+      body:Container(
+      child:Container(
+      height: 450,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30.0),
+        color:Colors.teal[100],
+      ),
+      margin: EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(16),
+      child:Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Unused Food',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Text(
+            'Remaining',
+            style: TextStyle(
+                color:Colors.grey[800],
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Expanded(
+            child:
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: BarChart(
+                mainBarData(),
+                swapAnimationDuration: Duration(milliseconds: 400),
+                //AnimatedAlign:anim// Optional
+                //AnimatedContainer:
+                //:Curves.linear,
+                //swapAnimationCurve: Curves.linear,
               ),
+            ),
+          ),
             ],
           ),
-        ),
+
+
+      ),
+      ),
       ),
     );
     //throw UnimplementedError();
