@@ -19,27 +19,29 @@ class DetailPage extends StatefulWidget{
 }
 
 class _DetailPageState extends State<DetailPage>{
+ // get infinity => null;
+
 
   @override
 
   Widget build(BuildContext context){
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.teal[50],
       bottomNavigationBar: Stack(
         children: [
           Container(
             //decoration: BoxDecoration(
-              //borderRadius: BorderRadius.circular(30.0),
-              //color:Colors.blueGrey,
+            //borderRadius: BorderRadius.circular(30.0),
+            //color:Colors.blueGrey,
             //),
-            margin: EdgeInsets.all(5.0),
+            //margin: EdgeInsets.all(5.0),
             //padding: const EdgeInsets.all(5),
-            child: Image(image: AssetImage('images/details.png'),
+            child: Image(image: NetworkImage('https://image.freepik.com/free-vector/hand-putting-golden-coin-donation-box-donate-concept-charity-share-illustration-flat-style_256722-27.jpg'),
             ),//asset('images/bill2crp.png'),
-            height: 350.0,
-            alignment:Alignment.center,
-            width:double.infinity,
+            //height: 350.0,
+            //alignment:Alignment.center,
+            //width:double.infinity,
           ),
 
         ],
@@ -52,6 +54,13 @@ class _DetailPageState extends State<DetailPage>{
               color: Colors.black,
               fontWeight: FontWeight.bold),
 
+          ),
+          leading: IconButton(
+            icon:Icon(Icons.arrow_back,color: Colors.teal[100],),
+            onPressed: ()
+            {
+              Navigator.pop(context, false);
+            },
           ),
           centerTitle: true),
 

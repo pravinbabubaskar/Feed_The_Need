@@ -91,7 +91,7 @@ class graphState extends State<graph> {
         showTitles: true,
         margin: 20,
         getTextStyles: (value) => const TextStyle(
-          color: Color(0xff67727d),
+          color: Colors.black54,//(0xff67727d),
           fontFamily: 'Sans',
           fontWeight: FontWeight.bold,
           fontSize: 10,
@@ -166,10 +166,10 @@ class graphState extends State<graph> {
                     ) // foreground
                 ),
                 child: Text(
-                  'Total',
+                  'Total FOOD DETAILS',
                   style: TextStyle(
                       fontFamily: 'Sans',
-                      fontSize: 30,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -180,7 +180,7 @@ class graphState extends State<graph> {
                       ));
                 }
             ),
-            height: 100.0,
+            height: 180.0,
             alignment:Alignment.center,
             width:double.infinity,
           ),
