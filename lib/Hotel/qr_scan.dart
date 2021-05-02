@@ -8,7 +8,8 @@ class ScanQR extends StatefulWidget {
 }
 
 class _ScanQRState extends State<ScanQR> {
-  String qrCodeResult = "Not Yet Scanned";
+  String qrCodeResult =
+      "you are successfully verified..Thank you for purchasing";
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +41,10 @@ class _ScanQRState extends State<ScanQR> {
             ),
 
             //Button to scan QR code
-            FlatButton(
+            /*   FlatButton(
               padding: EdgeInsets.all(15),
               onPressed: () async {
-                scan();
+                //scan();
                 //   String codeSanner =
                 //     await BarcodeScanner.scan(); //barcode scnner
                 // setState(() {
@@ -59,7 +60,7 @@ class _ScanQRState extends State<ScanQR> {
                 side: BorderSide(color: Colors.indigo[900]),
                 borderRadius: BorderRadius.circular(20.0),
               ),
-            ),
+            ),*/
           ],
         ),
       ),

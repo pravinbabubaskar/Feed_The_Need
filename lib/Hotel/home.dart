@@ -9,6 +9,8 @@ import 'Hotel_dashboard/order.dart';
 import 'Hotel_dashboard/product.dart';
 import 'add_product.dart';
 
+String d_id = null;
+
 class Home extends StatefulWidget {
   final String _id;
 
@@ -30,6 +32,9 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     this.getData();
+    setState(() {
+      d_id = widget._id;
+    });
   }
 
   getData() {
