@@ -1,4 +1,5 @@
 import 'package:feedthenead/Hotel/login.dart';
+import 'package:feedthenead/order.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'constants.dart';
@@ -67,8 +68,7 @@ class _AccountState extends State<Account> {
   }
 
   Past_orders() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Past_order()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Order()));
   }
 
   @override
@@ -131,7 +131,7 @@ class _AccountState extends State<Account> {
               child: Container(
                 //margin: EdgeInsets.all(20),
                 margin: EdgeInsets.only(top: 10, bottom: 10),
-                child: Text('Past Orders',
+                child: Text('Orders',
                     style: TextStyle(
                         fontFamily: 'Sans',
                         fontSize: 15,
@@ -170,8 +170,8 @@ class _AccountState extends State<Account> {
             Divider(thickness: 0.5, color: Colors.grey),
             GestureDetector(
               onTap: () {
-                //Navigator.push(context,
-                // MaterialPageRoute(builder: (context) => Analysis()));
+                //  Navigator.push(context,
+                //  MaterialPageRoute(builder: (context) => Analysis()));
               },
               child: Container(
                 //margin: EdgeInsets.all(20),

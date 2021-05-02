@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:feedthenead/home.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'data.dart';
 import 'success.dart';
+import 'data.dart';
 
 String tID;
+
 class bill extends StatefulWidget {
   double pay;
   @override
-  bill(this.pay,String id){
-    tID=id;
+  bill(this.pay, String id) {
+    tID = id;
   }
   billState createState() => new billState();
 }
@@ -32,55 +33,154 @@ class billState extends State<bill> {
         } else {
           _t.cancel();
           cartData.clear();
-          _store.collection(user1.email).doc(tID).set({'transaction id':tID,'result':'Confirmed','Cost':totalValue,'items':finalCart,'Hotel':hotelName});
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => Success()),
+              (Route<dynamic> route) => false);
+          /*    _store.collection(user1.email).doc(tID).set({
+            'transaction id': tID,
+            'result': 'Confirmed',
+            'Cost': totalValue,
+            'items': finalCart,
+            'Hotel': hotelName
+          });*/
 
-          _store.collection('hotel').doc(hotelId).update({'order': FieldValue.arrayUnion([{'transaction id':tID,'result':'Confirmed','Cost':totalValue,'items':finalCart,'Hotel':hotelName}])});
+          _store
+              .collection('orders')
+              .doc(user1.email)
+              .get()
+              .then((DocumentSnapshot documentSnapshot) {
+            if (documentSnapshot.exists) {
+              _store.collection('orders').doc(user1.email).update({
+                'Transaction': FieldValue.arrayUnion([
+                  {
+                    'transaction id': tID,
+                    'result': 'Confirmed',
+                    'Cost': totalValue,
+                    'items': finalCart,
+                    'Hotel': hotelName
+                  }
+                ])
+              });
+              _store.collection('QrCode').doc(user1.email).update({
+                'data': FieldValue.arrayUnion([
+                  {
+                    'result': "active",
+                    'transaction id': tID,
+                    'user id': user1.email,
+                    'user name': user1.displayName,
+                    'Cost': totalValue,
+                  }
+                ])
+              });
+            } else {
+              _store.collection('QrCode').doc(user1.email).set({
+                'data': FieldValue.arrayUnion([
+                  {
+                    'result': "active",
+                    'transaction id': tID,
+                    'user id': user1.email,
+                    'user name': user1.displayName,
+                    'Cost': totalValue,
+                  }
+                ])
+              });
+              _store.collection('orders').doc(user1.email).set({
+                'Transaction': FieldValue.arrayUnion([
+                  {
+                    'transaction id': tID,
+                    'result': 'Confirmed',
+                    'Cost': totalValue,
+                    'items': finalCart,
+                    'Hotel': hotelName
+                  }
+                ])
+              });
+            }
+          });
+
+          _store.collection('hotel').doc(hotelId).update({
+            'order': FieldValue.arrayUnion([
+              {
+                'user name': user1.displayName,
+                'user id': user1.email,
+                'transaction id': tID,
+                'result': 'Confirmed',
+                'Cost': totalValue,
+                'items': finalCart,
+                'Hotel': hotelName
+              }
+            ])
+          });
+
+          _store.collection('hotel').doc(hotelId).update({
+            'qr_data': FieldValue.arrayUnion([
+              {
+                'result': "active",
+                'transaction id': tID,
+                'user id': user1.email,
+                'user name': user1.displayName,
+                'Cost': totalValue,
+              }
+            ])
+          });
         }
       });
     });
   }
-  cancelOrder(){
+
+  cancelOrder() {
     ShowAlertCancel(context);
-    _store.collection(user1.email).doc(tID).set({'transaction id':tID,'result':'Canceled','Cost':totalValue,'items':finalCart,'Hotel':hotelName});
+    cartData.clear();
+
+    /* _store.collection(user1.email).doc(tID).set({
+      'transaction id': tID,
+      'result': 'Canceled',
+      'Cost': totalValue,
+      'items': finalCart,
+      'Hotel': hotelName
+    });*/
+
+    _store
+        .collection('orders')
+        .doc(user1.email)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        _store.collection('orders').doc(user1.email).update({
+          'Transaction': FieldValue.arrayUnion([
+            {
+              'transaction id': tID,
+              'result': 'Canceled',
+              'Cost': totalValue,
+              'items': finalCart,
+              'Hotel': hotelName
+            }
+          ])
+        });
+      } else {
+        _store.collection('orders').doc(user1.email).set({
+          'Transaction': FieldValue.arrayUnion([
+            {
+              'transaction id': tID,
+              'result': 'Canceled',
+              'Cost': totalValue,
+              'items': finalCart,
+              'Hotel': hotelName
+            }
+          ])
+        });
+      }
+    });
   }
-
-  ShowAlert(BuildContext context) {
-    // Create button
-    Widget ok = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.push(
-            context, MaterialPageRoute(
-            builder: (context) => Success()
-        ));
-      },
-    );
-
-    AlertDialog a = AlertDialog(
-      title: Text("Time Out"),
-      content: Text("Your Order Confirmed."),
-      actions: [
-        ok,
-      ],
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return a;
-      },
-    );
-  }
-
-
 
   ShowAlertCancel(BuildContext context) {
     // Create button
     Widget cancel = FlatButton(
       child: Text("OK"),
       onPressed: () {
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-            HomePage()), (Route<dynamic> route) => false);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false);
       },
     );
 
@@ -99,19 +199,21 @@ class billState extends State<bill> {
       },
     );
   }
+
   @override
-  void initState(){
+  void initState() {
     _startTimer();
-}
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-
           Center(
-            child: Text("CONFIRMING ORDER",
+            child: Text(
+              "CONFIRMING ORDER",
               style: TextStyle(
                 fontFamily: 'Impress',
                 fontWeight: FontWeight.bold,
@@ -119,15 +221,14 @@ class billState extends State<bill> {
               ),
             ),
           ),
-
-          Text("please wait...",
+          Text(
+            "please wait...",
             style: TextStyle(
               fontFamily: 'Sans',
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
           ),
-          ),
-
           Text(
             '$count',
             style: TextStyle(
@@ -135,21 +236,25 @@ class billState extends State<bill> {
               fontSize: 48,
             ),
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           InkWell(
-            onTap: ()=>cancelOrder(),//openSuccessPage,
+            onTap: () => cancelOrder(), //openSuccessPage,
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(40)),
                 color: Colors.red,
               ),
-              child: Text("Cancel", style: TextStyle(
-                  fontFamily: 'Sans',
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700
-              ),),
+              child: Text(
+                "Cancel",
+                style: TextStyle(
+                    fontFamily: 'Sans',
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700),
+              ),
             ),
           )
         ],
@@ -161,6 +266,3 @@ class billState extends State<bill> {
 //@override
 
 }
-
-
-

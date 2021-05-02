@@ -8,7 +8,6 @@ import 'cart.dart';
 import 'data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class HotelPage extends StatefulWidget {
   var hotelData;
   HotelPage({Key key, @required this.hotelData}) : super(key: key);
@@ -136,23 +135,36 @@ class _HotelPageState extends State<HotelPage> {
                       child: Row(
                         children: [
                           InkWell(
-                            child: Icon(Icons.call, size: 30.0, color: Colors.lime),
-                            onTap: (){
+                            child: Icon(Icons.call,
+                                size: 30.0, color: Colors.lime),
+                            onTap: () {
                               int num = int.parse(data["number"]);
                               launch("tel:$num");
                             },
                           ),
-                          SizedBox(width: 20,),
+                          SizedBox(
+                            width: 20,
+                          ),
                           InkWell(
-                            child: Icon(Icons.map, size: 30.0, color: Colors.lime),
-                            onTap: (){
+                            child:
+                                Icon(Icons.map, size: 30.0, color: Colors.lime),
+                            onTap: () {
                               double lat = latlong.latitude;
                               double long = latlong.longitude;
                               double Hlat = data["latitue"];
                               double Ulong = data["longitude"];
-                              String url = "https://www.google.com/maps/dir/?api=1&origin=" + '$Hlat'+","+'$Ulong' + "&destination=" +'$lat'+","+'$long' + "&travelmode=driving";
+                              String url =
+                                  "https://www.google.com/maps/dir/?api=1&origin=" +
+                                      '$Hlat' +
+                                      "," +
+                                      '$Ulong' +
+                                      "&destination=" +
+                                      '$lat' +
+                                      "," +
+                                      '$long' +
+                                      "&travelmode=driving";
                               launch(url);
-                              },
+                            },
                           ),
                         ],
                       ),
@@ -160,7 +172,6 @@ class _HotelPageState extends State<HotelPage> {
                   ],
                 ),
               ),
-
             ],
           ),
           SizedBox(
@@ -313,7 +324,7 @@ class _HotelPageState extends State<HotelPage> {
                         toto++;
                         cost += int.parse(mp["price"]);
                         openCartPage(mp);
-                        hotelId=data['id'];
+                        hotelId = data['id'];
                       });
                     },
                     child: Text(

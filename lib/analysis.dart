@@ -1,3 +1,5 @@
+/*
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +21,7 @@ class _AnalysisState extends State<Analysis> {
    double average=0.0 ;
   int startIndex;
   bool showGraph = false;
+
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -40,7 +43,6 @@ class _AnalysisState extends State<Analysis> {
     }
     int i =startIndex;
     int n=0;
-    xAxis.add(Date[i]);
     while(n<7){
       if(i==Date.length)
         i=0;
@@ -296,3 +298,4 @@ class _AnalysisState extends State<Analysis> {
     );
   }
 }
+*/

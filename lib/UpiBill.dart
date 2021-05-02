@@ -105,12 +105,6 @@ class UpiBillState extends State<UpiBill> {
           HomePage()), (Route<dynamic> route) => false);
       return;
     }
-    /*if(s=="UpiTransactionStatus.success") {
-      showAlertSuccess(context);
-      return;
-    }
-
-    showAlertSubmitted(context);*/
     Navigator.push(
         context, MaterialPageRoute(
         builder: (context) => bill(widget.pay, billingdata.txnId)
