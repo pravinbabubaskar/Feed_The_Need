@@ -122,11 +122,20 @@ class _CompletedState extends State<Completed> {
                                               ),
                                               GestureDetector(
                                                 onTap: () {
+                                                  var temp =
+                                                      order[index]['items'];
+                                                  var r = order[index]['Cost'];
+                                                  var n =
+                                                      order[index]['user name'];
+                                                  var i =
+                                                      order[index]['user id'];
+
                                                   Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              View_detail()));
+                                                              View_details(temp,
+                                                                  r, i, n)));
                                                 },
                                                 child: Text(
                                                   "view Details",
