@@ -1,3 +1,4 @@
+import 'package:barcode_scan_fix/barcode_scan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/order.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/order_details.dart';
@@ -14,6 +15,7 @@ class ActiveR extends StatefulWidget {
 }
 
 class _ActiveState extends State<ActiveR> {
+  String qrCodeResult;
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('hotel');
@@ -79,14 +81,35 @@ class _ActiveState extends State<ActiveR> {
                                   ),
                                   child: Row(
                                     children: <Widget>[
-                                      ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        child: Image.asset(
-                                          'images/qrscan.jpg',
-                                          width: 80,
-                                          height: 80,
-                                          fit: BoxFit.cover,
+                                      GestureDetector(
+                                        onTap: () async {
+                                          String codeSanner =
+                                              await BarcodeScanner.scan()
+                                                  .then((value) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ScanQR()));
+                                          });
+                                          setState(() {
+                                            qrCodeResult = codeSanner;
+                                          });
+                                          /* Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ScanQR()));*/
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                          child: Image.asset(
+                                            'images/qrscan.jpg',
+                                            width: 80,
+                                            height: 80,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(
@@ -125,11 +148,20 @@ class _ActiveState extends State<ActiveR> {
                                               ),
                                               GestureDetector(
                                                 onTap: () {
+                                                  var temp =
+                                                      order[index]['items'];
+                                                  var r = order[index]['Cost'];
+                                                  var n =
+                                                      order[index]['user name'];
+                                                  var i =
+                                                      order[index]['user id'];
+
                                                   Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              Order_detail()));
+                                                              Order_detail(temp,
+                                                                  r, i, n)));
                                                   /* docref.update({
                                                     'completed_orders':
                                                         FieldValue.arrayUnion([
