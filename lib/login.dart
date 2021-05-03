@@ -5,7 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'load_data.dart';
 import 'sign_up.dart';
 import 'constants.dart';
-
+import 'OTP.dart';
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -74,7 +74,7 @@ class _LoginState extends State<Login> {
   }
 
   navigateToSignUp() async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => otp()));//SignUp()));
   }
 
   @override

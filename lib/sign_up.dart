@@ -4,9 +4,11 @@ import 'package:flutter/gestures.dart';
 import 'login.dart';
 import 'load_data.dart';
 import 'constants.dart';
-
+import 'package:email_auth/email_auth.dart';
 class SignUp extends StatefulWidget {
+  String email;
   @override
+  SignUp(this.email);
   _SignUpState createState() => _SignUpState();
 }
 
@@ -28,6 +30,7 @@ class _SignUpState extends State<SignUp> {
   @override
   void initState() {
     super.initState();
+    _email=widget.email;
     this.checkAuthentication();
   }
 
@@ -148,7 +151,7 @@ class _SignUpState extends State<SignUp> {
                             onSaved: (input) => _name = input),
                       ),
                     ),
-                    Container(
+                    /*Container(
                       child: Theme(
                         data: new ThemeData(
                           primaryColor: Colors.grey,
@@ -165,7 +168,7 @@ class _SignUpState extends State<SignUp> {
                               prefixIcon: Icon(Icons.email,color: Colors.teal),),
                             onSaved: (input) => _email = input),
                       ),
-                    ),
+                    ),*/
                     Container(
                       child: Theme(
                         data: new ThemeData(
