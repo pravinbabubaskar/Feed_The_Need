@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:email_auth/email_auth.dart';
-
+import 'sign_up.dart';
+import 'package:flutter/gestures.dart';
+import 'login.dart';
 class otp extends StatefulWidget {
 
   @override
@@ -9,9 +11,6 @@ class otp extends StatefulWidget {
 }
 
 class otpState extends State<otp> {
-
-  //bool submitValid = false;
-
   final TextEditingController Usermail = TextEditingController();
   final TextEditingController otpvalue = TextEditingController();
 
@@ -21,13 +20,106 @@ class otpState extends State<otp> {
   }
 
 
+ /* showAlertOTPsent(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("OTP Sent to"),
+      content: Text(Usermail.text),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+*/
+  showAlertOTPerror(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => otp()));
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Error On Sending OTP"),
+      content: Text("try again"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
+
+  showAlertverificationFailed(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => otp()));
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Verification Failed!!"),
+      content: Text("try again"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
+  navigateLogIn() async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+  }
+
+
   void verify() {
     bool result=EmailAuth.validate(
         receiverMail: Usermail.value.text,
         userOTP: otpvalue.value.text);
     if(result)
       {
-        print("<<<<----Success Validation---->>>>");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SignUp(Usermail.toString()),
+            ));
+      }
+    else
+      {
+        showAlertverificationFailed(context);
       }
 
   }
@@ -38,10 +130,12 @@ class otpState extends State<otp> {
     bool result =
     await EmailAuth.sendOtp(receiverMail: Usermail.value.text);
     if (result) {
-        print("<<<<-----SUCCESS----->>>>");
+      //showAlertOTPsent(context);
+      print("<<<<-----SUCCESS----->>>>");
     }
     else{
-
+      showAlertOTPerror(context);
+      print("<<<<-----FAILED----->>>>");
     }
   }
 
@@ -65,6 +159,7 @@ class otpState extends State<otp> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: ListView(
                     children: <Widget>[
+
                 Container(
                 margin: EdgeInsets.only(top: 32),
                 child: Row(
@@ -214,6 +309,24 @@ class otpState extends State<otp> {
                     ]
                 ),
               ),
+
+                      RichText(
+
+                        text: TextSpan(
+                            text: 'Already have an account?',
+                            style: TextStyle(
+                                color: Colors.black, fontSize: 18,fontFamily: 'Raleway',fontWeight: FontWeight.bold),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: ' Log-In',
+                                style: TextStyle(color: Colors.blue[300]),
+                                recognizer: TapGestureRecognizer()..onTap = () {
+                                  navigateLogIn();
+                                },
+                              ),
+                            ]
+                        ),
+                      )
 
                     ]
                 ),

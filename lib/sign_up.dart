@@ -212,7 +212,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(
                       height: 20,
                     ),
-                    RichText(
+                    /*RichText(
                       text: TextSpan(
                           text: 'Already have an account?',
                           style: TextStyle(
@@ -227,7 +227,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ]
                       ),
-                    )
+                    )*/
                   ],
                 ),
               ),
