@@ -4,6 +4,7 @@ import 'constants.dart';
 import 'load_data.dart';
 import 'login.dart';
 import 'sign_up.dart';
+import'OTP.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -51,7 +52,7 @@ class _WelcomeState extends State<Welcome> {
   }
 
   navigateToRegister() async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => otp()));//SignUp()));
   }
 
   @override
