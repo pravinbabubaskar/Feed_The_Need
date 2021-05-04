@@ -1,5 +1,5 @@
-import 'package:feedthenead/Past_orders.dart';
 import 'package:feedthenead/active_orders.dart';
+import 'package:feedthenead/past_order.dart';
 import 'package:flutter/material.dart';
 
 class Order extends StatefulWidget {
@@ -14,11 +14,17 @@ class _OrderState extends State<Order> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.teal[100],
+
             title: Text(
               'Orders',
+              style: TextStyle(
+                fontFamily: 'Sans'
+              ),
               textAlign: TextAlign.center,
             ),
             bottom: TabBar(
+              indicatorColor: Colors.teal[100],
               tabs: [
                 Tab(text: 'Active', icon: Icon(Icons.autorenew)),
                 Tab(
@@ -31,7 +37,7 @@ class _OrderState extends State<Order> {
           body: TabBarView(
             children: [
               Active(),
-              Past(),
+              pastOrder(),
             ],
           )),
     );

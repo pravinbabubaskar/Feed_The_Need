@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'constants.dart';
 import 'data.dart';
-import 'Past_orders.dart';
 import 'welcome.dart';
 import 'web_scrapping.dart';
 import 'donate.dart';
@@ -170,8 +169,8 @@ class _AccountState extends State<Account> {
             Divider(thickness: 0.5, color: Colors.grey),
             GestureDetector(
               onTap: () {
-                //  Navigator.push(context,
-                //  MaterialPageRoute(builder: (context) => Analysis()));
+                 Navigator.push(context,
+                 MaterialPageRoute(builder: (context) => Analysis()));
               },
               child: Container(
                 //margin: EdgeInsets.all(20),

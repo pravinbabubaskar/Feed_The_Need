@@ -1,8 +1,6 @@
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
-import 'package:feedthenead/data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'welcome.dart';
 import 'near_me.dart';
 import 'explore.dart';
 import 'account.dart';
@@ -27,8 +25,8 @@ class _HomePageState extends State<HomePage> {
   PageController _pageController = PageController();
   List<Widget> _screen = [NearMe(), Explore(), Cart(null), Account()];
 
-  void _onItemTaped(int SelectedIndex) {
-    _pageController.jumpToPage(SelectedIndex);
+  void _onItemTaped(int selectedIndex) {
+    _pageController.jumpToPage(selectedIndex);
   }
 
   void _onPageChanged(int index) {

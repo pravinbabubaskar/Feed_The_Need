@@ -1,10 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-//import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class graph extends StatefulWidget {
   final String _id;
@@ -138,13 +136,13 @@ class graphState extends State<graph> {
       ),
       touchCallback: (barTouchResponse) {
         setState(() {
-          if (barTouchResponse.spot != null &&
-              barTouchResponse.touchInput is! FlPanEnd &&
-              barTouchResponse.touchInput is! FlLongPressEnd) {
-            iftouch = barTouchResponse.spot.touchedBarGroupIndex;
-          } else {
-            iftouch = -1;
-          }
+          // if (barTouchResponse.spot != null &&
+          //     barTouchResponse.touchInput is! FlPanEnd &&
+          //     barTouchResponse.touchInput is! FlLongPressEnd) {
+          //   iftouch = barTouchResponse.spot.touchedBarGroupIndex;
+          // } else {
+          //   iftouch = -1;
+          // }
         });
       },
     );

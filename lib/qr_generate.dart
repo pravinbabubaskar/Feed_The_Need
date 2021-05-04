@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'dart:ui';
 import 'package:flutter/rendering.dart';
-import 'data.dart';
+
 
 class GeneratePage extends StatefulWidget {
   final String _tid;

@@ -1,6 +1,6 @@
 import 'package:feedthenead/Hotel/Hotel_dashboard/active_order.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/completed_order.dart';
-import 'package:feedthenead/Past_orders.dart';
+import 'package:feedthenead/past_order.dart';
 import 'package:feedthenead/active_orders.dart';
 import 'package:feedthenead/constants.dart';
 import 'package:flutter/material.dart';
