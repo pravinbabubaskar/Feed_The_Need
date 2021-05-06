@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:email_auth/email_auth.dart';
+import 'constants.dart';
 import 'sign_up.dart';
 import 'package:flutter/gestures.dart';
 import 'login.dart';
@@ -20,21 +21,12 @@ class otpState extends State<otp> {
   }
 
 
- /* showAlertOTPsent(BuildContext context) {
-    // Create button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-      },
-    );
+  showAlertOTPsent(BuildContext context) {
 
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("OTP Sent to"),
       content: Text(Usermail.text),
-      actions: [
-        okButton,
-      ],
     );
 
     showDialog(
@@ -44,23 +36,14 @@ class otpState extends State<otp> {
       },
     );
   }
-*/
+
   showAlertOTPerror(BuildContext context) {
-    // Create button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => otp()));
-      },
-    );
 
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Error On Sending OTP"),
       content: Text("try again"),
-      actions: [
-        okButton,
-      ],
+
     );
 
     showDialog(
@@ -74,21 +57,12 @@ class otpState extends State<otp> {
 
 
   showAlertverificationFailed(BuildContext context) {
-    // Create button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => otp()));
-      },
-    );
 
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Verification Failed!!"),
       content: Text("try again"),
-      actions: [
-        okButton,
-      ],
+
     );
 
     showDialog(
@@ -130,7 +104,7 @@ class otpState extends State<otp> {
     bool result =
     await EmailAuth.sendOtp(receiverMail: Usermail.value.text);
     if (result) {
-      //showAlertOTPsent(context);
+      showAlertOTPsent(context);
       print("<<<<-----SUCCESS----->>>>");
     }
     else{
@@ -141,11 +115,8 @@ class otpState extends State<otp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      color: Colors.white,
-      home: Scaffold(
-          backgroundColor: Colors.white,
+    return Scaffold(
+         // backgroundColor: Colors.teal[100],
           appBar: AppBar(
             automaticallyImplyLeading: false,
             title: Text(
@@ -155,6 +126,7 @@ class otpState extends State<otp> {
             backgroundColor: Colors.teal[100],
           ),
           body: SafeArea(
+
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: ListView(
@@ -197,7 +169,6 @@ class otpState extends State<otp> {
                 ),
 
               ),
-
                       Container(
       margin: EdgeInsets.only(top: 22),
         child: Row(
@@ -309,11 +280,20 @@ class otpState extends State<otp> {
                     ]
                 ),
               ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Text("Join Us",textAlign: TextAlign.center,
+                        style: headingStyle),
+                      Text("Let's Create A Hunger Free Surrounding",textAlign: TextAlign.center,
+                          style: headingStyle),
+                      SizedBox(
+                        height: 80,
+                      ),
 
                       RichText(
-
                         text: TextSpan(
-                            text: 'Already have an account?',
+                            text: '      Already have an account?',
                             style: TextStyle(
                                 color: Colors.black, fontSize: 18,fontFamily: 'Raleway',fontWeight: FontWeight.bold),
                             children: <TextSpan>[
@@ -327,12 +307,11 @@ class otpState extends State<otp> {
                             ]
                         ),
                       )
-
                     ]
                 ),
     ),
     ),
-      ),
+     // ),
     );
   }
 }
