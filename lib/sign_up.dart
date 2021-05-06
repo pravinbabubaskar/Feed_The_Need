@@ -65,7 +65,7 @@ class _SignUpState extends State<SignUp> {
             title: Text('ERROR',style: errorStyle,),
             content: Text(errormessage,style: messageStyle,),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

@@ -1,31 +1,29 @@
-/*
 
 import 'package:flutter/services.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 class Classifier {
-  // name of the model file
+
   final _modelFile = 'feed.tflite';
 
   Map<String, int> _dict;
 
-  // TensorFlow Lite Interpreter object
+
   Interpreter _interpreter;
 
   Classifier() {
-    // Load model when the classifier is initialized.
+
     _loadModel();
   }
 
   void _loadModel() async {
-    // Creating the interpreter using Interpreter.fromAsset
+
     _interpreter = await Interpreter.fromAsset(_modelFile);
     print('Interpreter loaded successfully');
   }
 
   List<double> classify(List<double> ip) {
-    // tokenizeInputText returns List<List<double>>
-    // of shape [1, 256].
+
     print(ip);
     List<double> input = ip;
     List<double> results = new List<double>();
@@ -53,4 +51,4 @@ class Classifier {
   }
 }
 
-*/
+

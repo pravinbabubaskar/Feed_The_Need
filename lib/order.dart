@@ -1,5 +1,5 @@
-import 'package:feedthenead/Past_orders.dart';
 import 'package:feedthenead/active_orders.dart';
+import 'package:feedthenead/Past_orders.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'data.dart';
@@ -42,11 +42,18 @@ class _OrderState extends State<Order> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.teal[200],
+
             title: Text(
               'Orders',
+              style: TextStyle(
+                fontFamily: 'Sans',
+                    fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.center,
             ),
             bottom: TabBar(
+              indicatorColor: Colors.teal[100],
               tabs: [
                 Tab(text: 'Active', icon: Icon(Icons.autorenew)),
                 Tab(

@@ -5,11 +5,10 @@ import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:dio/dio.dart';
 import 'data.dart';
 import 'constants.dart';
 import 'home.dart';
-import 'package:web_scraper/web_scraper.dart';
+
 
 class Load extends StatefulWidget {
   @override
@@ -99,7 +98,7 @@ class _LoadState extends State<Load> {
           child: AnimatedTextKit(
             animatedTexts: [
               TypewriterAnimatedText(
-                'Loading Data',
+                'Feed \n The \n Need',
                 textStyle: headingStyle,
               ),
             ],

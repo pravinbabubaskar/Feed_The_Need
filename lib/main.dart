@@ -17,17 +17,7 @@ class _MyAppState extends State<MyApp> {
   Widget next = Welcome();
   void initState() {
     super.initState();
-    //this.checkAuthentication();
   }
-  //
-  // Future checkAuthentication() async {
-  //   FirebaseAuth.instance.authStateChanges().listen((firebaseUser) async {
-  //     print(firebaseUser);
-  //     if (firebaseUser != null) {
-  //       next =await Load();
-  //     }
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

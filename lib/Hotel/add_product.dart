@@ -1,8 +1,6 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'package:feedthenead/Hotel/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:feedthenead/data.dart';
 import 'package:feedthenead/helpers/style.dart';
 import 'package:feedthenead/widgets/custom_file_button.dart';
 import 'package:feedthenead/widgets/custom_text.dart';
@@ -12,21 +10,21 @@ import 'package:image_picker/image_picker.dart';
 
 import '../constants.dart';
 
-class Add_product extends StatefulWidget {
+class addProduct extends StatefulWidget {
   final String _id;
 
-  Add_product(this._id);
+  addProduct(this._id);
   @override
-  _Add_productState createState() => _Add_productState();
+  _addProductState createState() => _addProductState();
 }
 
-class _Add_productState extends State<Add_product> {
+class _addProductState extends State<addProduct> {
   final _key = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   int dropdownValue = 1;
   int quantity = 1;
 
-  String _name, _des, _price, _url, _pid;
+  String _name, _des, _price, _pid;
   File _image;
   final picker = ImagePicker();
   final _firebaseStorage = FirebaseStorage.instance;
