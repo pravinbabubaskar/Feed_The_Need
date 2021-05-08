@@ -13,13 +13,12 @@ class Active extends StatefulWidget {
 class _ActiveState extends State<Active> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
   Widget setupAlertDialoadContainer() {
     return Container(
-      height: 210.0, // Change as per your requirement
-      width: 210.0, // Change as per your requirement
+      height: 210.0,
+      width: 210.0,
       child: QrImage(
         data: "1234567890",
         version: QrVersions.auto,
@@ -43,11 +42,10 @@ class _ActiveState extends State<Active> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.orders[index]['Hotel'].toString(),style: TextStyle(
+                      Text(widget.orders[index]['Hotel'],style: TextStyle(
                         fontFamily:'Sans',
                         fontWeight: FontWeight.bold,
                         fontSize: 25
@@ -64,8 +62,9 @@ class _ActiveState extends State<Active> {
                     children: [
                       Expanded(
                         child: Container(
-                          height: 50,
+
                           child: ListView.builder(
+                            shrinkWrap: true,
                             itemCount: widget.orders[index]['items'].length,
                               itemBuilder: (context,ind){
                             return Text(camelCase(widget.orders[index]['items'][ind]['name']),style: TextStyle(
@@ -100,8 +99,12 @@ class _ActiveState extends State<Active> {
                         },)
                     ],
                   ),
-
-
+                  SizedBox(height: 5,),
+                  Text('Transaction ID:'+ widget.orders[index]['transaction id'].toString(),style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold
+                  ),)
                 ],
               ),
             );

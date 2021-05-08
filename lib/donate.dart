@@ -22,16 +22,6 @@ class _Donation extends State<donate> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      // appBar: AppBar(title: Text("Donate For A Cause",style: TextStyle(
-      //     fontFamily: 'Raleway',
-      //     fontSize: 25,
-      //     fontWeight: FontWeight.bold,
-      //     color: Colors.black
-      //     ),
-      //     ),
-      //      backgroundColor: Colors.white,
-      //   centerTitle: true,
-      //     ),
         bottomNavigationBar: Stack(
           children: [
             Container(

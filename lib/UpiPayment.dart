@@ -2,14 +2,17 @@ import 'dart:math';
 import 'package:feedthenead/donate.dart';
 import 'package:flutter/material.dart';
 import 'package:upi_pay/upi_pay.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedthenead/data.dart';
 import 'home.dart';
 class UpiPayment extends StatefulWidget {
   //static const routeName = '/upipayment';
   // string to store the UPI id of the NGO;
   String payid;
+  String name;
+  int val=0;
   // getting UPI id
-  UpiPayment(this.payid);
+  UpiPayment(this.payid,this.name,this.val);
 
   @override
   UpiPaymentState createState() => UpiPaymentState();
@@ -18,7 +21,7 @@ class UpiPayment extends StatefulWidget {
 class UpiPaymentState extends State<UpiPayment> {
   // used for storing errors.
   String upiError;
-
+  final _store = FirebaseFirestore.instance;
   // used to store the UPI ID and the donation amount
   TextEditingController upicontrol = TextEditingController();
   TextEditingController donationamountControl = TextEditingController();
@@ -82,6 +85,7 @@ class UpiPaymentState extends State<UpiPayment> {
     Widget okButton = FlatButton(
       child: Text("OK"),
       onPressed: () {
+        _store.collection('NGO').doc(widget.name).update({'donation':(widget.val+int.parse(donationamountControl.text)).toString()});
         Navigator.push(
             context,
             MaterialPageRoute(

@@ -1,9 +1,8 @@
 import 'dart:math';
-import 'package:feedthenead/Hotel/home.dart';
 import 'package:flutter/material.dart';
 import 'package:upi_pay/upi_pay.dart';
 import 'bill.dart';
-import 'home.dart';
+
 
 
 class UpiBill extends StatefulWidget {

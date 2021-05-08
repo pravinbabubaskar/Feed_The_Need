@@ -1,6 +1,5 @@
 import 'package:feedthenead/data.dart';
 import 'package:flutter/material.dart';
-import 'package:feedthenead/home.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'success.dart';
@@ -172,9 +171,7 @@ class billState extends State<bill> {
     Widget cancel = FlatButton(
       child: Text("OK"),
       onPressed: () {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => HomePage()),
-            (Route<dynamic> route) => false);
+        Navigator.pop(context);
       },
     );
 
@@ -201,6 +198,15 @@ class billState extends State<bill> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Stack(
+        children: [
+          Container(
+            child: Image.asset('images/confirm.png'),
+            height: 300.0,
+            width: double.infinity,
+          ),
+        ],
+      ),
       backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -216,7 +222,7 @@ class billState extends State<bill> {
             ),
           ),
           Text(
-            "please wait...",
+            "Please wait...",
             style: TextStyle(
               fontFamily: 'Sans',
               fontWeight: FontWeight.bold,

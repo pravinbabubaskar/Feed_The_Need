@@ -1,9 +1,5 @@
 
-import 'dart:typed_data';
-import 'dart:async';
-import 'package:firebase_core/firebase_core.dart';
 import 'UpiPayment.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -27,7 +23,7 @@ class _DetailPageState extends State<DetailPage>{
   Widget build(BuildContext context){
 
     return Scaffold(
-      backgroundColor: Colors.teal[50],
+      backgroundColor: Colors.white,
       bottomNavigationBar: Stack(
         children: [
           Container(
@@ -37,7 +33,7 @@ class _DetailPageState extends State<DetailPage>{
             //),
             //margin: EdgeInsets.all(5.0),
             //padding: const EdgeInsets.all(5),
-            child: Image(image: NetworkImage('https://image.freepik.com/free-vector/hand-putting-golden-coin-donation-box-donate-concept-charity-share-illustration-flat-style_256722-27.jpg'),
+            child: Image(image: AssetImage('images/test.png'),
             ),//asset('images/bill2crp.png'),
             //height: 350.0,
             //alignment:Alignment.center,
@@ -123,7 +119,13 @@ class _DetailPageState extends State<DetailPage>{
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 35,),
+            Text("Donation Received So Far :  "+"₹ "+widget.post.get('donation').toString(),  style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 20,
+              color: Colors.black,
+            ),),
+            SizedBox(height: 25,),
           ],
         ),
 
@@ -149,7 +151,7 @@ class _DetailPageState extends State<DetailPage>{
               onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(
-                    builder: (context) => UpiPayment(widget.post.get('user')),
+                    builder: (context) => UpiPayment(widget.post.get('user'),widget.post.get('name'),widget.post.get('donation')),
                   ));
             }
               ),
