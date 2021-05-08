@@ -36,14 +36,6 @@ class billState extends State<bill> {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => Success()),
               (Route<dynamic> route) => false);
-          /*    _store.collection(user1.email).doc(tID).set({
-            'transaction id': tID,
-            'result': 'Confirmed',
-            'Cost': totalValue,
-            'items': finalCart,
-            'Hotel': hotelName
-          });*/
-
           _store
               .collection('orders')
               .doc(user1.email)
@@ -55,6 +47,7 @@ class billState extends State<bill> {
                   {
                     'transaction id': tID,
                     'result': 'Confirmed',
+                    'status':'Active',
                     'Cost': totalValue,
                     'items': finalCart,
                     'Hotel': hotelName
@@ -104,7 +97,6 @@ class billState extends State<bill> {
                 'user name': user1.displayName,
                 'user id': user1.email,
                 'transaction id': tID,
-                'result': 'Confirmed',
                 'Cost': totalValue,
                 'items': finalCart,
                 'Hotel': hotelName
@@ -151,6 +143,7 @@ class billState extends State<bill> {
             {
               'transaction id': tID,
               'result': 'Canceled',
+              'status' : 'Active',
               'Cost': totalValue,
               'items': finalCart,
               'Hotel': hotelName
@@ -163,6 +156,7 @@ class billState extends State<bill> {
             {
               'transaction id': tID,
               'result': 'Canceled',
+              'status' : 'Past',
               'Cost': totalValue,
               'items': finalCart,
               'Hotel': hotelName

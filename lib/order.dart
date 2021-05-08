@@ -9,10 +9,9 @@ class Order extends StatefulWidget {
 }
 
 class _OrderState extends State<Order> {
-  String mail=user1.email;//'kannathasan123@gmail.com';
-  //user1.email;
-  // ignore: deprecated_member_use
-  List orders=new List();
+  String mail=user1.email;
+  List ordersActive=new List();
+  List ordersPast = new List();
   void DBdata() async
   {
 
@@ -20,21 +19,23 @@ class _OrderState extends State<Order> {
       setState(() {
       for (var m in document.docs) {
         if (m.id == mail) {
-          orders=m.data()['Transaction'];
+          for(var temp in m.data()['Transaction']){
+            if(temp['status']=='Active' && temp['result']=='Confirmed')
+              ordersActive.add(temp);
+            else
+              ordersPast.add(temp);
+          }
         }
       }
-      print(orders);
 
     });
 
   }
   @override
-  void initState()
-  {
-    //setState(() {
-      DBdata();
-   // });
-
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DBdata();
   }
   @override
   Widget build(BuildContext context) {
@@ -66,8 +67,8 @@ class _OrderState extends State<Order> {
           body: TabBarView(
             
             children: [
-              Active(),
-              Past(orders),
+              Active(ordersActive),
+              Past(ordersPast),
               
             ],
           

@@ -27,12 +27,8 @@ class UpiBillState extends State<UpiBill> {
   @override
   void initState() {
     super.initState();
-
-    // getting the billing amount
     BillamountControl.text = (widget.pay.toString());
-    //getting the hotel id
     upicontrol.text="srikalamani1970@oksbi";
-    // stores the list of apps installed in mobile phone for bill payment
     paymentapps = UpiPay.getInstalledUpiApplications();
   }
   showAlertFail(BuildContext context) {
@@ -40,11 +36,7 @@ class UpiBillState extends State<UpiBill> {
     Widget okButton = FlatButton(
       child: Text("OK"),
       onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>UpiBill(widget.pay)
-            ));
+       Navigator.pop(context);
       },
     );
 
@@ -99,12 +91,12 @@ class UpiBillState extends State<UpiBill> {
 
     String s=billingdata.status.toString();
     print(s);
-    if(s=="UpiTransactionStatus.failure") {
-      showAlertFail(context);
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-          HomePage()), (Route<dynamic> route) => false);
-      return;
-    }
+    // if(s=="UpiTransactionStatus.failure") {
+    //   showAlertFail(context);
+    //   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+    //       HomePage()), (Route<dynamic> route) => false);
+    //   return;
+    // }
     Navigator.push(
         context, MaterialPageRoute(
         builder: (context) => bill(widget.pay, billingdata.txnId)

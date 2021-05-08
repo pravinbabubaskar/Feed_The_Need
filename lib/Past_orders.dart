@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Past extends StatelessWidget {
-  //const Past({Key key}) : super(key: key);
-
-List orders;
+  List orders;
 Past(this.orders);
 List<String> item=new List();
 void cal()
@@ -21,10 +19,7 @@ void cal()
       t="";
     }
 }
-//void initState()
-//{
- //super.initState();
-//}
+
 Widget Listdata()
 {
    cal();
@@ -56,13 +51,7 @@ Widget Listdata()
           );
     });
 }
-
-//Widget card()
-//{
- // return
-//}
-
-  Widget build(BuildContext context) {
+Widget build(BuildContext context) {
     return Listdata();
 
   }

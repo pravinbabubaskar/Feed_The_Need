@@ -99,7 +99,11 @@ class _LoadState extends State<Load> {
             animatedTexts: [
               TypewriterAnimatedText(
                 'Feed \n The \n Need',
-                textStyle: headingStyle,
+                textStyle:TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 50,
+                  color: Colors.teal
+                ),
               ),
             ],
             onTap: () {
