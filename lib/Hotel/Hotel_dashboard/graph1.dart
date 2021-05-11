@@ -1,4 +1,3 @@
-//import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,7 +28,6 @@ class graphState1 extends State<graph1> {
     if(total.length>30)
       {
         int i=total.length-30;
-        i=i-1;
         while(i<total.length)
         {
           axis.add(FlSpot(j.toDouble(), total[i].toDouble()));
@@ -59,7 +57,7 @@ class graphState1 extends State<graph1> {
       //});
   }
   Widget build(BuildContext context) {
-    // TODO: implement build
+
     return Container(
      child:
         Scaffold(
@@ -100,8 +98,8 @@ class graphState1 extends State<graph1> {
                   height: 25,
                 ),
 
-                const Text(
-                  'Past 30 Days',
+                 Text(
+                  "Past "+(axis.length).toString()+" Days",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 22,
@@ -171,7 +169,7 @@ class graphState1 extends State<graph1> {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 20,
-          interval: 5,
+          interval: axis.length<15 ?3:5,
             getTextStyles: (value) =>
           const
           TextStyle(
@@ -181,11 +179,7 @@ class graphState1 extends State<graph1> {
           ),
           margin: 10,
           getTitles: (value) {
-            //if(value%15==0)
-            //return "DAY "+(value).toInt().toString();
-            //else
-            return (value).toInt().toString();
-
+                return (value).toInt().toString();
           },
         ),
         leftTitles: SideTitles(

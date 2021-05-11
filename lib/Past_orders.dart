@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 
 class Past extends StatelessWidget {
   List orders;
@@ -23,33 +25,75 @@ void cal()
 Widget Listdata()
 {
    cal();
-    return ListView.builder(
-        itemCount:orders.length,
-        itemBuilder: (context,index){
-          return Card(
-            child: ListTile(
-              title://Row(
-                  //children:<Widget>[
-                    //Container(
-               //       child:
-                Column(
-                        children:<Widget>[
-                           Row( children:<Widget>[
-                             Text(" Hotel : "+orders[index]['Hotel'].toString()),]),
-                            Row( children:<Widget>[
-                              Text(" Bill : "+orders[index]['Cost'].toString()),]),
-                          Row( children:<Widget>[
-                            Text(" Items : "+item[index]
-                              ,)//[index].toString()),
-           ]),
-                    ]
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListView.builder(
+          itemCount: orders.length,
+          itemBuilder:(context,index){
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(orders[index]['Hotel'],style: TextStyle(
+                          fontFamily:'Sans',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25
+                      )),
+                      Text("₹ "+orders[index]['Cost'].toString(),style: TextStyle(
+                          fontFamily:'Sans',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25
+                      )),
+                    ],
+                  ),
+                  Divider(color: Colors.grey),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: orders[index]['items'].length,
+                              itemBuilder: (context,ind){
+                                return Text(//camelCase(
+                                    orders[index]['items'][ind]['name'],style: TextStyle(
+                                    fontFamily: 'Sans',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                    color: Colors.grey
+                                ),
+                                    );
+                              }),
+                        ),
                       ),
-                 //   ),
-                  //]
-              //),
-            ),
-          );
-    });
+
+                    ],
+                  ),
+                  SizedBox(height: 5,),
+                  Text('Transaction ID : '+ orders[index]['transaction id'].toString(),style: TextStyle(
+                      fontFamily: 'Raleway',
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold
+                  ),),
+                  SizedBox(height: 5,),
+                  Text('Status : '+ orders[index]['result'].toString(),style: TextStyle(
+                      fontFamily: 'Raleway',
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold
+                  ),),
+
+
+                ],
+              ),
+            );
+          }
+      ),
+    );
 }
 Widget build(BuildContext context) {
     return Listdata();

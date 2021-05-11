@@ -33,7 +33,6 @@ class _OrderState extends State<Order> {
   }
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     DBdata();
   }
@@ -69,7 +68,6 @@ class _OrderState extends State<Order> {
             children: [
               Active(ordersActive),
               Past(ordersPast),
-              
             ],
           
           )
