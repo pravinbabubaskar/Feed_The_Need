@@ -55,7 +55,6 @@ class otpState extends State<otp> {
   }
 
 
-
   showAlertverificationFailed(BuildContext context) {
 
     // Create AlertDialog
@@ -78,36 +77,30 @@ class otpState extends State<otp> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
   }
 
-
   void verify() {
     bool result=EmailAuth.validate(
-        receiverMail: Usermail.value.text,
-        userOTP: otpvalue.value.text);
+        receiverMail: Usermail.value.text, userOTP: otpvalue.value.text);
     if(result)
-      {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SignUp(Usermail.toString()),
-            ));
-      }
-    else
-      {
-        showAlertverificationFailed(context);
-      }
-
+    {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SignUp(Usermail.toString()),
+          ));
+    }
+  else {
+      showAlertverificationFailed(context);
+    }
   }
-
 
   void sendotp() async {
     EmailAuth.sessionName = "FEED THE NEED";
-    bool result =
-    await EmailAuth.sendOtp(receiverMail: Usermail.value.text);
+    bool result = await EmailAuth.sendOtp(receiverMail: Usermail.value.text);
     if (result) {
       showAlertOTPsent(context);
       print("<<<<-----SUCCESS----->>>>");
-    }
-    else{
+     }
+    else {
       showAlertOTPerror(context);
       print("<<<<-----FAILED----->>>>");
     }
@@ -116,202 +109,155 @@ class otpState extends State<otp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-         // backgroundColor: Colors.teal[100],
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Text(
-              'New User',
-              style: TextStyle(color: Colors.black, fontFamily: 'Sans'),
+      // backgroundColor: Colors.teal[100],
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: ListView(children: <Widget>[
+            SizedBox(
+              height: 50,
             ),
-            backgroundColor: Colors.teal[100],
-          ),
-          body: SafeArea(
-
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: ListView(
-                    children: <Widget>[
-
-                Container(
-                margin: EdgeInsets.only(top: 32),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Theme(
-                        data: new ThemeData(
-                          primaryColor: Colors.black,
-
-                          primaryColorDark: Colors.grey,
-                        ),
-
-                        child: TextFormField(
-                          controller: Usermail,
-                          enabled: true,
-                          style: TextStyle(
+            Text("Join Us", textAlign: TextAlign.center, style: headingStyle),
+            Text("Let's Create A Hunger Free Surrounding",
+                textAlign: TextAlign.center, style: headingStyle),
+            SizedBox(
+              height: 80,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 32),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Theme(
+                      data: new ThemeData(
+                        primaryColor: Colors.black,
+                        primaryColorDark: Colors.grey,
+                      ),
+                      child: TextFormField(
+                        controller: Usermail,
+                        enabled: true,
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'OpenSans',
+                            color: Colors.black),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Enter the valid Email ID',
+                          labelText: 'Email ID',
+                          labelStyle: TextStyle(
                               fontSize: 15,
-                              fontFamily: 'OpenSans',
+                              fontFamily: 'Sans',
                               color: Colors.black),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Enter the valid Email ID',
-                            labelText: 'Email ID',
-                            labelStyle: TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'Sans',
-                                color: Colors.black),
-                          ),
                         ),
                       ),
                     ),
-
-                  ],
-
-                ),
-
+                  ),
+                ],
               ),
-                      Container(
-      margin: EdgeInsets.only(top: 22),
-        child: Row(
-          children: <Widget>[
-          Expanded(
-            child: Theme(
-              data: new ThemeData(
-              primaryColor: Colors.black,
-              primaryColorDark: Colors.grey,
-              ),
-             child: TextField(
-              controller: otpvalue,
-              enabled: true,
-              style: TextStyle(
-              fontSize: 15,
-              fontFamily: 'Sans',
-              color: Colors.black
-              ),
-              decoration: InputDecoration(
-              border: new OutlineInputBorder(
-              borderSide: new BorderSide(
-              color: Colors.black,
-                  width: 10)
-              ),
-              labelText: 'OTP',
-              labelStyle: TextStyle(
-              fontSize: 15,
-              fontFamily: 'Sans',
-              color: Colors.black),
             ),
-          ),
+            Container(
+              margin: EdgeInsets.only(top: 22),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Theme(
+                      data: new ThemeData(
+                        primaryColor: Colors.black,
+                        primaryColorDark: Colors.grey,
+                      ),
+                      child: TextField(
+                        controller: otpvalue,
+                        enabled: true,
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Sans',
+                            color: Colors.black),
+                        decoration: InputDecoration(
+                          border: new OutlineInputBorder(
+                              borderSide: new BorderSide(
+                                  color: Colors.black, width: 10)),
+                          labelText: 'OTP',
+                          labelStyle: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Sans',
+                              color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        width: 150,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.only(top: 15, bottom: 15),
+                              primary: Colors.teal.shade200, // background
+                              onPrimary: Colors.white,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(20.0),
+                              ) // foreground
+                          ),
+                          onPressed: sendotp,
+                          child: Text(
+                            'Send OTP',
+                            style: buttonStyle,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 150,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.only(top: 15, bottom: 15),
+                              primary: Colors.teal.shade200, // background
+                              onPrimary: Colors.white,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(20.0),
+                              ) // foreground
+                          ),
+                          onPressed: verify,
+                          child: Text(
+                            'Verify',
+                            style: buttonStyle,
+                          ),
+                        ),
+                      ),
+                    ]),
+              ),
+            ),
+            SizedBox(height: 20),
+            RichText(
+              text: TextSpan(
+                  text: '      Already have an account?',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontFamily: 'Raleway',
+                      fontWeight: FontWeight.bold),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: ' Log-In',
+                      style: TextStyle(color: Colors.blue[300]),
+                      recognizer: TapGestureRecognizer()..onTap = () {
+                          navigateLogIn();
+                        },
+                    ),
+                  ]
+              ),
+            )
+          ]),
         ),
       ),
-
-      ],
-    ),
-   ),
-                      Container(
-                        child:Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-
-                              Container(
-                                margin: EdgeInsets.all(5.0),
-                                padding: const EdgeInsets.all(5),
-                                child: ElevatedButton(
-                                    style:ElevatedButton.styleFrom(
-                                        primary: Colors.teal[100],
-                                        onPrimary: Colors.black,
-                                        shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(20.0),
-                                        ) // foreground
-                                    ),
-                                    child: Text(
-                                      'Send OTP',
-                                      style: TextStyle(
-                                        fontFamily: 'Sans',
-                                        fontSize: 15,
-
-                                      ),
-                                    ),
-
-                                    onPressed: () {
-                                      sendotp();
-                                    }
-
-                                ),
-
-                                height: 70.0,
-                                alignment:Alignment.center,
-
-                              ),
-
-
-
-                              Container(
-                                margin: EdgeInsets.all(5.0),
-                                padding: const EdgeInsets.all(5),
-                                child: ElevatedButton(
-                                  style:ElevatedButton.styleFrom(
-                                  primary: Colors.teal[100],
-                                  onPrimary: Colors.black,
-                                  shape: new RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(20.0),
-                                  ) // foreground
-                                ),
-                                  child: Text(
-                                  ' Proceed ',
-                                  style: TextStyle(
-                                  fontFamily: 'Sans',
-                                  fontSize: 15,
-                                ),
-
-                            ),
-
-                            onPressed: () {
-                              verify();
-                            }
-
-                        ),
-
-                        height: 70.0,
-                        alignment:Alignment.center,
-
-                      ),
-
-
-
-                    ]
-                ),
-              ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      Text("Join Us",textAlign: TextAlign.center,
-                        style: headingStyle),
-                      Text("Let's Create A Hunger Free Surrounding",textAlign: TextAlign.center,
-                          style: headingStyle),
-                      SizedBox(
-                        height: 80,
-                      ),
-
-                      RichText(
-                        text: TextSpan(
-                            text: '      Already have an account?',
-                            style: TextStyle(
-                                color: Colors.black, fontSize: 18,fontFamily: 'Raleway',fontWeight: FontWeight.bold),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: ' Log-In',
-                                style: TextStyle(color: Colors.blue[300]),
-                                recognizer: TapGestureRecognizer()..onTap = () {
-                                  navigateLogIn();
-                                },
-                              ),
-                            ]
-                        ),
-                      )
-                    ]
-                ),
-    ),
-    ),
-     // ),
+      // ),
     );
   }
 }
