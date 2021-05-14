@@ -4,10 +4,11 @@ import 'constants.dart';
 import 'sign_up.dart';
 import 'package:flutter/gestures.dart';
 import 'login.dart';
-
 class otp extends StatefulWidget {
+
   @override
   otpState createState() => otpState();
+
 }
 
 class otpState extends State<otp> {
@@ -19,7 +20,9 @@ class otpState extends State<otp> {
     super.initState();
   }
 
+
   showAlertOTPsent(BuildContext context) {
+
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("OTP Sent to"),
@@ -35,10 +38,12 @@ class otpState extends State<otp> {
   }
 
   showAlertOTPerror(BuildContext context) {
+
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Error On Sending OTP"),
       content: Text("try again"),
+
     );
 
     showDialog(
@@ -49,11 +54,14 @@ class otpState extends State<otp> {
     );
   }
 
+
   showAlertverificationFailed(BuildContext context) {
+
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Verification Failed!!"),
       content: Text("try again"),
+
     );
 
     showDialog(
@@ -63,21 +71,24 @@ class otpState extends State<otp> {
       },
     );
   }
+
 
   navigateLogIn() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
   }
 
   void verify() {
-    bool result = EmailAuth.validate(
+    bool result=EmailAuth.validate(
         receiverMail: Usermail.value.text, userOTP: otpvalue.value.text);
-    if (result) {
+    if(result)
+    {
       Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => SignUp(Usermail.toString()),
           ));
-    } else {
+    }
+  else {
       showAlertverificationFailed(context);
     }
   }
@@ -88,7 +99,8 @@ class otpState extends State<otp> {
     if (result) {
       showAlertOTPsent(context);
       print("<<<<-----SUCCESS----->>>>");
-    } else {
+     }
+    else {
       showAlertOTPerror(context);
       print("<<<<-----FAILED----->>>>");
     }
@@ -201,24 +213,24 @@ class otpState extends State<otp> {
                           ),
                         ),
                       ),
-                  Container(
-                    width: 150,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.only(top: 15, bottom: 15),
-                          primary: Colors.teal.shade200, // background
-                          onPrimary: Colors.white,
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(20.0),
-                          ) // foreground
+                      Container(
+                        width: 150,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.only(top: 15, bottom: 15),
+                              primary: Colors.teal.shade200, // background
+                              onPrimary: Colors.white,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(20.0),
+                              ) // foreground
+                          ),
+                          onPressed: verify,
+                          child: Text(
+                            'Verify',
+                            style: buttonStyle,
+                          ),
+                        ),
                       ),
-                      onPressed: verify,
-                      child: Text(
-                        'Verify',
-                        style: buttonStyle,
-                      ),
-                    ),
-                  ),
                     ]),
               ),
             ),
@@ -235,12 +247,12 @@ class otpState extends State<otp> {
                     TextSpan(
                       text: ' Log-In',
                       style: TextStyle(color: Colors.blue[300]),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
+                      recognizer: TapGestureRecognizer()..onTap = () {
                           navigateLogIn();
                         },
                     ),
-                  ]),
+                  ]
+              ),
             )
           ]),
         ),
