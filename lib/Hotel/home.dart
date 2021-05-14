@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
 
   String _name = "name";
   String _imgurl;
+  String revenue="0";
   String _count = "0";
   String _len = "0";
   //List<dynamic> pr;
@@ -44,9 +45,11 @@ class _HomeState extends State<Home> {
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       setState(() {
+
         _name = documentSnapshot.data()['name'];
         _imgurl = documentSnapshot.data()['imageUrl'];
         _type = documentSnapshot.data()['type'];
+        revenue=documentSnapshot.data()['revenue'].toString();
 
         int len = documentSnapshot.data()['product'].length;
         print(len);
@@ -254,6 +257,56 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
+
+
+
+
+          SizedBox(
+            height: 10,
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(4),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey[300],
+                          offset: Offset(-2, -1),
+                          blurRadius: 5),
+                    ]),
+                child: ListTile(
+
+                    leading: Padding(
+                      padding: const EdgeInsets.all(4),
+
+                        child:Container(
+                        child: Text("  ₹ ",style: TextStyle(fontSize: 40,
+                            //fontWeight: FontWeight.bold,
+                            color: Colors.teal),
+
+                        ),
+                      ),
+
+                    ),
+                    title: CustomText(
+                      text: "Revenue",
+                      size: 24,
+                    ),
+                    trailing: CustomText(
+                      text: revenue,
+                      size: 24,
+                      weight: FontWeight.bold,
+                    )),
+              ),
+            ),
+          ),
+
+
 
           // products
           Column()
