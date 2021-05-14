@@ -167,7 +167,7 @@ class UpiPaymentState extends State<UpiPayment> {
 
     // to start payment transaction.
     final paymentdata = await UpiPay.initiateTransaction(
-      amount: donationamountControl.text,
+      amount: donationamountControl.text.toString(),
       app: app.upiApplication,
       receiverName: 'NGO',
       receiverUpiAddress: upicontrol.text,

@@ -151,7 +151,7 @@ class _DetailPageState extends State<DetailPage>{
               onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(
-                    builder: (context) => UpiPayment(widget.post.get('user'),widget.post.get('name'),widget.post.get('donation')),
+                    builder: (context) => UpiPayment(widget.post.get('user'),widget.post.get('name'),int.parse(widget.post.get('donation'))),
                   ));
             }
               ),

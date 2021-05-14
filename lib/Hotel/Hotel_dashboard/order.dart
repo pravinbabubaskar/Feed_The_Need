@@ -1,8 +1,5 @@
 import 'package:feedthenead/Hotel/Hotel_dashboard/active_order.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/completed_order.dart';
-import 'package:feedthenead/Past_orders.dart';
-import 'package:feedthenead/active_orders.dart';
-import 'package:feedthenead/constants.dart';
 import 'package:flutter/material.dart';
 
 class Order extends StatefulWidget {
@@ -17,6 +14,7 @@ class _OrderState extends State<Order> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.teal[100],
             title: Text(
               'Orders',
               textAlign: TextAlign.center,
