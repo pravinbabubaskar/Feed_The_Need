@@ -2,7 +2,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:upi_pay/upi_pay.dart';
 import 'bill.dart';
-
+import 'home.dart';
+import 'data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class UpiBill extends StatefulWidget {
@@ -17,7 +19,8 @@ class UpiBill extends StatefulWidget {
 
 class UpiBillState extends State<UpiBill> {
 
-  // used for storing errors.
+  final _store = FirebaseFirestore.instance;
+  int revenue =0;
   String upiErr;
   TextEditingController upicontrol = TextEditingController();
   TextEditingController BillamountControl = TextEditingController();
@@ -27,8 +30,17 @@ class UpiBillState extends State<UpiBill> {
   void initState() {
     super.initState();
     BillamountControl.text = (widget.pay.toString());
-    upicontrol.text="srikalamani1970@oksbi";
+    upicontrol.text="pravinbabu171-1@okicici";
     paymentapps = UpiPay.getInstalledUpiApplications();
+    var doc = _store.collection('hotel').doc(hotelId).get().then((DocumentSnapshot doc) {
+      if(doc.exists){
+        print(doc["revenue"]);
+        revenue=doc["revenue"];
+      }
+
+    });
+
+    
   }
   showAlertFail(BuildContext context) {
     // Create button
@@ -90,16 +102,21 @@ class UpiBillState extends State<UpiBill> {
 
     String s=billingdata.status.toString();
     print(s);
-    // if(s=="UpiTransactionStatus.failure") {
-    //   showAlertFail(context);
-    //   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-    //       HomePage()), (Route<dynamic> route) => false);
-    //   return;
-    // }
+    if(s=="UpiTransactionStatus.failure") {
+      showAlertFail(context);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+          HomePage()), (Route<dynamic> route) => false);
+      return;
+    }
+    updateValue();
     Navigator.push(
         context, MaterialPageRoute(
         builder: (context) => bill(widget.pay, billingdata.txnId)
     ));
+  }
+
+  void updateValue() async{
+    _store.collection('hotel').doc(hotelId).update({'revenue':totalValue+revenue});
   }
 
   @override

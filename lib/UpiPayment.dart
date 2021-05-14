@@ -34,7 +34,7 @@ class UpiPaymentState extends State<UpiPayment> {
     super.initState();
 
     // PId data to donate money
-    upicontrol.text = "9943914993@api"; //.toString();
+    upicontrol.text = "pravinbabu171-1@okicici"; //.toString();
 
     // stores the list of payment apps installed in mobile phone
     paymentapps = UpiPay.getInstalledUpiApplications();

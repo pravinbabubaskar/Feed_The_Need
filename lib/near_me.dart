@@ -33,7 +33,7 @@ class _NearMeState extends State<NearMe> {
     for (var t in hotelData) {
       if (t['district'] == loc1) {
         hotel.add(t);
-        getDistance(t['latitue'],t['longitude']);
+        //getDistance(t['latitue'],t['longitude']);
       }
     }
   }

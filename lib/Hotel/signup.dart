@@ -114,6 +114,7 @@ class _Sign_upState extends State<Sign_up> {
             'password': _password,
             'type': _type,
             'latitue': lat,
+             'revenue':0,
             'longitude': lon,
             'address': _address,
             'district': _district,

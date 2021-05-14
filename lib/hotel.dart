@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:like_button/like_button.dart';
-
+import 'package:geolocator/geolocator.dart';
+import 'dart:math' show cos, sqrt, asin;
 import 'cart.dart';
 import 'data.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,9 +18,28 @@ class HotelPage extends StatefulWidget {
 
 class _HotelPageState extends State<HotelPage> {
   var data;
+  double distance;
   List<dynamic> products = new List();
   _HotelPageState(this.data) {
     products = data['product'];
+    distance=calculateDistance(latlong.latitude, latlong.longitude, data['latitue'], data['longitude']);
+
+  }
+
+  double calculateDistance(lat1, lon1, lat2, lon2){
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 - c((lat2 - lat1) * p)/2 +
+        c(lat1 * p) * c(lat2 * p) *
+            (1 - c((lon2 - lon1) * p))/2;
+    return 12742 * asin(sqrt(a));
+  }
+
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
   }
   @override
   Widget build(BuildContext context) {
@@ -91,8 +112,8 @@ class _HotelPageState extends State<HotelPage> {
                                   starCount: 5,
                                   rating: double.parse(data['r']),
                                   isReadOnly: true,
-                                  color: Colors.lime,
-                                  borderColor: Colors.lime[100],
+                                  color: Colors.green,
+                                  borderColor: Colors.green,
                                   spacing: -0.5),
                             ],
                           ),
@@ -102,7 +123,9 @@ class _HotelPageState extends State<HotelPage> {
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle, color: Colors.white),
                             child: Center(
-                              child: LikeButton(),
+                              child: LikeButton(
+                                isLiked: true,
+                              ),
                             ),
                           )
                         ],
@@ -113,57 +136,64 @@ class _HotelPageState extends State<HotelPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              data['type'],
-                              style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.black54,
-                                  fontSize: 15),
-                            ),
-                          ),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          data['type'],
+                          style: TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Colors.black54,
+                              fontSize: 15),
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 15),
+                      padding: const EdgeInsets.only(left: 15,right: 15),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          InkWell(
-                            child: Icon(Icons.call,
-                                size: 30.0, color: Colors.lime),
-                            onTap: () {
-                              int num = int.parse(data["number"]);
-                              launch("tel:$num");
-                            },
+                          Row(
+                            children: [
+                              InkWell(
+                                child: Icon(Icons.call,
+                                    size: 30.0, color: Colors.green),
+                                onTap: () {
+                                  int num = int.parse(data["number"]);
+                                  launch("tel:$num");
+                                },
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              InkWell(
+                                child:
+                                    Icon(Icons.map, size: 30.0, color: Colors.green),
+                                onTap: () {
+                                  double lat = latlong.latitude;
+                                  double long = latlong.longitude;
+                                  double Hlat = data["latitue"];
+                                  double Ulong = data["longitude"];
+                                  String url =
+                                      "https://www.google.com/maps/dir/?api=1&origin=" +
+                                          '$Hlat' +
+                                          "," +
+                                          '$Ulong' +
+                                          "&destination=" +
+                                          '$lat' +
+                                          "," +
+                                          '$long' +
+                                          "&travelmode=driving";
+                                  launch(url);
+                                },
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          InkWell(
-                            child:
-                                Icon(Icons.map, size: 30.0, color: Colors.lime),
-                            onTap: () {
-                              double lat = latlong.latitude;
-                              double long = latlong.longitude;
-                              double Hlat = data["latitue"];
-                              double Ulong = data["longitude"];
-                              String url =
-                                  "https://www.google.com/maps/dir/?api=1&origin=" +
-                                      '$Hlat' +
-                                      "," +
-                                      '$Ulong' +
-                                      "&destination=" +
-                                      '$lat' +
-                                      "," +
-                                      '$long' +
-                                      "&travelmode=driving";
-                              launch(url);
-                            },
+                          Text(
+                            distance.toStringAsFixed(2)+" KM",
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                color: Colors.black54,
+                                fontSize: 20),
                           ),
                         ],
                       ),
