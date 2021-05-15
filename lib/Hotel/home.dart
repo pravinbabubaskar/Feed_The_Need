@@ -25,9 +25,11 @@ class _HomeState extends State<Home> {
 
   String _name = "name";
   String _imgurl;
-  String revenue="0";
+  String revenue = "0";
   String _count = "0";
   String _len = "0";
+  String _olen = "0";
+
   //List<dynamic> pr;
   @override
   void initState() {
@@ -45,15 +47,17 @@ class _HomeState extends State<Home> {
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       setState(() {
-
         _name = documentSnapshot.data()['name'];
         _imgurl = documentSnapshot.data()['imageUrl'];
         _type = documentSnapshot.data()['type'];
-        revenue=documentSnapshot.data()['revenue'].toString();
+        revenue = documentSnapshot.data()['revenue'].toString();
 
         int len = documentSnapshot.data()['product'].length;
+        int olen = documentSnapshot.data()['order'].length;
+
         print(len);
         _count = len.toString();
+        _olen = olen.toString();
       });
     });
   }
@@ -212,7 +216,7 @@ class _HomeState extends State<Home> {
                       size: 24,
                     ),
                     trailing: CustomText(
-                      text: _len,
+                      text: _olen,
                       size: 24,
                       weight: FontWeight.bold,
                     )),
@@ -258,9 +262,6 @@ class _HomeState extends State<Home> {
             ),
           ),
 
-
-
-
           SizedBox(
             height: 10,
           ),
@@ -280,18 +281,17 @@ class _HomeState extends State<Home> {
                           blurRadius: 5),
                     ]),
                 child: ListTile(
-
                     leading: Padding(
                       padding: const EdgeInsets.all(4),
-
-                        child:Container(
-                        child: Text("  ₹ ",style: TextStyle(fontSize: 40,
-                            //fontWeight: FontWeight.bold,
-                            color: Colors.teal),
-
+                      child: Container(
+                        child: Text(
+                          "  ₹ ",
+                          style: TextStyle(
+                              fontSize: 40,
+                              //fontWeight: FontWeight.bold,
+                              color: Colors.teal),
                         ),
                       ),
-
                     ),
                     title: CustomText(
                       text: "Revenue",
@@ -305,8 +305,6 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-
-
 
           // products
           Column()

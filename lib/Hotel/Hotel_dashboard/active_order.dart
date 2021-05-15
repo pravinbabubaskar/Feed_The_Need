@@ -100,6 +100,29 @@ class _ActiveState extends State<ActiveR> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       ScanQR()));*/
+
+                                          docref.update({
+                                            'completed_orders':
+                                                FieldValue.arrayUnion([
+                                              {
+                                                'user name': order[index]
+                                                    ['user name'],
+                                                'user id': order[index]
+                                                    ['user id'],
+                                                'transaction id': order[index]
+                                                    ['transaction id'],
+                                                'result': 'Completed',
+                                                'Cost': order[index]['Cost'],
+                                                'items': order[index]['items'],
+                                                'Hotel': order[index]['Hotel']
+                                              }
+                                            ])
+                                          });
+
+                                          docref.update({
+                                            'order': FieldValue.arrayRemove(
+                                                [order[index]])
+                                          });
                                         },
                                         child: ClipRRect(
                                           borderRadius:
@@ -162,34 +185,6 @@ class _ActiveState extends State<ActiveR> {
                                                           builder: (context) =>
                                                               Order_detail(temp,
                                                                   r, i, n)));
-                                                  /* docref.update({
-                                                    'completed_orders':
-                                                        FieldValue.arrayUnion([
-                                                      {
-                                                        'user name':
-                                                            order[index]
-                                                                ['user name'],
-                                                        'user id': order[index]
-                                                            ['user id'],
-                                                        'transaction id': order[
-                                                                index]
-                                                            ['transaction id'],
-                                                        'result': 'Completed',
-                                                        'Cost': order[index]
-                                                            ['Cost'],
-                                                        'items': order[index]
-                                                            ['items'],
-                                                        'Hotel': order[index]
-                                                            ['Hotel']
-                                                      }
-                                                    ])
-                                                  });
-
-                                                  docref.update({
-                                                    'order':
-                                                        FieldValue.arrayRemove(
-                                                            [order[index]])
-                                                  });*/
                                                 },
                                                 child: Text(
                                                   "view Details",
