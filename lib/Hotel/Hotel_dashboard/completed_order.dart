@@ -94,7 +94,7 @@ class _CompletedState extends State<Completed> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            order[index]['user id'],
+                                            order[index]['user name'],
                                             style: TextStyle(
                                               fontWeight: FontWeight.w500,
                                               fontSize: 17,

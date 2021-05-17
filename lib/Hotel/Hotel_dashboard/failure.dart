@@ -1,20 +1,14 @@
-import 'package:barcode_scan_fix/barcode_scan.dart';
 import 'package:feedthenead/constants.dart';
 import 'package:feedthenead/helpers/style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class ScanQR extends StatefulWidget {
-  final String val;
-
-  ScanQR(this.val);
+class Failure extends StatefulWidget {
   @override
-  _ScanQRState createState() => _ScanQRState();
+  _FailureState createState() => _FailureState();
 }
 
-class _ScanQRState extends State<ScanQR> {
-  String qrCodeResult =
-      "You are Successfully Verified..Thank you for Purchasing";
+class _FailureState extends State<Failure> {
+  String qrCodeResult = "You are Not Verified..Try Again!!!";
 
   @override
   Widget build(BuildContext context) {
@@ -28,24 +22,8 @@ class _ScanQRState extends State<ScanQR> {
           children: [
             //Message displayed over here
             Image.asset(
-              'images/successful.gif',
+              'images/wrong.png',
               height: 200,
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Text(
-              "User",
-              style: messageStyle,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text(
-              widget.val,
-              style: supportStyle,
-              textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 20.0,
@@ -82,25 +60,5 @@ class _ScanQRState extends State<ScanQR> {
         ),
       ),
     );
-  }
-
-  Future scan() async {
-    try {
-      String barcode = await BarcodeScanner.scan();
-      setState(() => qrCodeResult = barcode);
-    } on PlatformException catch (e) {
-      if (e.code == BarcodeScanner.CameraAccessDenied) {
-        setState(() {
-          qrCodeResult = 'The user did not grant the camera permission!';
-        });
-      } else {
-        setState(() => qrCodeResult = 'Unknown error: $e');
-      }
-    } on FormatException {
-      setState(() => qrCodeResult =
-          'null (User returned using the "back"-button before scanning anything. Result)');
-    } catch (e) {
-      setState(() => qrCodeResult = 'Unknown error: $e');
-    }
   }
 }

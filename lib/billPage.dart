@@ -75,16 +75,16 @@ class billPageState extends State<billPage> {
                 ),
               ),
               onTap: () {
-                /* Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UpiBill(widget.bill.toDouble()),
-                    ));*/
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => bill(40.0, "kanna"),
+                      builder: (context) => UpiBill(widget.bill.toDouble()),
                     ));
+                /*  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => bill(40.0, "kanna"),
+                    ));*/
               }),
           GestureDetector(
               child: Card(

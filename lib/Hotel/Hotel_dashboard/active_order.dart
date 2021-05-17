@@ -1,5 +1,6 @@
 import 'package:barcode_scan_fix/barcode_scan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:feedthenead/Hotel/Hotel_dashboard/failure.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/order.dart';
 import 'package:feedthenead/Hotel/Hotel_dashboard/order_details.dart';
 import 'package:feedthenead/Hotel/home.dart';
@@ -66,7 +67,6 @@ class _ActiveState extends State<ActiveR> {
               child: ListView.builder(
                   itemCount: order != null ? order.length : 0,
                   itemBuilder: (_, int index) {
-                    print(order[index]['Hotel']);
                     return AnimationConfiguration.staggeredList(
                         position: index,
                         duration: const Duration(milliseconds: 2000),
@@ -86,11 +86,48 @@ class _ActiveState extends State<ActiveR> {
                                           String codeSanner =
                                               await BarcodeScanner.scan()
                                                   .then((value) {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ScanQR()));
+                                            print((value));
+                                            if (value ==
+                                                order[index]['user id']) {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ScanQR(value)));
+
+                                              docref.update({
+                                                'completed_orders':
+                                                    FieldValue.arrayUnion([
+                                                  {
+                                                    'user name': order[index]
+                                                        ['user name'],
+                                                    'user id': order[index]
+                                                        ['user id'],
+                                                    'transaction id':
+                                                        order[index]
+                                                            ['transaction id'],
+                                                    'result': 'Completed',
+                                                    'Cost': order[index]
+                                                        ['Cost'],
+                                                    'items': order[index]
+                                                        ['items'],
+                                                    'Hotel': order[index]
+                                                        ['Hotel']
+                                                  }
+                                                ])
+                                              });
+
+                                              docref.update({
+                                                'order': FieldValue.arrayRemove(
+                                                    [order[index]])
+                                              });
+                                            } else {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Failure()));
+                                            }
                                           });
                                           setState(() {
                                             qrCodeResult = codeSanner;
@@ -100,29 +137,6 @@ class _ActiveState extends State<ActiveR> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       ScanQR()));*/
-
-                                          docref.update({
-                                            'completed_orders':
-                                                FieldValue.arrayUnion([
-                                              {
-                                                'user name': order[index]
-                                                    ['user name'],
-                                                'user id': order[index]
-                                                    ['user id'],
-                                                'transaction id': order[index]
-                                                    ['transaction id'],
-                                                'result': 'Completed',
-                                                'Cost': order[index]['Cost'],
-                                                'items': order[index]['items'],
-                                                'Hotel': order[index]['Hotel']
-                                              }
-                                            ])
-                                          });
-
-                                          docref.update({
-                                            'order': FieldValue.arrayRemove(
-                                                [order[index]])
-                                          });
                                         },
                                         child: ClipRRect(
                                           borderRadius:
