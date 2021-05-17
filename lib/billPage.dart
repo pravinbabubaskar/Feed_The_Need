@@ -1,3 +1,4 @@
+import 'package:feedthenead/bill.dart';
 import 'package:feedthenead/donate.dart';
 import 'package:flutter/material.dart';
 import 'UpiBill.dart';
@@ -20,11 +21,12 @@ class billPageState extends State<billPage> {
           Container(
             //margin: EdgeInsets.all(5.0),
             //padding: const EdgeInsets.all(5),
-            child: Image(image: AssetImage('images/rcart.png'),
-            ),//asset('images/bill2crp.png'),
+            child: Image(
+              image: AssetImage('images/rcart.png'),
+            ), //asset('images/bill2crp.png'),
             height: 500.0,
-            alignment:Alignment.center,
-            width:double.infinity,//500.0,
+            alignment: Alignment.center,
+            width: double.infinity, //500.0,
           ),
         ],
       ),
@@ -73,16 +75,16 @@ class billPageState extends State<billPage> {
                 ),
               ),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UpiBill(widget.bill.toDouble()),
-                    ));
                 /* Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => bill(40.0, null),
+                      builder: (context) => UpiBill(widget.bill.toDouble()),
                     ));*/
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => bill(40.0, "kanna"),
+                    ));
               }),
           GestureDetector(
               child: Card(

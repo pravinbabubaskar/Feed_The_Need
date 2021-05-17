@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:feedthenead/data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -10,33 +12,42 @@ class Active extends StatefulWidget {
   _ActiveState createState() => _ActiveState();
 }
 
+String mail;
+
 class _ActiveState extends State<Active> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      mail = user1.email;
+    });
   }
+
   Widget setupAlertDialoadContainer() {
     return Container(
       height: 210.0,
       width: 210.0,
       child: QrImage(
-        data: "1234567890",
+        data: mail,
         version: QrVersions.auto,
         size: 200.0,
       ),
     );
   }
-  String camelCase(String str){
+
+  String camelCase(String str) {
     return "${str[0].toUpperCase()}${str.substring(1)}";
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    CollectionReference users = FirebaseFirestore.instance.collection('orders');
+    DocumentReference docref = users.doc(mail);
+    return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView.builder(
           itemCount: widget.orders.length,
-          itemBuilder:(context,index){
+          itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -45,16 +56,16 @@ class _ActiveState extends State<Active> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.orders[index]['Hotel'],style: TextStyle(
-                        fontFamily:'Sans',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25
-                      )),
-                      Text("₹ "+widget.orders[index]['Cost'].toString(),style: TextStyle(
-                          fontFamily:'Sans',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25
-                      )),
+                      Text(widget.orders[index]['Hotel'],
+                          style: TextStyle(
+                              fontFamily: 'Sans',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25)),
+                      Text("₹ " + widget.orders[index]['Cost'].toString(),
+                          style: TextStyle(
+                              fontFamily: 'Sans',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25)),
                     ],
                   ),
                   Divider(color: Colors.grey),
@@ -62,24 +73,26 @@ class _ActiveState extends State<Active> {
                     children: [
                       Expanded(
                         child: Container(
-
                           child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: widget.orders[index]['items'].length,
-                              itemBuilder: (context,ind){
-                            return Text(camelCase(widget.orders[index]['items'][ind]['name']),style: TextStyle(
-                              fontFamily: 'Sans',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.grey
-                            ),);
-                          }),
+                              shrinkWrap: true,
+                              itemCount: widget.orders[index]['items'].length,
+                              itemBuilder: (context, ind) {
+                                return Text(
+                                  camelCase(widget.orders[index]['items'][ind]
+                                      ['name']),
+                                  style: TextStyle(
+                                      fontFamily: 'Sans',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18,
+                                      color: Colors.grey),
+                                );
+                              }),
                         ),
                       ),
                       IconButton(
                         alignment: Alignment.center,
-                        icon:Icon(Icons.qr_code_rounded),
-                        onPressed:(){
+                        icon: Icon(Icons.qr_code_rounded),
+                        onPressed: () {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -91,26 +104,51 @@ class _ActiveState extends State<Active> {
                                       child: Text("OK"),
                                       onPressed: () {
                                         Navigator.pop(context);
+                                        docref.update({
+                                          'completed': FieldValue.arrayUnion([
+                                            {
+                                              'transaction id':
+                                                  widget.orders[index]
+                                                      ['transaction id'],
+                                              'result': 'Completed',
+                                              'Cost': widget.orders[index]
+                                                  ['Cost'],
+                                              'items': widget.orders[index]
+                                                  ['items'],
+                                              'Hotel': widget.orders[index]
+                                                  ['Hotel']
+                                            }
+                                          ])
+                                        });
+
+                                        docref.update({
+                                          'Transaction': FieldValue.arrayRemove(
+                                              [widget.orders[index]])
+                                        });
                                       },
                                     )
                                   ],
                                 );
                               });
-                        },)
+                        },
+                      )
                     ],
                   ),
-                  SizedBox(height: 5,),
-                  Text('Transaction ID:'+ widget.orders[index]['transaction id'].toString(),style: TextStyle(
-                    fontFamily: 'Raleway',
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold
-                  ),)
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Transaction ID:' +
+                        widget.orders[index]['transaction id'].toString(),
+                    style: TextStyle(
+                        fontFamily: 'Raleway',
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  )
                 ],
               ),
             );
-          }
-      ),
+          }),
     );
   }
 }
-
