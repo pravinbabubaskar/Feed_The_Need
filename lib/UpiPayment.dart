@@ -85,7 +85,7 @@ class UpiPaymentState extends State<UpiPayment> {
     Widget okButton = FlatButton(
       child: Text("OK"),
       onPressed: () {
-        _store.collection('NGO').doc(widget.name).update({'donation':(widget.val+int.parse(donationamountControl.text)).toString()});
+        _store.collection('NGO').doc(widget.name).update({'donation':(widget.val+int.parse(donationamountControl.text))/*.toString()*/});
         Navigator.push(
             context,
             MaterialPageRoute(
