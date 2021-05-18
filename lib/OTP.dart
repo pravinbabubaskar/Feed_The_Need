@@ -82,10 +82,11 @@ class otpState extends State<otp> {
         receiverMail: Usermail.value.text, userOTP: otpvalue.value.text);
     if(result)
     {
+      print(Usermail.value.text);
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SignUp(Usermail.toString()),
+            builder: (context) => SignUp(Usermail.value.text),
           ));
     }
   else {

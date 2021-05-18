@@ -16,7 +16,8 @@ class _SignUpState extends State<SignUp> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _name, _email, _password;
+  String _name, _password;
+  String _email;
 
   checkAuthentication() async {
     FirebaseAuth.instance.authStateChanges().listen((firebaseUser) async {
@@ -42,8 +43,10 @@ class _SignUpState extends State<SignUp> {
       _formKey.currentState.save();
 
       try {
+        print(_email);
+        print("fdbgfbngf");
         final user = await _auth.createUserWithEmailAndPassword(
-            email: _email, password: _password);
+            email: _email.toString(), password: _password);
 
         if (user != null) {
           await FirebaseAuth.instance.currentUser

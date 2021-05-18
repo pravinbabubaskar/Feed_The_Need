@@ -60,7 +60,7 @@ class _WebScraperAppState extends State<WebScraperApp> {
         print(elements[88]);
     }
     FirebaseFirestore.instance.collection('NGO').doc(name)
-        .update({'address':elements[ind]});
+        .update({'address':elements[ind],'donation':0});
 
   }
 
