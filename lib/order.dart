@@ -19,7 +19,11 @@ class _OrderState extends State<Order> {
       for (var m in document.docs) {
         if (m.id == mail) {
           for (var temp in m.data()['Transaction']) {
-            ordersActive.add(temp);
+            if (temp['result'] == 'Confirmed') {
+              ordersActive.add(temp);
+            } else {
+              ordersPast.add(temp);
+            }
           }
           for (var temp in m.data()['completed']) {
             ordersPast.add(temp);
