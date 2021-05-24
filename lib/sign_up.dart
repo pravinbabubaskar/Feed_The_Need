@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -5,6 +6,7 @@ import 'login.dart';
 import 'load_data.dart';
 import 'constants.dart';
 import 'package:email_auth/email_auth.dart';
+
 class SignUp extends StatefulWidget {
   String email;
   @override
@@ -22,6 +24,8 @@ class _SignUpState extends State<SignUp> {
   checkAuthentication() async {
     FirebaseAuth.instance.authStateChanges().listen((firebaseUser) async {
       if (firebaseUser != null) {
+        addOrders();
+        addQR();
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Load()));
       }
@@ -31,13 +35,14 @@ class _SignUpState extends State<SignUp> {
   @override
   void initState() {
     super.initState();
-    _email=widget.email;
+    _email = widget.email;
     this.checkAuthentication();
   }
 
   navigateLogIn() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
   }
+
   signUp() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
@@ -51,6 +56,7 @@ class _SignUpState extends State<SignUp> {
         if (user != null) {
           await FirebaseAuth.instance.currentUser
               .updateProfile(displayName: _name);
+
           checkAuthentication();
         }
       } catch (e) {
@@ -65,8 +71,14 @@ class _SignUpState extends State<SignUp> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('ERROR',style: errorStyle,),
-            content: Text(errormessage,style: messageStyle,),
+            title: Text(
+              'ERROR',
+              style: errorStyle,
+            ),
+            content: Text(
+              errormessage,
+              style: messageStyle,
+            ),
             actions: <Widget>[
               TextButton(
                   onPressed: () {
@@ -76,6 +88,30 @@ class _SignUpState extends State<SignUp> {
             ],
           );
         });
+  }
+
+  CollectionReference users = FirebaseFirestore.instance.collection('orders');
+  CollectionReference qr = FirebaseFirestore.instance.collection('QrCode');
+
+  Future<void> addOrders() {
+    return users
+        .doc(_email)
+        .set({
+          'Transaction': [],
+          'completed': [],
+        })
+        .then((value) => print("Document Added"))
+        .catchError((error) => print("Failed to add document: $error"));
+  }
+
+  Future<void> addQR() {
+    return qr
+        .doc(_email)
+        .set({
+          'data': [],
+        })
+        .then((value) => print("Document Added"))
+        .catchError((error) => print("Failed to add document: $error"));
   }
 
   @override
@@ -101,33 +137,33 @@ class _SignUpState extends State<SignUp> {
             Container(
               margin: EdgeInsets.only(left: 40),
               alignment: Alignment.topLeft,
-              child: Text("Journey",style: TextStyle(
-                  fontSize: 50,
-                  fontFamily: 'Poppins',
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold
-              )),
+              child: Text("Journey",
+                  style: TextStyle(
+                      fontSize: 50,
+                      fontFamily: 'Poppins',
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold)),
             ),
             Container(
               margin: EdgeInsets.only(left: 40),
               alignment: Alignment.topLeft,
-              child: RichText(text: TextSpan(
-                  text: 'Starts',
-                  style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 50,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  ),
-                  children: [
-                    TextSpan(text:'  .',style: TextStyle(
+              child: RichText(
+                text: TextSpan(
+                    text: 'Starts',
+                    style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 50,
-                        color: Colors.teal,
-                        fontWeight: FontWeight.bold
-                    ))
-                  ]
-              ),
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                    children: [
+                      TextSpan(
+                          text: '  .',
+                          style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 50,
+                              color: Colors.teal,
+                              fontWeight: FontWeight.bold))
+                    ]),
               ),
             ),
             Container(
@@ -142,15 +178,20 @@ class _SignUpState extends State<SignUp> {
                           primaryColor: Colors.grey,
                         ),
                         child: TextFormField(
-                            style: TextStyle(fontFamily:'Raleway',fontWeight: FontWeight.bold,letterSpacing: 1,fontSize: 20),
+                            style: TextStyle(
+                                fontFamily: 'Raleway',
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                                fontSize: 20),
                             // ignore: missing_return
                             validator: (input) {
-                              if (input.isEmpty)
-                                return 'Enter Name';
+                              if (input.isEmpty) return 'Enter Name';
                             },
                             decoration: InputDecoration(
                               labelText: 'Name',
-                              prefixIcon: Icon(Icons.account_circle,color: Colors.teal),),
+                              prefixIcon: Icon(Icons.account_circle,
+                                  color: Colors.teal),
+                            ),
                             onSaved: (input) => _name = input),
                       ),
                     ),
@@ -178,7 +219,11 @@ class _SignUpState extends State<SignUp> {
                           primaryColor: Colors.grey,
                         ),
                         child: TextFormField(
-                            style: TextStyle(fontFamily:'Raleway',fontWeight: FontWeight.bold,letterSpacing: 1,fontSize: 20),
+                            style: TextStyle(
+                                fontFamily: 'Raleway',
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                                fontSize: 20),
                             // ignore: missing_return
                             validator: (input) {
                               if (input.length < 6)
@@ -186,7 +231,7 @@ class _SignUpState extends State<SignUp> {
                             },
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              prefixIcon: Icon(Icons.lock,color: Colors.teal),
+                              prefixIcon: Icon(Icons.lock, color: Colors.teal),
                             ),
                             obscureText: true,
                             onSaved: (input) => _password = input),
@@ -200,11 +245,10 @@ class _SignUpState extends State<SignUp> {
                             padding: EdgeInsets.only(top: 15, bottom: 15),
                             primary: Colors.teal.shade200, // background
                             onPrimary: Colors.white,
-
                             shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(20.0),
                             ) // foreground
-                        ),
+                            ),
                         onPressed: signUp,
                         child: Text(
                           'Sign-up',

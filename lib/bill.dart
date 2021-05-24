@@ -46,7 +46,7 @@ class billState extends State<bill> {
                   {
                     'transaction id': tID,
                     'result': 'Confirmed',
-                    'status':'Active',
+                    'status': 'Active',
                     'Cost': totalValue,
                     'items': finalCart,
                     'Hotel': hotelName
@@ -65,28 +65,7 @@ class billState extends State<bill> {
                 ])
               });
             } else {
-              _store.collection('QrCode').doc(user1.email).set({
-                'data': FieldValue.arrayUnion([
-                  {
-                    'result': "active",
-                    'transaction id': tID,
-                    'user id': user1.email,
-                    'user name': user1.displayName,
-                    'Cost': totalValue,
-                  }
-                ])
-              });
-              _store.collection('orders').doc(user1.email).set({
-                'Transaction': FieldValue.arrayUnion([
-                  {
-                    'transaction id': tID,
-                    'result': 'Confirmed',
-                    'Cost': totalValue,
-                    'items': finalCart,
-                    'Hotel': hotelName
-                  }
-                ])
-              });
+              print("doc does not exist");
             }
           });
 
@@ -142,7 +121,7 @@ class billState extends State<bill> {
             {
               'transaction id': tID,
               'result': 'Canceled',
-              'status' : 'Active',
+              'status': 'Active',
               'Cost': totalValue,
               'items': finalCart,
               'Hotel': hotelName
@@ -150,18 +129,7 @@ class billState extends State<bill> {
           ])
         });
       } else {
-        _store.collection('orders').doc(user1.email).set({
-          'Transaction': FieldValue.arrayUnion([
-            {
-              'transaction id': tID,
-              'result': 'Canceled',
-              'status' : 'Past',
-              'Cost': totalValue,
-              'items': finalCart,
-              'Hotel': hotelName
-            }
-          ])
-        });
+        print("doc does not exist");
       }
     });
   }
