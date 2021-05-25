@@ -104,27 +104,6 @@ class _ActiveState extends State<Active> {
                                       child: Text("OK"),
                                       onPressed: () {
                                         Navigator.pop(context);
-                                        docref.update({
-                                          'completed': FieldValue.arrayUnion([
-                                            {
-                                              'transaction id':
-                                                  widget.orders[index]
-                                                      ['transaction id'],
-                                              'result': 'Completed',
-                                              'Cost': widget.orders[index]
-                                                  ['Cost'],
-                                              'items': widget.orders[index]
-                                                  ['items'],
-                                              'Hotel': widget.orders[index]
-                                                  ['Hotel']
-                                            }
-                                          ])
-                                        });
-
-                                        docref.update({
-                                          'Transaction': FieldValue.arrayRemove(
-                                              [widget.orders[index]])
-                                        });
                                       },
                                     )
                                   ],

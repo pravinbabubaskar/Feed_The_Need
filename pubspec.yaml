@@ -43,8 +43,8 @@ dependencies:
   url_launcher: ^6.0.3
   upi_pay: ^0.2.1
   dio: any
-  flutter_google_places: ^0.3.0
-  google_maps_flutter: ^2.0.1
+  flutter_google_places: 
+  google_maps_flutter: 
   firebase_storage: ^8.0.1
   image_picker: ^0.7.3
   like_button: ^2.0.2
@@ -61,6 +61,7 @@ dependencies:
   qr_flutter: ^4.0.0
   barcode_scan_fix: ^1.0.2
   email_auth: ^0.0.1+3
+  google_maps_webservice: ^0.0.19
 
 dev_dependencies:
   flutter_test:

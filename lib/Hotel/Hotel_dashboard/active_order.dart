@@ -21,6 +21,8 @@ class _ActiveState extends State<ActiveR> {
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('hotel');
     DocumentReference docref = users.doc(d_id);
+    CollectionReference ord_col =
+        FirebaseFirestore.instance.collection('orders');
     return StreamBuilder<DocumentSnapshot>(
         stream: users.doc(d_id).snapshots(),
         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -120,6 +122,46 @@ class _ActiveState extends State<ActiveR> {
                                               docref.update({
                                                 'order': FieldValue.arrayRemove(
                                                     [order[index]])
+                                              });
+
+                                              DocumentReference ord_doc =
+                                                  ord_col.doc(
+                                                      order[index]['user id']);
+                                              ord_doc.update({
+                                                'completed':
+                                                    FieldValue.arrayUnion([
+                                                  {
+                                                    'transaction id':
+                                                        order[index]
+                                                            ['transaction id'],
+                                                    'result': 'Completed',
+                                                    'Cost': order[index]
+                                                        ['Cost'],
+                                                    'items': order[index]
+                                                        ['items'],
+                                                    'Hotel': order[index]
+                                                        ['Hotel']
+                                                  }
+                                                ])
+                                              });
+
+                                              ord_doc.update({
+                                                'Transaction':
+                                                    FieldValue.arrayRemove([
+                                                  {
+                                                    'transaction id':
+                                                        order[index]
+                                                            ['transaction id'],
+                                                    'result': 'Confirmed',
+                                                    'Cost': order[index]
+                                                        ['Cost'],
+                                                    'items': order[index]
+                                                        ['items'],
+                                                    'Hotel': order[index]
+                                                        ['Hotel'],
+                                                    'status': "Active",
+                                                  }
+                                                ])
                                               });
                                             } else {
                                               Navigator.push(
