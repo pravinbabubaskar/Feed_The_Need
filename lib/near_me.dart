@@ -33,7 +33,7 @@ class _NearMeState extends State<NearMe> {
     for (var t in hotelData) {
       if (t['district'] == loc1) {
         hotel.add(t);
-        //getDistance(t['latitue'],t['longitude']);
+        getDistance(t['latitue'],t['longitude']);
       }
     }
   }
@@ -44,7 +44,7 @@ class _NearMeState extends State<NearMe> {
     double Ulat = latlong.latitude;
     double Ulong = latlong.longitude;
     final response = await dio.get(
-        'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=$Ulat,$Ulong&destinations=$lat,$long&key=AIzaSyChMRxmcfqCAvdTQMPUzi1Lu4hnIrJpAFk');
+        'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=$Ulat,$Ulong&destinations=$lat,$long&key=dsgdfgdfrgd232435');
     Map data = response.data;
     setState(() {
       duration[i] = data['rows'][0]["elements"][0]["duration"]["text"];

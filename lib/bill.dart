@@ -2,6 +2,7 @@ import 'package:feedthenead/data.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'home.dart';
 import 'success.dart';
 import 'data.dart';
 
@@ -98,7 +99,7 @@ class billState extends State<bill> {
     });
   }
 
-  cancelOrder() {
+  cancelOrder() async{
     ShowAlertCancel(context);
     cartData.clear();
 
@@ -110,7 +111,7 @@ class billState extends State<bill> {
       'Hotel': hotelName
     });*/
 
-    _store
+    await _store
         .collection('orders')
         .doc(user1.email)
         .get()
@@ -132,6 +133,8 @@ class billState extends State<bill> {
         print("doc does not exist");
       }
     });
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+        HomePage()), (Route<dynamic> route) => false);
   }
 
   ShowAlertCancel(BuildContext context) {

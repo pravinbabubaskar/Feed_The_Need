@@ -30,7 +30,7 @@ class UpiBillState extends State<UpiBill> {
   void initState() {
     super.initState();
     BillamountControl.text = (widget.pay.toString());
-    upicontrol.text="pravinbabu171-1@okicici";
+    upicontrol.text="dummy@okicici";
     paymentapps = UpiPay.getInstalledUpiApplications();
     var doc = _store.collection('hotel').doc(hotelId).get().then((DocumentSnapshot doc) {
       if(doc.exists){
@@ -102,12 +102,12 @@ class UpiBillState extends State<UpiBill> {
 
     String s=billingdata.status.toString();
     print(s);
-    if(s=="UpiTransactionStatus.failure") {
-      showAlertFail(context);
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-          HomePage()), (Route<dynamic> route) => false);
-      return;
-    }
+    // if(s=="UpiTransactionStatus.failure") {
+    //   showAlertFail(context);
+    //   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+    //       HomePage()), (Route<dynamic> route) => false);
+    //   return;
+    // }
     updateValue();
     Navigator.push(
         context, MaterialPageRoute(
